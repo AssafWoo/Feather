@@ -1,3 +1,5 @@
+import EmailSignup from './EmailSignup'
+
 const CTA = ({ config }) => {
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-900">
@@ -8,13 +10,17 @@ const CTA = ({ config }) => {
         <p className="text-base text-gray-300 mb-6">
           {config.subtitle}
         </p>
-        {config.button && (
-          <a
-            href={config.button.link}
-            className="inline-block px-6 py-2.5 bg-white text-gray-900 rounded-md text-sm font-normal hover:bg-gray-100 transition-colors"
-          >
-            {config.button.text}
-          </a>
+        {config.showEmailSignup ? (
+          <EmailSignup config={config.emailSignup} onSubmit={config.onEmailSubmit} />
+        ) : (
+          config.button && (
+            <a
+              href={config.button.link}
+              className="inline-block px-6 py-2.5 bg-white text-gray-900 rounded-md text-sm font-normal hover:bg-gray-100 transition-colors"
+            >
+              {config.button.text}
+            </a>
+          )
         )}
       </div>
     </section>
