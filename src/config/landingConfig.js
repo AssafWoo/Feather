@@ -36,6 +36,8 @@ export const landingConfig = {
     // Optional: Custom email submit handler (defaults to console.log)
     // onEmailSubmit: (email) => { /* your API call here */ },
     backgroundImage: null, // Add image URL or leave null for gradient
+    rightImage: null, // Add image URL for right side (35% width)
+    rightImageAlt: "Hero Image",
   },
 
   // Features Section
@@ -102,7 +104,7 @@ export const landingConfig = {
 
   // Footer
   footer: {
-    enabled: true,
+    enabled: false,
     companyName: "Your Company",
     tagline: "Building the future, one landing page at a time",
     links: [

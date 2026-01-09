@@ -41,7 +41,7 @@ const EmailSignup = ({ config, onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-md mx-auto">
-      <div className="flex flex-col sm:flex-row gap-2">
+      <div className="flex flex-col sm:flex-row gap-2 bg-white p-4 rounded-2xl shadow-2xl border border-gray-100">
         <input
           type="email"
           value={email}
@@ -55,7 +55,7 @@ const EmailSignup = ({ config, onSubmit }) => {
         />
         <button
           type="submit"
-          className="px-6 py-2.5 bg-gray-900 text-white rounded-full text-sm font-normal hover:bg-gray-800 transition-colors whitespace-nowrap"
+          className="px-6 py-2.5 bg-gray-900 text-white rounded-full text-sm font-normal hover:bg-gray-800 transition-colors whitespace-nowrap shadow-lg"
         >
           {config.buttonText || "Join Waitlist"}
         </button>

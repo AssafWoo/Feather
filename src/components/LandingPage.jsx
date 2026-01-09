@@ -6,7 +6,7 @@ import Footer from './Footer'
 
 const LandingPage = ({ config }) => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-y-scroll snap-y snap-mandatory scroll-smooth" style={{ height: '100vh', scrollBehavior: 'smooth' }}>
       {config.header?.enabled && <Header config={config.header} />}
       <Hero config={config.hero} />
       {config.features?.enabled && <Features config={config.features} />}

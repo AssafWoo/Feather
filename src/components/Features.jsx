@@ -4,12 +4,12 @@ const Features = ({ config }) => {
   const rightColumn = config.items?.filter((_, index) => index % 2 === 1) || []
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white relative overflow-hidden">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white relative overflow-hidden min-h-screen snap-start flex items-center">
       {/* Subtle background decoration */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-gray-100 rounded-full blur-3xl opacity-20"></div>
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-gray-100 rounded-full blur-3xl opacity-20"></div>
       
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10 w-full">
         {/* Title with highlighted word */}
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-gray-900 mb-4">

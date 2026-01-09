@@ -1,7 +1,7 @@
 const Footer = ({ config }) => {
   return (
-    <footer className="bg-gray-50 border-t border-gray-200 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <footer className="bg-gray-50 border-t border-gray-200 py-12 px-4 sm:px-6 lg:px-8 min-h-screen snap-start flex items-center">
+      <div className="max-w-7xl mx-auto w-full">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
             <h3 className="text-base font-medium text-gray-900 mb-2">{config.companyName}</h3>

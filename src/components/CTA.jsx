@@ -2,8 +2,8 @@ import EmailSignup from './EmailSignup'
 
 const CTA = ({ config }) => {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-900">
-      <div className="max-w-4xl mx-auto text-center">
+    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-900 min-h-screen snap-start flex items-center">
+      <div className="max-w-4xl mx-auto text-center w-full">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-white mb-3">
           {config.title}
         </h2>
