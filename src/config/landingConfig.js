@@ -7,10 +7,19 @@ export const landingConfig = {
     logoText: "Logo", // Text to display if no logo image
     logoAlt: "Company Logo",
     navLinks: [
-      { text: "Features", link: "#features" },
-      { text: "About", link: "#about" },
-      { text: "Contact", link: "#contact" },
+      { text: "Home", link: "#" },
+      { text: "About Us", link: "#about" },
+      { text: "Services", link: "#services" },
+      { text: "Our Team", link: "#team" },
     ],
+    helpLink: {
+      text: "Help!",
+      link: "#help",
+    },
+    ctaButton: {
+      text: "Contact Us",
+      link: "#contact",
+    },
   },
 
   // Hero Section
@@ -33,27 +42,45 @@ export const landingConfig = {
   features: {
     enabled: true,
     title: "What's Coming",
+    highlightWord: "Coming", // Word to highlight in amber/gold
     subtitle: "Here's what you can expect when we launch",
     items: [
       {
         title: "Lightning Fast",
-        description: "Built for speed and performance from the ground up",
-        icon: "zap",
+        name: "Lightning Fast", // For avatar fallback
+        description: "Built for speed and performance from the ground up. Experience blazing fast load times and seamless interactions.",
+        avatar: null, // Add image URL for avatar, or leave null for gradient circle
+        role: "Performance Feature",
+        platform: null, // Optional: "Via Facebook", "Via Twitter", etc.
+        special: false, // Set to true for special highlighted card
       },
       {
         title: "Intuitive Design",
-        description: "Beautiful and easy to use, no learning curve required",
-        icon: "target",
+        name: "Intuitive Design",
+        description: "Beautiful and easy to use, no learning curve required. We've designed every interaction with you in mind.",
+        avatar: null,
+        role: "UX Feature",
+        platform: null,
+        special: true, // This one will have a special badge
+        badge: "Featured",
       },
       {
         title: "Secure by Default",
-        description: "Your data and privacy are our top priorities",
-        icon: "lock",
+        name: "Secure by Default",
+        description: "Your data and privacy are our top priorities. Enterprise-grade security built into every feature.",
+        avatar: null,
+        role: "Security Feature",
+        platform: null,
+        special: false,
       },
       {
         title: "Always Improving",
-        description: "We're constantly adding new features based on your feedback",
-        icon: "message",
+        name: "Always Improving",
+        description: "We're constantly adding new features based on your feedback. Your voice shapes our product.",
+        avatar: null,
+        role: "Growth Feature",
+        platform: null,
+        special: false,
       },
     ],
   },

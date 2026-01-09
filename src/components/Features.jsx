@@ -1,68 +1,168 @@
-import { 
-  Zap, 
-  Target, 
-  Lock, 
-  MessageCircle,
-  Sparkles,
-  Shield,
-  Clock,
-  Heart
-} from 'lucide-react'
-
-const iconMap = {
-  'zap': Zap,
-  'target': Target,
-  'lock': Lock,
-  'message': MessageCircle,
-  'sparkles': Sparkles,
-  'shield': Shield,
-  'clock': Clock,
-  'heart': Heart,
-}
-
-const gradientColors = [
-  'from-blue-500 to-cyan-500',
-  'from-purple-500 to-pink-500',
-  'from-green-500 to-emerald-500',
-  'from-orange-500 to-red-500',
-  'from-indigo-500 to-purple-500',
-  'from-teal-500 to-blue-500',
-  'from-rose-500 to-pink-500',
-  'from-amber-500 to-orange-500',
-]
-
 const Features = ({ config }) => {
+  // Split items into two columns
+  const leftColumn = config.items?.filter((_, index) => index % 2 === 0) || []
+  const rightColumn = config.items?.filter((_, index) => index % 2 === 1) || []
+
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white relative overflow-hidden">
+      {/* Subtle background decoration */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-gray-100 rounded-full blur-3xl opacity-20"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 bg-gray-100 rounded-full blur-3xl opacity-20"></div>
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Title with highlighted word */}
         <div className="text-center mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium text-gray-900 mb-3">
-            {config.title}
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-medium text-gray-900 mb-4">
+            {config.title.split(' ').map((word, index) => {
+              const highlightWord = config.highlightWord || 'Coming'
+              if (word.toLowerCase().includes(highlightWord.toLowerCase())) {
+                return (
+                  <span key={index}>
+                    <span className="text-amber-500">{word}</span>{' '}
+                  </span>
+                )
+              }
+              return <span key={index}>{word} </span>
+            })}
           </h2>
           <p className="text-base text-gray-600 max-w-2xl mx-auto">
             {config.subtitle}
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {config.items?.map((feature, index) => {
-            const IconComponent = iconMap[feature.icon] || iconMap['sparkles']
-            const gradient = gradientColors[index % gradientColors.length]
-            
-            return (
-              <div
-                key={index}
-                className="group bg-white p-6 rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${gradient} mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                  <IconComponent className="w-6 h-6 text-white" />
+
+        {/* Two column grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Left Column */}
+          <div className="space-y-6">
+            {leftColumn.map((feature, index) => {
+              const originalIndex = config.items?.indexOf(feature) || 0
+              const isSpecial = feature.special || false
+              
+              return (
+                <div
+                  key={originalIndex}
+                  className={`bg-white rounded-xl p-6 border ${
+                    isSpecial 
+                      ? 'bg-gray-50 border-gray-200' 
+                      : 'border-gray-100 hover:border-gray-200'
+                  } hover:shadow-lg transition-all duration-300`}
+                >
+                  {isSpecial && (
+                    <div className="inline-flex items-center px-2 py-1 bg-amber-500 text-white text-xs font-medium rounded mb-4">
+                      {feature.badge || 'Featured'}
+                    </div>
+                  )}
+                  
+                  <div className="flex items-start gap-4">
+                    {/* Avatar/Icon */}
+                    <div className="flex-shrink-0">
+                      {feature.avatar ? (
+                        <img
+                          src={feature.avatar}
+                          alt={feature.name || feature.title}
+                          className="w-12 h-12 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-medium text-sm">
+                          {feature.name ? feature.name.charAt(0).toUpperCase() : feature.title.charAt(0)}
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <h3 className="text-base font-medium text-gray-900">
+                            {feature.name || feature.title}
+                          </h3>
+                          {feature.role && (
+                            <p className="text-xs text-gray-500 mt-0.5">
+                              {feature.role}
+                            </p>
+                          )}
+                        </div>
+                        {feature.platform && (
+                          <span className="text-xs text-gray-400">
+                            {feature.platform}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-gray-600 leading-relaxed">
+                        {feature.description || feature.testimonial}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-base font-medium text-gray-900 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{feature.description}</p>
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
+
+          {/* Right Column */}
+          <div className="space-y-6">
+            {rightColumn.map((feature, index) => {
+              const originalIndex = config.items?.indexOf(feature) || 0
+              const isSpecial = feature.special || false
+              
+              return (
+                <div
+                  key={originalIndex}
+                  className={`bg-white rounded-xl p-6 border ${
+                    isSpecial 
+                      ? 'bg-gray-50 border-gray-200' 
+                      : 'border-gray-100 hover:border-gray-200'
+                  } hover:shadow-lg transition-all duration-300`}
+                >
+                  {isSpecial && (
+                    <div className="inline-flex items-center px-2 py-1 bg-amber-500 text-white text-xs font-medium rounded mb-4">
+                      {feature.badge || 'Featured'}
+                    </div>
+                  )}
+                  
+                  <div className="flex items-start gap-4">
+                    {/* Avatar/Icon */}
+                    <div className="flex-shrink-0">
+                      {feature.avatar ? (
+                        <img
+                          src={feature.avatar}
+                          alt={feature.name || feature.title}
+                          className="w-12 h-12 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-medium text-sm">
+                          {feature.name ? feature.name.charAt(0).toUpperCase() : feature.title.charAt(0)}
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="flex-1">
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <h3 className="text-base font-medium text-gray-900">
+                            {feature.name || feature.title}
+                          </h3>
+                          {feature.role && (
+                            <p className="text-xs text-gray-500 mt-0.5">
+                              {feature.role}
+                            </p>
+                          )}
+                        </div>
+                        {feature.platform && (
+                          <span className="text-xs text-gray-400">
+                            {feature.platform}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-gray-600 leading-relaxed">
+                        {feature.description || feature.testimonial}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>

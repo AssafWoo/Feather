@@ -16,7 +16,7 @@ const CTA = ({ config }) => {
           config.button && (
             <a
               href={config.button.link}
-              className="inline-block px-6 py-2.5 bg-white text-gray-900 rounded-md text-sm font-normal hover:bg-gray-100 transition-colors"
+              className="inline-block px-6 py-2.5 bg-white text-gray-900 rounded-full text-sm font-normal hover:bg-gray-100 transition-colors"
             >
               {config.button.text}
             </a>

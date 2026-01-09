@@ -50,12 +50,12 @@ const EmailSignup = ({ config, onSubmit }) => {
             setError('')
           }}
           placeholder={config.placeholder || "Enter your email"}
-          className="flex-1 px-4 py-2.5 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+          className="flex-1 px-4 py-2.5 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
           required
         />
         <button
           type="submit"
-          className="px-6 py-2.5 bg-gray-900 text-white rounded-md text-sm font-normal hover:bg-gray-800 transition-colors whitespace-nowrap"
+          className="px-6 py-2.5 bg-gray-900 text-white rounded-full text-sm font-normal hover:bg-gray-800 transition-colors whitespace-nowrap"
         >
           {config.buttonText || "Join Waitlist"}
         </button>

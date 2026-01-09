@@ -38,9 +38,6 @@ const Footer = ({ config }) => {
             </div>
           </div>
         </div>
-        <div className="border-t border-gray-200 pt-6 text-center">
-          <p className="text-sm text-gray-600">{config.copyright}</p>
-        </div>
       </div>
     </footer>
   )
