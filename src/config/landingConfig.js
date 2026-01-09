@@ -134,6 +134,43 @@ export const landingConfig = {
       arrowSize: "w-3.5 h-3.5",
     },
     
+    // Background Animations
+    animations: {
+      enabled: true,
+      // Floating Geometric Shapes
+      geometricShapes: {
+        enabled: true,
+        shapes: [
+          // Circles - spread evenly across viewport
+          { type: "circle", size: 50, x: 10, y: 20, duration: 25, delay: 1, opacity: 0.3, color: "#ec4899" },
+          { type: "circle", size: 45, x: 60, y: 50, duration: 28, delay: 3, opacity: 0.28, color: "#ec4899" },
+          { type: "circle", size: 40, x: 90, y: 75, duration: 24, delay: 4, opacity: 0.35, color: "#ec4899" },
+          
+          // Triangles - spread evenly across viewport
+          { type: "triangle", size: 50, x: 50, y: 15, duration: 27, delay: 1.5, opacity: 0.28, color: "#ec4899" },
+          { type: "triangle", size: 40, x: 20, y: 45, duration: 25, delay: 2.5, opacity: 0.35, color: "#ec4899" },
+          { type: "triangle", size: 46, x: 75, y: 80, duration: 24, delay: 5.5, opacity: 0.3, color: "#ec4899" },
+          
+          // Hexagons - spread evenly across viewport
+          { type: "hexagon", size: 50, x: 85, y: 35, duration: 30, delay: 0.8, opacity: 0.35, color: "#ec4899" },
+          { type: "hexagon", size: 45, x: 15, y: 65, duration: 32, delay: 1.8, opacity: 0.3, color: "#ec4899" },
+          { type: "hexagon", size: 48, x: 40, y: 85, duration: 28, delay: 2.8, opacity: 0.32, color: "#ec4899" },
+        ],
+      },
+      // Text Entrance Animation
+      textAnimation: {
+        enabled: true,
+        duration: 800, // milliseconds
+        delay: 200, // milliseconds
+      },
+      // Right Image Animation
+      imageAnimation: {
+        enabled: true,
+        type: "float", // "float", "pulse", or "none"
+        intensity: "subtle", // "subtle", "medium", "strong"
+      },
+    },
+    
     // Optional: Custom email submit handler
     // onEmailSubmit: (email) => { /* your API call here */ },
   },
@@ -256,6 +293,24 @@ export const landingConfig = {
       buttonBg: "bg-white",
       buttonText: "text-gray-900",
       buttonHover: "hover:bg-gray-100",
+    },
+    
+    // Background Animations
+    animations: {
+      enabled: true,
+      // Floating Geometric Shapes
+      geometricShapes: {
+        enabled: true,
+        shapes: [
+          // Fewer, bold shapes - full opacity
+          { type: "circle", size: 45, x: 10, y: 20, duration: 20, delay: 0, opacity: 1.0, color: "#ec4899" },
+          { type: "triangle", size: 50, x: 80, y: 60, duration: 25, delay: 2, opacity: 1.0, color: "#ec4899" },
+          { type: "hexagon", size: 48, x: 30, y: 75, duration: 30, delay: 4, opacity: 1.0, color: "#ec4899" },
+          { type: "circle", size: 40, x: 70, y: 15, duration: 24, delay: 1, opacity: 1.0, color: "#ec4899" },
+          { type: "triangle", size: 46, x: 50, y: 50, duration: 27, delay: 3, opacity: 1.0, color: "#ec4899" },
+          { type: "hexagon", size: 42, x: 20, y: 40, duration: 28, delay: 5, opacity: 1.0, color: "#ec4899" },
+        ],
+      },
     },
     
     // Optional: Custom email submit handler

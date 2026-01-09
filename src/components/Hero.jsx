@@ -1,10 +1,106 @@
 import EmailSignup from './EmailSignup'
 import { ChevronDown } from 'lucide-react'
 
+// Floating Geometric Shapes Component
+const FloatingShapes = ({ shapes }) => {
+  if (!shapes || shapes.length === 0) return null
+
+  const renderShape = (shape, index) => {
+    const style = {
+      position: 'absolute',
+      left: `${shape.x}%`,
+      top: `${shape.y}%`,
+      width: `${shape.size}px`,
+      height: `${shape.size}px`,
+      opacity: shape.opacity || 0.1,
+      animation: `float ${shape.duration || 20}s ease-in-out infinite`,
+      animationDelay: `${shape.delay || 0}s`,
+      pointerEvents: 'none',
+      zIndex: 1,
+    }
+
+    if (shape.type === 'circle') {
+      return (
+        <div
+          key={index}
+          className="rounded-full"
+          style={{ ...style, backgroundColor: shape.color }}
+        />
+      )
+    } else if (shape.type === 'triangle') {
+      // Remove opacity from style for SVG, use it only on the polygon
+      const svgStyle = { ...style }
+      delete svgStyle.opacity
+      return (
+        <svg
+          key={index}
+          width={shape.size}
+          height={shape.size}
+          style={svgStyle}
+          viewBox="0 0 100 100"
+        >
+          <polygon
+            points="50,0 100,100 0,100"
+            fill={shape.color}
+            opacity={shape.opacity}
+          />
+        </svg>
+      )
+    } else if (shape.type === 'hexagon') {
+      // Remove opacity from style for SVG, use it only on the polygon
+      const svgStyle = { ...style }
+      delete svgStyle.opacity
+      return (
+        <svg
+          key={index}
+          width={shape.size}
+          height={shape.size}
+          style={svgStyle}
+          viewBox="0 0 100 100"
+        >
+          <polygon
+            points="50,0 100,25 100,75 50,100 0,75 0,25"
+            fill={shape.color}
+            opacity={shape.opacity}
+          />
+        </svg>
+      )
+    }
+    return null
+  }
+
+  return (
+    <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 1 }}>
+      {shapes.map((shape, index) => renderShape(shape, index))}
+    </div>
+  )
+}
+
 const Hero = ({ config }) => {
   const gradient = config.gradient || { from: "from-slate-50", to: "to-gray-100" }
   const scrollIndicator = config.scrollIndicator || {}
   const badge = config.badge || {}
+  const animations = config.animations || {}
+  const textAnim = animations.textAnimation || {}
+  const imageAnim = animations.imageAnimation || {}
+  
+  // Get animation classes
+  const getTextAnimationClass = () => {
+    if (textAnim.enabled === false) return ''
+    return 'animate-fade-in-up'
+  }
+  
+  const getImageAnimationClass = () => {
+    if (imageAnim.enabled === false || imageAnim.type === 'none') return ''
+    if (imageAnim.type === 'pulse') return 'animate-pulse-subtle'
+    if (imageAnim.type === 'float') {
+      const intensity = imageAnim.intensity || 'subtle'
+      if (intensity === 'strong') return 'animate-gentle-float'
+      if (intensity === 'medium') return 'animate-gentle-float'
+      return 'animate-gentle-float'
+    }
+    return ''
+  }
   
   return (
     <section
@@ -19,22 +115,36 @@ const Hero = ({ config }) => {
           : {}
       }
     >
+      {/* Floating Geometric Shapes Background */}
+      {animations.enabled !== false && animations.geometricShapes?.enabled !== false && (
+        <FloatingShapes shapes={animations.geometricShapes?.shapes || []} />
+      )}
+      
       {config.backgroundImage && (
-        <div className={`absolute inset-0 ${config.backgroundOverlay || 'bg-black/20'}`}></div>
+        <div className={`absolute inset-0 ${config.backgroundOverlay || 'bg-black/20'}`} style={{ zIndex: 2 }}></div>
       )}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 w-full flex-1 flex items-center">
         <div className="flex items-start gap-8 relative w-full">
           {/* Left Content - 65% */}
           <div className="w-[65%] relative">
             {badge.enabled !== false && badge.text && (
-              <div className={`inline-flex items-center px-3 py-1 rounded-full ${badge.bgColor || 'bg-gray-100'} border ${badge.borderColor || 'border-gray-200'} mb-6`}>
+              <div 
+                className={`inline-flex items-center px-3 py-1 rounded-full ${badge.bgColor || 'bg-gray-100'} border ${badge.borderColor || 'border-gray-200'} mb-6 ${getTextAnimationClass()}`}
+                style={{ animationDelay: `${(textAnim.delay || 200) - 100}ms` }}
+              >
                 <span className={`text-xs font-medium ${badge.textColor || 'text-gray-700'}`}>{badge.text}</span>
               </div>
             )}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-gray-900 mb-4 leading-tight">
+            <h1 
+              className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-gray-900 mb-4 leading-tight ${getTextAnimationClass()}`}
+              style={{ animationDelay: `${textAnim.delay || 200}ms` }}
+            >
               {config.title}
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8">
+            <p 
+              className={`text-base sm:text-lg md:text-xl text-gray-600 mb-8 ${getTextAnimationClass()}`}
+              style={{ animationDelay: `${(textAnim.delay || 200) + 200}ms` }}
+            >
               {config.subtitle}
             </p>
             {!config.showEmailSignup && (
@@ -72,7 +182,8 @@ const Hero = ({ config }) => {
               <img
                 src={config.rightImage}
                 alt={config.rightImageAlt || "Hero Image"}
-                className="w-full h-auto object-contain"
+                className={`w-full h-auto object-contain ${getImageAnimationClass()} ${getTextAnimationClass()}`}
+                style={{ animationDelay: `${(textAnim.delay || 200) + 400}ms` }}
               />
             ) : (
               <div className="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center">
