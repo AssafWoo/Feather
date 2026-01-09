@@ -1,5 +1,18 @@
 // Customize your landing page here
 export const landingConfig = {
+  // Header Section
+  header: {
+    enabled: true,
+    logo: null, // Add image URL for logo (e.g., "/logo.png")
+    logoText: "Logo", // Text to display if no logo image
+    logoAlt: "Company Logo",
+    navLinks: [
+      { text: "Features", link: "#features" },
+      { text: "About", link: "#about" },
+      { text: "Contact", link: "#contact" },
+    ],
+  },
+
   // Hero Section
   hero: {
     title: "Welcome to Our Amazing Product",
