@@ -5,11 +5,11 @@ const Header = ({ config }) => {
 
   return (
     <header className="fixed top-4 left-0 right-0 z-50">
-      <div className="flex justify-center px-4">
-        <div className="max-w-6xl w-full flex items-center justify-between">
+      <div className="px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
           {/* Dark Navigation Container */}
-          <div className={`${styles.navContainerBg || 'bg-gray-900'} rounded-full px-4 sm:px-6 lg:px-8 ${styles.navContainerWidth || 'w-1/2'}`}>
-            <div className="flex items-center justify-between h-16">
+          <div className={`${styles.navContainerBg || 'bg-gray-900'} rounded-full px-4 sm:px-5 lg:px-6 ${styles.navContainerWidth || 'w-1/2'}`}>
+            <div className="flex items-center gap-4 sm:gap-5 h-16">
               {/* Logo */}
               <div className="flex items-center">
                 {config.logo ? (
@@ -19,7 +19,7 @@ const Header = ({ config }) => {
                     className={config.logoHeight || "h-8 w-auto"}
                   />
                 ) : (
-                  <span className="text-lg font-medium text-white">
+                  <span className={`text-lg font-medium ${styles.navTextColor || 'text-white'}`}>
                     {config.logoText || "Logo"}
                   </span>
                 )}
@@ -27,7 +27,7 @@ const Header = ({ config }) => {
 
               {/* Navigation */}
               {config.navLinks && config.navLinks.length > 0 && (
-                <nav className="hidden md:flex items-center space-x-8">
+                <nav className="hidden md:flex items-center space-x-4">
                   {config.navLinks.map((link, index) => (
                     <a
                       key={index}
@@ -43,7 +43,7 @@ const Header = ({ config }) => {
           </div>
 
           {/* Help and Contact - Outside the dark wrapper, pushed to the right */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-5">
             {config.helpLink?.enabled !== false && config.helpLink && (
               <a
                 href={config.helpLink.link}

@@ -136,13 +136,13 @@ const Hero = ({ config }) => {
               </div>
             )}
             <h1 
-              className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-gray-900 mb-4 leading-tight ${getTextAnimationClass()}`}
+              className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium ${config.titleColor || 'text-gray-900'} mb-4 leading-tight ${getTextAnimationClass()}`}
               style={{ animationDelay: `${textAnim.delay || 200}ms` }}
             >
               {config.title}
             </h1>
             <p 
-              className={`text-base sm:text-lg md:text-xl text-gray-600 mb-8 ${getTextAnimationClass()}`}
+              className={`text-base sm:text-lg md:text-xl ${config.subtitleColor || 'text-gray-600'} mb-8 ${getTextAnimationClass()}`}
               style={{ animationDelay: `${(textAnim.delay || 200) + 200}ms` }}
             >
               {config.subtitle}

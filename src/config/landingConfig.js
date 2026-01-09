@@ -86,6 +86,14 @@ export const landingConfig = {
       placeholder: "Enter your email",
       buttonText: "Join Waitlist",
       successMessage: "Thanks! We'll notify you when we launch.",
+      // Option 1: API Endpoint - Send emails to your backend
+      // apiEndpoint: "https://your-api.com/api/subscribe",
+      
+      // Option 2: Use custom onSubmit handler (see below)
+      // This allows you to integrate with services like:
+      // - SendGrid, Mailchimp, ConvertKit, etc.
+      // - Your own backend API
+      // - Serverless functions (Vercel, Netlify, AWS Lambda)
     },
     
     // Alternative: Action Buttons (if showEmailSignup is false)
@@ -171,8 +179,49 @@ export const landingConfig = {
       },
     },
     
-    // Optional: Custom email submit handler
-    // onEmailSubmit: (email) => { /* your API call here */ },
+    // Optional: Custom email submit handler for Hero section
+    // Use this to integrate with email services or your backend
+    // Examples:
+    //
+    // Option 1: SendGrid
+    // onEmailSubmit: async (email) => {
+    //   const response = await fetch('https://api.sendgrid.com/v3/marketing/contacts', {
+    //     method: 'PUT',
+    //     headers: {
+    //       'Authorization': `Bearer YOUR_SENDGRID_API_KEY`,
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ contacts: [{ email }] })
+    //   })
+    //   if (!response.ok) throw new Error('Failed to subscribe')
+    // }
+    //
+    // Option 2: Your Backend API
+    // onEmailSubmit: async (email) => {
+    //   const response = await fetch('https://your-api.com/api/subscribe', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ email })
+    //   })
+    //   if (!response.ok) throw new Error('Failed to subscribe')
+    // }
+    //
+    // Option 3: Mailchimp
+    // onEmailSubmit: async (email) => {
+    //   const response = await fetch('https://YOUR_DC.api.mailchimp.com/3.0/lists/YOUR_LIST_ID/members', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Authorization': 'Bearer YOUR_MAILCHIMP_API_KEY',
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({ email_address: email, status: 'subscribed' })
+    //   })
+    //   if (!response.ok) throw new Error('Failed to subscribe')
+    // }
+    //
+    // Option 4: Formspree (easiest - no backend needed)
+    // Just set apiEndpoint in emailSignup config:
+    // emailSignup: { apiEndpoint: "https://formspree.io/f/YOUR_FORM_ID" }
   },
 
   // ============================================
@@ -313,8 +362,9 @@ export const landingConfig = {
       },
     },
     
-    // Optional: Custom email submit handler
-    // onEmailSubmit: (email) => { /* your API call here */ },
+    // Optional: Custom email submit handler for CTA section
+    // Same options as Hero section (see above for examples)
+    // onEmailSubmit: async (email) => { /* your API call here */ },
   },
 
   // ============================================

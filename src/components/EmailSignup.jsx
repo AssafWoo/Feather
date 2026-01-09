@@ -5,7 +5,7 @@ const EmailSignup = ({ config, onSubmit }) => {
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     
     // Basic email validation
@@ -14,17 +14,44 @@ const EmailSignup = ({ config, onSubmit }) => {
       return
     }
 
-    // Call the onSubmit handler if provided, otherwise just show success
+    // Call the onSubmit handler if provided
     if (onSubmit) {
-      onSubmit(email)
+      try {
+        await onSubmit(email)
+        setSubmitted(true)
+        setEmail('')
+        setError('')
+      } catch (err) {
+        setError(err.message || 'Something went wrong. Please try again.')
+      }
+    } else if (config.apiEndpoint) {
+      // If API endpoint is configured, send to that endpoint
+      try {
+        const response = await fetch(config.apiEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
+        })
+        
+        if (!response.ok) {
+          throw new Error('Failed to submit email')
+        }
+        
+        setSubmitted(true)
+        setEmail('')
+        setError('')
+      } catch (err) {
+        setError(err.message || 'Something went wrong. Please try again.')
+      }
     } else {
-      // Default behavior - just show success message
+      // Default behavior - just show success message (for development)
       console.log('Email submitted:', email)
+      setSubmitted(true)
+      setEmail('')
+      setError('')
     }
-    
-    setSubmitted(true)
-    setEmail('')
-    setError('')
   }
 
   if (submitted) {
