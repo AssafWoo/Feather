@@ -104,7 +104,7 @@ const Hero = ({ config }) => {
   
   return (
     <section
-      className={`relative min-h-screen flex flex-col items-center snap-start ${
+      className={`relative h-screen flex flex-col items-center snap-start overflow-hidden ${
         config.backgroundImage
           ? 'bg-cover bg-center'
           : `bg-gradient-to-br ${gradient.from} ${gradient.to}`
@@ -123,10 +123,10 @@ const Hero = ({ config }) => {
       {config.backgroundImage && (
         <div className={`absolute inset-0 ${config.backgroundOverlay || 'bg-black/20'}`} style={{ zIndex: 2 }}></div>
       )}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 w-full flex-1 flex items-center">
+      <div className={`relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex items-center justify-center`} style={{ paddingTop: config.topPadding || '4rem' }}>
         <div className="flex items-start gap-8 relative w-full">
           {/* Left Content - 65% */}
-          <div className="w-[65%] relative">
+          <div className="w-[65%] relative" style={{ marginTop: config.contentTopMargin || '2rem' }}>
             {badge.enabled !== false && badge.text && (
               <div 
                 className={`inline-flex items-center px-3 py-1 rounded-full ${badge.bgColor || 'bg-gray-100'} border ${badge.borderColor || 'border-gray-200'} mb-6 ${getTextAnimationClass()}`}
@@ -176,15 +176,42 @@ const Hero = ({ config }) => {
             )}
           </div>
 
-          {/* Right Image */}
-          <div className={`${config.rightImageWidth || 'w-[35%]'} flex items-start justify-center relative`}>
-            {config.rightImage ? (
-              <img
-                src={config.rightImage}
-                alt={config.rightImageAlt || "Hero Image"}
+          {/* Right Image/Video */}
+          <div className={`${config.rightImageWidth || 'w-[35%]'} flex items-start justify-center relative overflow-hidden`}>
+            {config.rightVideo ? (
+              <video
+                src={config.rightVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
                 className={`w-full h-auto object-contain ${getImageAnimationClass()} ${getTextAnimationClass()}`}
-                style={{ animationDelay: `${(textAnim.delay || 200) + 400}ms` }}
+                style={{ 
+                  animationDelay: `${(textAnim.delay || 200) + 400}ms`,
+                  mixBlendMode: config.videoBlendMode || 'normal',
+                  filter: config.videoFilter || 'none',
+                  transform: config.imageScale ? `scale(${config.imageScale})` : 'scale(1.3)',
+                  transformOrigin: 'center center'
+                }}
               />
+            ) : config.rightImage ? (
+              <div className="relative w-full overflow-hidden" style={{ 
+                aspectRatio: config.imageAspectRatio || 'auto',
+                height: config.imageHeight || 'auto',
+                maxHeight: config.imageMaxHeight || 'none'
+              }}>
+                <img
+                  src={config.rightImage}
+                  alt={config.rightImageAlt || "Hero Image"}
+                  className={`w-full h-full object-cover ${getImageAnimationClass()} ${getTextAnimationClass()}`}
+                  style={{ 
+                    animationDelay: `${(textAnim.delay || 200) + 400}ms`,
+                    transform: config.imageScale ? `scale(${config.imageScale})` : 'scale(1.3)',
+                    transformOrigin: config.imageTransformOrigin || 'center center',
+                    objectPosition: config.imagePosition || 'center center'
+                  }}
+                />
+              </div>
             ) : (
               <div className="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center">
                 <span className="text-gray-400">Image placeholder</span>

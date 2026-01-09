@@ -19,7 +19,7 @@ export const featherConfig = {
 
     // Navigation Links
     navLinks: [
-      { text: "How it works", link: "#how" },
+      { text: "How it works", link: "#why" },
       { text: "Why Feather", link: "#why" },
       { text: "Integrations", link: "#integrations" },
     ],
@@ -56,6 +56,11 @@ export const featherConfig = {
   // HERO SECTION
   // ============================================
   hero: {
+    // Top padding to move content down
+    topPadding: "4rem", // Adjust this value to move text up/down (e.g., "3rem", "4rem", "5rem")
+    // Top margin for left text content (moves text down without affecting section height)
+    contentTopMargin: "3rem", // Adjust this to move the left text content down (e.g., "2rem", "3rem", "4rem")
+    
     // Badge
     badge: {
       enabled: true,
@@ -105,10 +110,25 @@ export const featherConfig = {
     backgroundImage: null,
     backgroundOverlay: "bg-black/20",
 
-    // Right Side Image
-    rightImage: "/screens/feather-labeling-workspace.png",
+    // Right Side Image/Video
+    rightImage: "/images/feather-hero.png", // Image file path
+    rightVideo: null, // Set to null to use image instead
     rightImageAlt: "Feather labeling workspace",
-    rightImageWidth: "w-[40%]",
+    rightImageWidth: "w-[60%]",
+    imageScale: 2.2, // Scale factor to make image bigger (2.2 = 220% size) without affecting layout
+    // Image cropping options to focus on the feather
+    imageAspectRatio: "1 / 1.5", // Container aspect ratio (width/height) - taller container crops more
+    imagePosition: "center 35%", // object-position to center the feather (adjust second value: lower = move up, higher = move down)
+    imageTransformOrigin: "center 35%", // Transform origin to match image position
+    imageMaxHeight: "90vh", // Maximum height to prevent overflow
+    // Video styling options for white background handling
+    // For white background videos on dark backgrounds, try:
+    // - "multiply" (darkens white, good for white backgrounds)
+    // - "screen" (brightens, good for dark videos on light backgrounds)
+    // - "overlay" (combines multiply and screen)
+    // - "normal" (no blending)
+    videoBlendMode: "multiply", // Best for white backgrounds on dark
+    videoFilter: "brightness(1.1) contrast(1.05)", // Adjust to fine-tune appearance
 
     // Background Gradient
     gradient: {
@@ -250,6 +270,77 @@ export const featherConfig = {
       { from: "from-slate-950", to: "to-fuchsia-500" },
       { from: "from-slate-900", to: "to-fuchsia-400" },
     ],
+  },
+
+  // ============================================
+  // INTEGRATIONS SECTION
+  // ============================================
+  integrations: {
+    enabled: true,
+
+    // Section Title
+    title: "Recommended Integrations",
+    highlightWord: "Integrations",
+    subtitle: "Seamlessly connect Feather with your existing ML infrastructure and tools.",
+
+    // Styling
+    styles: {
+      backgroundColor: "bg-gradient-to-b from-slate-50 to-white",
+      titleColor: "text-slate-950",
+      subtitleColor: "text-slate-600",
+      highlightColor: "text-blue-600",
+      decorationColor: "bg-blue-100",
+      decorationOpacity: "opacity-15",
+    },
+
+    // Integration Items
+    items: [
+      {
+        name: "MLflow",
+        category: "Experiment & Artifact Tracking",
+        description: "A staple open-source tool for experiment tracking, metadata, and model lifecycle management; great for linking datasets and labels back to runs.",
+        icon: "/integrations/mlflow.svg",
+      },
+      {
+        name: "Weights & Biases (W&B)",
+        category: "Experiment & Metrics Dashboard",
+        description: "Highly popular for tracking experiments, metrics, datasets, and artifacts with rich visualization — commonly used alongside MLflow or as an alternative.",
+        icon: "/integrations/wandb.svg",
+      },
+      {
+        name: "DVC (Data Version Control)",
+        category: "Data & Pipeline Versioning",
+        description: "A Git-based data versioning tool that tracks datasets and models; very useful for reproducibility and linking label changes to specific data versions.",
+        icon: "/integrations/dvc.svg",
+      },
+      {
+        name: "lakeFS",
+        category: "Git-Like Data Lake Version Control",
+        description: "Provides Git-style branching and versioning for object stores (S3, GCS, Azure Blob), enhancing Feather's lineage and reproducibility story.",
+        icon: "/integrations/lakefs.svg",
+      },
+      {
+        name: "Apache Airflow",
+        category: "Workflow Orchestration",
+        description: "One of the most widely used workflow tools for ML and data pipelines; integrates with experimentation tools, storage, and model training pipelines.",
+        icon: "/integrations/airflow.svg",
+      },
+      {
+        name: "Kubeflow",
+        category: "ML Lifecycle Orchestration on Kubernetes",
+        description: "Specifically for Kubernetes-native teams; covers experiment tracking, pipelines, training, and serving — valuable for enterprise ML operations.",
+        icon: "/integrations/kubeflow.svg",
+      },
+    ],
+
+    // Card Styling
+    cardStyles: {
+      defaultBg: "bg-white",
+      defaultBorder: "border-slate-100",
+      defaultHoverBorder: "hover:border-slate-200",
+      titleColor: "text-slate-950",
+      descriptionColor: "text-slate-600",
+    },
   },
 
   // ============================================

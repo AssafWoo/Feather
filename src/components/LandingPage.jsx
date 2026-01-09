@@ -1,6 +1,7 @@
 import Header from './Header'
 import Hero from './Hero'
 import Features from './Features'
+import Integrations from './Integrations'
 import CTA from './CTA'
 import Footer from './Footer'
 
@@ -10,6 +11,7 @@ const LandingPage = ({ config }) => {
       {config.header?.enabled && <Header config={config.header} />}
       <Hero config={config.hero} />
       {config.features?.enabled && <Features config={config.features} />}
+      {config.integrations?.enabled && <Integrations config={config.integrations} />}
       {config.cta?.enabled && <CTA config={config.cta} />}
       {config.footer?.enabled && <Footer config={config.footer} />}
     </div>

@@ -10,7 +10,7 @@ const Features = ({ config }) => {
   ]
 
   return (
-    <section className={`py-20 px-4 sm:px-6 lg:px-8 ${styles.backgroundColor || 'bg-white'} relative overflow-hidden min-h-screen snap-start flex items-center`}>
+    <section id="why" className={`py-20 px-4 sm:px-6 lg:px-8 ${styles.backgroundColor || 'bg-white'} relative overflow-hidden min-h-screen snap-start flex items-center`}>
       {/* Subtle background decoration */}
       <div className={`absolute top-0 right-0 w-64 h-64 ${styles.decorationColor || 'bg-gray-100'} rounded-full blur-3xl ${styles.decorationOpacity || 'opacity-20'}`}></div>
       <div className={`absolute bottom-0 left-0 w-64 h-64 ${styles.decorationColor || 'bg-gray-100'} rounded-full blur-3xl ${styles.decorationOpacity || 'opacity-20'}`}></div>

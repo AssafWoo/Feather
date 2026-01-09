@@ -3,6 +3,17 @@ const Header = ({ config }) => {
 
   const styles = config.styles || {}
 
+  const handleNavClick = (e, href) => {
+    if (href.startsWith('#')) {
+      e.preventDefault()
+      const targetId = href.substring(1)
+      const targetElement = document.getElementById(targetId)
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }
+  }
+
   return (
     <header className="fixed top-4 left-0 right-0 z-50">
       <div className="px-4 sm:px-6 lg:px-8">
@@ -32,6 +43,7 @@ const Header = ({ config }) => {
                     <a
                       key={index}
                       href={link.link}
+                      onClick={(e) => handleNavClick(e, link.link)}
                       className={`text-sm ${styles.navTextColor || 'text-white'} ${styles.navHoverColor || 'hover:text-gray-300'} transition-colors`}
                     >
                       {link.text}
@@ -55,6 +67,7 @@ const Header = ({ config }) => {
             {config.ctaButton?.enabled !== false && config.ctaButton && (
               <a
                 href={config.ctaButton.link}
+                onClick={(e) => handleNavClick(e, config.ctaButton.link)}
                 className={`px-4 py-2 ${styles.ctaButtonBg || 'bg-amber-500'} ${styles.ctaButtonHover || 'hover:bg-amber-600'} ${styles.ctaButtonText || 'text-white'} rounded-full text-sm font-medium transition-colors`}
               >
                 {config.ctaButton.text}
