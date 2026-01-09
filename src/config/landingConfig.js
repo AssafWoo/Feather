@@ -1,60 +1,175 @@
-// Customize your landing page here
+// ============================================
+// COMPREHENSIVE LANDING PAGE CONFIGURATION
+// ============================================
+// 
+// This is a fully configurable landing page template.
+// Customize everything for your product/company by editing the values below.
+//
+// CONFIGURATION GUIDE:
+// - All text, images, colors, and styles can be customized
+// - Set 'enabled: false' to hide any section
+// - Colors use Tailwind CSS classes (e.g., 'bg-blue-500', 'text-white')
+// - Image paths can be URLs or relative paths from the public folder
+// - Leave values as null to use defaults or hide elements
+//
+// ============================================
+
 export const landingConfig = {
-  // Header Section
+  // ============================================
+  // HEADER / NAVIGATION SECTION
+  // ============================================
   header: {
     enabled: true,
-    logo: null, // Add image URL for logo (e.g., "/logo.png")
+    
+    // Logo Configuration
+    logo: null, // Image URL for logo (e.g., "/logo.png")
     logoText: "Logo", // Text to display if no logo image
     logoAlt: "Company Logo",
+    logoHeight: "h-8", // Tailwind height class
+    
+    // Navigation Links
     navLinks: [
       { text: "Home", link: "#" },
       { text: "About Us", link: "#about" },
       { text: "Services", link: "#services" },
       { text: "Our Team", link: "#team" },
     ],
+    
+    // Help Link
     helpLink: {
+      enabled: true,
       text: "Help!",
       link: "#help",
     },
+    
+    // CTA Button
     ctaButton: {
+      enabled: true,
       text: "Contact Us",
       link: "#contact",
     },
+    
+    // Styling
+    styles: {
+      navContainerBg: "bg-gray-900", // Dark nav container background
+      navContainerWidth: "w-1/2", // Width of dark nav container
+      navTextColor: "text-white", // Navigation link text color
+      navHoverColor: "hover:text-gray-300", // Navigation link hover color
+      helpLinkColor: "text-gray-900", // Help link text color
+      helpLinkHover: "hover:text-gray-700", // Help link hover color
+      ctaButtonBg: "bg-amber-500", // CTA button background
+      ctaButtonHover: "hover:bg-amber-600", // CTA button hover
+      ctaButtonText: "text-white", // CTA button text color
+    },
   },
 
-  // Hero Section
+  // ============================================
+  // HERO SECTION
+  // ============================================
   hero: {
-    badge: "Coming Soon",
+    // Badge (optional)
+    badge: {
+      enabled: true,
+      text: "Coming Soon",
+      bgColor: "bg-gray-100",
+      borderColor: "border-gray-200",
+      textColor: "text-gray-700",
+    },
+    
+    // Main Content
     title: "Something Amazing is Coming",
     subtitle: "Be among the first to experience our revolutionary product. Join the waitlist for early access.",
+    
+    // Email Signup Configuration
     showEmailSignup: true,
     emailSignup: {
       placeholder: "Enter your email",
       buttonText: "Join Waitlist",
       successMessage: "Thanks! We'll notify you when we launch.",
     },
-    // Optional: Custom email submit handler (defaults to console.log)
-    // onEmailSubmit: (email) => { /* your API call here */ },
-    backgroundImage: null, // Add image URL or leave null for gradient
-    rightImage: null, // Add image URL for right side (35% width)
+    
+    // Alternative: Action Buttons (if showEmailSignup is false)
+    primaryButton: {
+      enabled: false,
+      text: "Get Started",
+      link: "#get-started",
+      bgColor: "bg-gray-900",
+      textColor: "text-white",
+      hoverBg: "hover:bg-gray-800",
+    },
+    secondaryButton: {
+      enabled: false,
+      text: "Learn More",
+      link: "#learn-more",
+      borderColor: "border-gray-300",
+      textColor: "text-gray-700",
+      hoverBg: "hover:bg-gray-50",
+    },
+    
+    // Background Configuration
+    backgroundImage: null, // Image URL for background, or null for gradient
+    backgroundOverlay: "bg-black/20", // Overlay when using background image
+    
+    // Right Side Image
+    rightImage: null, // Image URL for right side (35% width)
     rightImageAlt: "Hero Image",
+    rightImageWidth: "w-[35%]", // Width of right image container
+    
+    // Background Gradient (when no backgroundImage)
+    gradient: {
+      from: "from-slate-50",
+      to: "to-gray-100",
+    },
+    
+    // More? Scroll Indicator
+    scrollIndicator: {
+      enabled: true,
+      text: "More?",
+      textColor: "text-gray-900",
+      textSize: "text-sm",
+      curveColor: "#111827", // Dark gray for the bell curve
+      curveWidth: 320, // Width in pixels
+      curveHeight: 20, // Height in pixels
+      arrowColor: "text-white",
+      arrowSize: "w-3.5 h-3.5",
+    },
+    
+    // Optional: Custom email submit handler
+    // onEmailSubmit: (email) => { /* your API call here */ },
   },
 
-  // Features Section
+  // ============================================
+  // FEATURES / "WHAT'S COMING" SECTION
+  // ============================================
   features: {
     enabled: true,
+    
+    // Section Title
     title: "What's Coming",
-    highlightWord: "Coming", // Word to highlight in amber/gold
+    highlightWord: "Coming", // Word to highlight in accent color
     subtitle: "Here's what you can expect when we launch",
+    
+    // Styling
+    styles: {
+      backgroundColor: "bg-white",
+      titleColor: "text-gray-900",
+      subtitleColor: "text-gray-600",
+      highlightColor: "text-amber-500", // Color for highlighted word
+      decorationColor: "bg-gray-100", // Background decoration circles
+      decorationOpacity: "opacity-20",
+    },
+    
+    // Feature Items
     items: [
       {
         title: "Lightning Fast",
         name: "Lightning Fast", // For avatar fallback
         description: "Built for speed and performance from the ground up. Experience blazing fast load times and seamless interactions.",
-        avatar: null, // Add image URL for avatar, or leave null for gradient circle
+        avatar: null, // Image URL for avatar, or null for gradient circle
         role: "Performance Feature",
         platform: null, // Optional: "Via Facebook", "Via Twitter", etc.
         special: false, // Set to true for special highlighted card
+        badge: null, // Badge text if special
       },
       {
         title: "Intuitive Design",
@@ -74,6 +189,7 @@ export const landingConfig = {
         role: "Security Feature",
         platform: null,
         special: false,
+        badge: null,
       },
       {
         title: "Always Improving",
@@ -83,26 +199,72 @@ export const landingConfig = {
         role: "Growth Feature",
         platform: null,
         special: false,
+        badge: null,
       },
+    ],
+    
+    // Card Styling
+    cardStyles: {
+      defaultBg: "bg-white",
+      defaultBorder: "border-gray-100",
+      defaultHoverBorder: "hover:border-gray-200",
+      specialBg: "bg-gray-50",
+      specialBorder: "border-gray-200",
+      badgeBg: "bg-amber-500",
+      badgeText: "text-white",
+      titleColor: "text-gray-900",
+      roleColor: "text-gray-500",
+      descriptionColor: "text-gray-600",
+      platformColor: "text-gray-400",
+    },
+    
+    // Avatar Gradient Colors (when no avatar image)
+    avatarGradients: [
+      { from: "from-blue-500", to: "to-cyan-500" }, // Left column
+      { from: "from-purple-500", to: "to-pink-500" }, // Right column
     ],
   },
 
-  // Call to Action Section
+  // ============================================
+  // CALL TO ACTION SECTION
+  // ============================================
   cta: {
     enabled: true,
+    
     title: "Get Early Access",
     subtitle: "Join the waitlist and be notified when we launch",
+    
     showEmailSignup: true,
     emailSignup: {
       placeholder: "Enter your email",
       buttonText: "Join Waitlist",
       successMessage: "You're on the list! We'll be in touch soon.",
     },
-    // Optional: Custom email submit handler (defaults to console.log)
+    
+    // Alternative: Button (if showEmailSignup is false)
+    button: {
+      enabled: false,
+      text: "Get Started",
+      link: "#get-started",
+    },
+    
+    // Styling
+    styles: {
+      backgroundColor: "bg-gray-900",
+      titleColor: "text-white",
+      subtitleColor: "text-gray-300",
+      buttonBg: "bg-white",
+      buttonText: "text-gray-900",
+      buttonHover: "hover:bg-gray-100",
+    },
+    
+    // Optional: Custom email submit handler
     // onEmailSubmit: (email) => { /* your API call here */ },
   },
 
-  // Footer
+  // ============================================
+  // FOOTER SECTION
+  // ============================================
   footer: {
     enabled: false,
     companyName: "Your Company",
