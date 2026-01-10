@@ -59,13 +59,19 @@ const EmailSignup = ({ config, onSubmit }) => {
           } else if (response.status >= 500) {
             throw new Error('Server error. Please try again later.')
           } else {
-            // Try to get error message from response
+            // Try to get error message from response (Worker returns { error: string } for 400)
             let errorMessage = 'Failed to submit email'
             try {
               const errorData = await response.json()
-              errorMessage = errorData.message || errorData.error || errorMessage
+              errorMessage = errorData.error || errorData.message || errorMessage
             } catch {
-              errorMessage = `Failed to submit email (${response.status})`
+              // If response is not JSON, try to get text
+              try {
+                const text = await response.text()
+                errorMessage = text || errorMessage
+              } catch {
+                errorMessage = `Failed to submit email (${response.status})`
+              }
             }
             throw new Error(errorMessage)
           }
