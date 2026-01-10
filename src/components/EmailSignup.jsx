@@ -40,8 +40,6 @@ const EmailSignup = ({ config, onSubmit }) => {
           ? config.apiEndpoint
           : `/${config.apiEndpoint}`
         
-        console.log('Submitting email to:', endpoint)
-        
         const response = await fetch(endpoint, {
           method: 'POST',
           headers: {
@@ -49,8 +47,6 @@ const EmailSignup = ({ config, onSubmit }) => {
           },
           body: JSON.stringify({ email }),
         })
-        
-        console.log('Response status:', response.status, response.statusText)
         
         // Handle different error status codes
         if (!response.ok) {
@@ -96,7 +92,6 @@ const EmailSignup = ({ config, onSubmit }) => {
       }
     } else {
       // Default behavior - just show success message (for development)
-      console.log('Email submitted:', email)
       setSubmitted(true)
       setEmail('')
       setError('')
