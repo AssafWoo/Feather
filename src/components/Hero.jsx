@@ -94,10 +94,7 @@ const Hero = ({ config }) => {
     if (imageAnim.enabled === false || imageAnim.type === 'none') return ''
     if (imageAnim.type === 'pulse') return 'animate-pulse-subtle'
     if (imageAnim.type === 'float') {
-      const intensity = imageAnim.intensity || 'subtle'
-      if (intensity === 'strong') return 'animate-gentle-float'
-      if (intensity === 'medium') return 'animate-gentle-float'
-      return 'animate-gentle-float'
+      return 'animate-slow-move'
     }
     return ''
   }
@@ -131,20 +128,29 @@ const Hero = ({ config }) => {
             {badge.enabled !== false && badge.text && (
               <div 
                 className={`inline-flex items-center px-2.5 sm:px-3 py-1 rounded-full ${badge.bgColor || 'bg-gray-100'} border ${badge.borderColor || 'border-gray-200'} mb-4 sm:mb-6 ${getTextAnimationClass()}`}
-                style={{ animationDelay: `${(textAnim.delay || 200) - 100}ms` }}
+                style={{ 
+                  animationDelay: `${(textAnim.delay || 200) - 100}ms`,
+                  opacity: textAnim.enabled === false ? 1 : 0
+                }}
               >
                 <span className={`text-xs font-medium ${badge.textColor || 'text-gray-700'}`}>{badge.text}</span>
               </div>
             )}
             <h1 
               className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-medium ${config.titleColor || 'text-gray-900'} mb-3 sm:mb-4 leading-tight ${getTextAnimationClass()}`}
-              style={{ animationDelay: `${textAnim.delay || 200}ms` }}
+              style={{ 
+                animationDelay: `${textAnim.delay || 200}ms`,
+                opacity: textAnim.enabled === false ? 1 : 0
+              }}
             >
               {config.title}
             </h1>
             <p 
               className={`text-sm sm:text-base md:text-lg lg:text-xl ${config.subtitleColor || 'text-gray-600'} mb-6 sm:mb-8 ${getTextAnimationClass()}`}
-              style={{ animationDelay: `${(textAnim.delay || 200) + 200}ms` }}
+              style={{ 
+                animationDelay: `${(textAnim.delay || 200) + 300}ms`,
+                opacity: textAnim.enabled === false ? 1 : 0
+              }}
             >
               {config.subtitle}
             </p>
@@ -182,37 +188,55 @@ const Hero = ({ config }) => {
             className="w-full md:w-[35%] flex items-start justify-center relative overflow-hidden -mt-24 md:mt-0 md:-mt-8"
           >
             {config.rightVideo ? (
-              <video
-                src={config.rightVideo}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className={`w-full h-auto object-contain ${getImageAnimationClass()} ${getTextAnimationClass()}`}
-                style={{ 
-                  animationDelay: `${(textAnim.delay || 200) + 400}ms`,
-                  mixBlendMode: config.videoBlendMode || 'normal',
-                  filter: config.videoFilter || 'none',
-                  transform: config.imageScale ? `scale(${config.imageScale})` : 'scale(1.3)',
-                  transformOrigin: 'center center'
+              <div
+                className="w-full"
+                style={{
+                  ...(imageAnim.enabled !== false && imageAnim.type === 'float' ? {
+                    animation: `slowMove 8s ease-in-out infinite`,
+                    animationDelay: textAnim.enabled === false ? '0s' : `${((textAnim.delay || 200) + 500 + 1000) / 1000}s`
+                  } : {})
                 }}
-              />
+              >
+                <video
+                  src={config.rightVideo}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-auto object-contain"
+                  style={{ 
+                    mixBlendMode: config.videoBlendMode || 'normal',
+                    filter: config.videoFilter || 'none',
+                    transform: config.imageScale ? `scale(${config.imageScale})` : 'scale(1.3)',
+                    transformOrigin: 'center center',
+                    opacity: textAnim.enabled === false ? 1 : 0,
+                    animation: textAnim.enabled === false ? 'none' : `fadeInImage 1s ease-out ${(textAnim.delay || 200) + 500}ms forwards`
+                  }}
+                />
+              </div>
             ) : config.rightImage ? (
-              <div className="relative w-full overflow-hidden" style={{ 
-                aspectRatio: config.imageAspectRatio || 'auto',
-                height: config.imageHeight || 'auto',
-                maxHeight: config.imageMaxHeight || 'none'
-              }}>
+              <div 
+                className="relative w-full overflow-hidden" 
+                style={{ 
+                  aspectRatio: config.imageAspectRatio || 'auto',
+                  height: config.imageHeight || 'auto',
+                  maxHeight: config.imageMaxHeight || 'none',
+                  ...(imageAnim.enabled !== false && imageAnim.type === 'float' ? {
+                    animation: `slowMove 8s ease-in-out infinite`,
+                    animationDelay: textAnim.enabled === false ? '0s' : `${((textAnim.delay || 200) + 500 + 1000) / 1000}s`
+                  } : {})
+                }}
+              >
                 <img
                   src={config.rightImage}
                   alt={config.rightImageAlt || "Hero Image"}
-                  className={`w-full h-full object-cover ${getImageAnimationClass()}`}
+                  className="w-full h-full object-cover"
                   style={{ 
                     transform: config.imageScale ? `scale(${config.imageScale})` : 'scale(1.3)',
                     transformOrigin: config.imageTransformOrigin || 'center center',
                     objectPosition: config.imagePosition || 'center center',
                     opacity: textAnim.enabled === false ? 1 : 0,
-                    animation: textAnim.enabled === false ? 'none' : `fadeInImage 0.8s ease-out ${(textAnim.delay || 200) + 400}ms forwards`
+                    animation: textAnim.enabled === false ? 'none' : `fadeInImage 1s ease-out ${(textAnim.delay || 200) + 500}ms forwards`
                   }}
                 />
               </div>

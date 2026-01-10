@@ -64,6 +64,21 @@
   }
 }
 
+@keyframes slowMove {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(5px, -5px);
+  }
+  50% {
+    transform: translate(-3px, -8px);
+  }
+  75% {
+    transform: translate(3px, -3px);
+  }
+}
+
 @keyframes pulse {
   0%, 100% {
     transform: scale(1);
@@ -76,9 +91,22 @@
 @keyframes fadeInImage {
   from {
     opacity: 0;
+    transform: translateX(20px);
   }
   to {
     opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInImageWithMove {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
@@ -92,14 +120,20 @@
 
 .animate-fade-in-up {
   animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
 }
 
 .animate-fade-in {
   animation: fadeIn 0.8s ease-out forwards;
+  opacity: 0;
 }
 
 .animate-gentle-float {
   animation: gentleFloat 4s ease-in-out infinite;
+}
+
+.animate-slow-move {
+  animation: slowMove 8s ease-in-out infinite;
 }
 
 .animate-pulse-subtle {
