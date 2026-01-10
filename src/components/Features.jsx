@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 const Features = ({ config }) => {
   // Split items into two columns
   const leftColumn = config.items?.filter((_, index) => index % 2 === 0) || []
@@ -9,8 +11,50 @@ const Features = ({ config }) => {
     { from: "from-purple-500", to: "to-pink-500" },
   ]
 
+  // Add structured data for features
+  useEffect(() => {
+    if (config.items && config.items.length > 0) {
+      const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": config.title || "Features",
+        "description": config.subtitle || "",
+        "itemListElement": config.items.map((feature, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "item": {
+            "@type": "SoftwareFeature",
+            "name": feature.title || feature.name,
+            "description": feature.description,
+            "applicationCategory": "DataScienceApplication"
+          }
+        }))
+      }
+
+      // Remove existing script if any
+      const existingScript = document.getElementById('features-structured-data')
+      if (existingScript) {
+        existingScript.remove()
+      }
+
+      // Add new script
+      const script = document.createElement('script')
+      script.id = 'features-structured-data'
+      script.type = 'application/ld+json'
+      script.text = JSON.stringify(structuredData)
+      document.head.appendChild(script)
+
+      return () => {
+        const scriptToRemove = document.getElementById('features-structured-data')
+        if (scriptToRemove) {
+          scriptToRemove.remove()
+        }
+      }
+    }
+  }, [config.items, config.title, config.subtitle])
+
   return (
-    <section id="why" className={`py-20 px-4 sm:px-6 lg:px-8 ${styles.backgroundColor || 'bg-white'} relative overflow-hidden min-h-screen snap-start flex items-center`}>
+    <section id="why" aria-label={config.title || "Features"} className={`py-20 px-4 sm:px-6 lg:px-8 ${styles.backgroundColor || 'bg-white'} relative overflow-hidden min-h-screen snap-start flex items-center`}>
       {/* Subtle background decoration */}
       <div className={`absolute top-0 right-0 w-64 h-64 ${styles.decorationColor || 'bg-gray-100'} rounded-full blur-3xl ${styles.decorationOpacity || 'opacity-20'}`}></div>
       <div className={`absolute bottom-0 left-0 w-64 h-64 ${styles.decorationColor || 'bg-gray-100'} rounded-full blur-3xl ${styles.decorationOpacity || 'opacity-20'}`}></div>
@@ -107,7 +151,7 @@ const Features = ({ config }) => {
                       </p>
                     </div>
                   </div>
-                </div>
+                </article>
               )
             })}
           </div>
@@ -119,7 +163,7 @@ const Features = ({ config }) => {
               const isSpecial = feature.special || false
               
               return (
-                <div
+                <article
                   key={originalIndex}
                   className={`${isSpecial ? cardStyles.specialBg : cardStyles.defaultBg} rounded-xl p-6 border ${
                     isSpecial 
@@ -181,7 +225,7 @@ const Features = ({ config }) => {
                       </p>
                     </div>
                   </div>
-                </div>
+                </article>
               )
             })}
           </div>

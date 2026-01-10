@@ -104,6 +104,7 @@ const Hero = ({ config }) => {
   
   return (
     <section
+      aria-label="Hero section"
       className={`relative h-screen flex flex-col items-center snap-start overflow-hidden ${
         config.backgroundImage
           ? 'bg-cover bg-center'

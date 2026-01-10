@@ -1,9 +1,53 @@
+import { useEffect } from 'react'
+
 const Integrations = ({ config }) => {
   const styles = config.styles || {}
   const cardStyles = config.cardStyles || {}
 
+  // Add structured data for integrations
+  useEffect(() => {
+    if (config.items && config.items.length > 0) {
+      const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": config.title || "Integrations",
+        "description": config.subtitle || "",
+        "itemListElement": config.items.map((integration, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "item": {
+            "@type": "SoftwareApplication",
+            "name": integration.name,
+            "description": integration.description,
+            "applicationCategory": integration.category || "DataScienceApplication"
+          }
+        }))
+      }
+
+      // Remove existing script if any
+      const existingScript = document.getElementById('integrations-structured-data')
+      if (existingScript) {
+        existingScript.remove()
+      }
+
+      // Add new script
+      const script = document.createElement('script')
+      script.id = 'integrations-structured-data'
+      script.type = 'application/ld+json'
+      script.text = JSON.stringify(structuredData)
+      document.head.appendChild(script)
+
+      return () => {
+        const scriptToRemove = document.getElementById('integrations-structured-data')
+        if (scriptToRemove) {
+          scriptToRemove.remove()
+        }
+      }
+    }
+  }, [config.items, config.title, config.subtitle])
+
   return (
-    <section id="integrations" className={`py-20 px-4 sm:px-6 lg:px-8 ${styles.backgroundColor || 'bg-gradient-to-b from-gray-50 to-white'} relative overflow-hidden min-h-screen snap-start flex items-center`}>
+    <section id="integrations" aria-label={config.title || "Integrations"} className={`py-20 px-4 sm:px-6 lg:px-8 ${styles.backgroundColor || 'bg-gradient-to-b from-gray-50 to-white'} relative overflow-hidden min-h-screen snap-start flex items-center`}>
       {/* Different background decoration pattern - diagonal lines instead of circles */}
       <div className={`absolute top-0 left-0 w-96 h-96 ${styles.decorationColor || 'bg-blue-100'} rounded-full blur-3xl ${styles.decorationOpacity || 'opacity-15'}`}></div>
       <div className={`absolute bottom-0 right-0 w-96 h-96 ${styles.decorationColor || 'bg-purple-100'} rounded-full blur-3xl ${styles.decorationOpacity || 'opacity-15'}`}></div>
@@ -33,7 +77,7 @@ const Integrations = ({ config }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {config.items?.map((integration, index) => {
             return (
-              <div
+              <article
                 key={index}
                 className={`${cardStyles.defaultBg || 'bg-white'} rounded-lg p-4 border ${cardStyles.defaultBorder || 'border-gray-100'} ${cardStyles.defaultHoverBorder || 'hover:border-gray-200'} hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col items-start text-left`}
               >
@@ -72,7 +116,7 @@ const Integrations = ({ config }) => {
                     </p>
                   )}
                 </div>
-              </div>
+              </article>
             )
           })}
         </div>

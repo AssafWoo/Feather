@@ -80,7 +80,7 @@ const CTA = ({ config }) => {
   const animations = config.animations || {}
   
   return (
-    <section id="waitlist" className={`py-16 px-4 sm:px-6 lg:px-8 ${styles.backgroundColor || 'bg-gray-900'} min-h-screen snap-start flex items-center relative`}>
+    <section id="waitlist" aria-label="Call to action" className={`py-16 px-4 sm:px-6 lg:px-8 ${styles.backgroundColor || 'bg-gray-900'} min-h-screen snap-start flex items-center relative`}>
       {/* Floating Geometric Shapes Background */}
       {animations.enabled !== false && animations.geometricShapes?.enabled !== false && (
         <FloatingShapes shapes={animations.geometricShapes?.shapes || []} />
