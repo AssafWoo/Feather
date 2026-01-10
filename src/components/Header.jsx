@@ -29,13 +29,41 @@ const Header = ({ config }) => {
     return `${heightMap[defaultHeight] || "h-6 md:h-8"} w-auto`
   }
 
+  // Get navigation container classes
+  const getNavContainerClasses = () => {
+    const baseClasses = `${styles.navContainerBg || 'bg-gray-900'} rounded-full`
+    // Perfect circle on mobile: equal padding and fixed square dimensions
+    const mobileClasses = "p-2.5 w-10 h-10 flex items-center justify-center"
+    // Pill shape on larger screens
+    const desktopClasses = "sm:px-5 sm:py-0 sm:h-16 sm:w-auto lg:px-6"
+    const widthClass = styles.navContainerWidth || 'w-1/2'
+    
+    // Handle common width classes (Tailwind needs full class names at build time)
+    let widthClasses = ""
+    if (widthClass === 'w-1/2') {
+      widthClasses = "sm:w-1/2"
+    } else if (widthClass === 'w-1/3') {
+      widthClasses = "sm:w-1/3"
+    } else if (widthClass === 'w-auto') {
+      widthClasses = "sm:w-auto"
+    } else if (widthClass === 'w-full') {
+      widthClasses = "sm:w-full"
+    }
+    // If widthClass doesn't match common cases, default to w-1/2
+    if (!widthClasses) {
+      widthClasses = "sm:w-1/2"
+    }
+    
+    return `${baseClasses} ${mobileClasses} ${desktopClasses} ${widthClasses}`
+  }
+
   return (
     <header className="fixed top-4 left-0 right-0 z-50">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
           {/* Dark Navigation Container */}
-          <div className={`${styles.navContainerBg || 'bg-gray-900'} rounded-full px-4 sm:px-5 lg:px-6 ${styles.navContainerWidth || 'w-1/2'}`}>
-            <div className="flex items-center gap-4 sm:gap-5 h-16">
+          <div className={getNavContainerClasses()}>
+            <div className="flex items-center justify-center gap-2 sm:gap-5 h-full w-full">
               {/* Logo */}
               <div className="flex items-center">
                 {config.logo ? (
