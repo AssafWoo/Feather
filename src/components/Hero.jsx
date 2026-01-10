@@ -124,25 +124,25 @@ const Hero = ({ config }) => {
         <div className={`absolute inset-0 ${config.backgroundOverlay || 'bg-black/20'}`} style={{ zIndex: 2 }}></div>
       )}
       <div className={`relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex items-center justify-center`} style={{ paddingTop: config.topPadding || '4rem' }}>
-        <div className="flex items-start gap-8 relative w-full">
+        <div className="flex flex-col md:flex-row items-start gap-6 md:gap-8 relative w-full">
           {/* Left Content - 65% */}
-          <div className="w-[65%] relative" style={{ marginTop: config.contentTopMargin || '2rem' }}>
+          <div className="w-full md:w-[65%] relative" style={{ marginTop: config.contentTopMargin || '2rem' }}>
             {badge.enabled !== false && badge.text && (
               <div 
-                className={`inline-flex items-center px-3 py-1 rounded-full ${badge.bgColor || 'bg-gray-100'} border ${badge.borderColor || 'border-gray-200'} mb-6 ${getTextAnimationClass()}`}
+                className={`inline-flex items-center px-2.5 sm:px-3 py-1 rounded-full ${badge.bgColor || 'bg-gray-100'} border ${badge.borderColor || 'border-gray-200'} mb-4 sm:mb-6 ${getTextAnimationClass()}`}
                 style={{ animationDelay: `${(textAnim.delay || 200) - 100}ms` }}
               >
                 <span className={`text-xs font-medium ${badge.textColor || 'text-gray-700'}`}>{badge.text}</span>
               </div>
             )}
             <h1 
-              className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium ${config.titleColor || 'text-gray-900'} mb-4 leading-tight ${getTextAnimationClass()}`}
+              className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-medium ${config.titleColor || 'text-gray-900'} mb-3 sm:mb-4 leading-tight ${getTextAnimationClass()}`}
               style={{ animationDelay: `${textAnim.delay || 200}ms` }}
             >
               {config.title}
             </h1>
             <p 
-              className={`text-base sm:text-lg md:text-xl ${config.subtitleColor || 'text-gray-600'} mb-8 ${getTextAnimationClass()}`}
+              className={`text-sm sm:text-base md:text-lg lg:text-xl ${config.subtitleColor || 'text-gray-600'} mb-6 sm:mb-8 ${getTextAnimationClass()}`}
               style={{ animationDelay: `${(textAnim.delay || 200) + 200}ms` }}
             >
               {config.subtitle}
@@ -170,14 +170,16 @@ const Hero = ({ config }) => {
             
             {/* Floating Email Signup - Positioned below subtitle, extends into image area */}
             {config.showEmailSignup && (
-              <div className="absolute left-0 top-full mt-4 z-20" style={{ width: '85%' }}>
+              <div className="relative md:absolute left-0 top-full mt-4 z-20 w-full md:w-[85%]">
                 <EmailSignup config={config.emailSignup} onSubmit={config.onEmailSubmit} />
               </div>
             )}
           </div>
 
           {/* Right Image/Video */}
-          <div className={`${config.rightImageWidth || 'w-[35%]'} flex items-start justify-center relative overflow-hidden`}>
+          <div 
+            className="w-full md:w-[35%] flex items-start justify-center relative overflow-hidden -mt-24 md:mt-0 md:-mt-8"
+          >
             {config.rightVideo ? (
               <video
                 src={config.rightVideo}
