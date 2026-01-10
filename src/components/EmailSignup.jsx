@@ -33,7 +33,14 @@ const EmailSignup = ({ config, onSubmit }) => {
     } else if (config.apiEndpoint) {
       // If API endpoint is configured, send to that endpoint
       try {
-        const response = await fetch(config.apiEndpoint, {
+        // Ensure the endpoint is a relative URL (starts with /)
+        const endpoint = config.apiEndpoint.startsWith('/') 
+          ? config.apiEndpoint 
+          : `/${config.apiEndpoint}`
+        
+        console.log('Submitting email to:', endpoint)
+        
+        const response = await fetch(endpoint, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -41,8 +48,27 @@ const EmailSignup = ({ config, onSubmit }) => {
           body: JSON.stringify({ email }),
         })
         
+        console.log('Response status:', response.status, response.statusText)
+        
+        // Handle different error status codes
         if (!response.ok) {
-          throw new Error('Failed to submit email')
+          if (response.status === 405) {
+            throw new Error('Method not allowed. Please check the API endpoint configuration.')
+          } else if (response.status === 404) {
+            throw new Error('API endpoint not found. Please verify the route is correct.')
+          } else if (response.status >= 500) {
+            throw new Error('Server error. Please try again later.')
+          } else {
+            // Try to get error message from response
+            let errorMessage = 'Failed to submit email'
+            try {
+              const errorData = await response.json()
+              errorMessage = errorData.message || errorData.error || errorMessage
+            } catch {
+              errorMessage = `Failed to submit email (${response.status})`
+            }
+            throw new Error(errorMessage)
+          }
         }
 
         const data = await response.json()
