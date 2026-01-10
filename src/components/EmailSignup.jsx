@@ -4,6 +4,7 @@ const EmailSignup = ({ config, onSubmit }) => {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -14,6 +15,9 @@ const EmailSignup = ({ config, onSubmit }) => {
       return
     }
 
+    setIsLoading(true)
+    setError('')
+
     // Call the onSubmit handler if provided
     if (onSubmit) {
       try {
@@ -23,6 +27,8 @@ const EmailSignup = ({ config, onSubmit }) => {
         setError('')
       } catch (err) {
         setError(err.message || 'Something went wrong. Please try again.')
+      } finally {
+        setIsLoading(false)
       }
     } else if (config.apiEndpoint) {
       // If API endpoint is configured, send to that endpoint
@@ -38,12 +44,21 @@ const EmailSignup = ({ config, onSubmit }) => {
         if (!response.ok) {
           throw new Error('Failed to submit email')
         }
+
+        const data = await response.json()
         
-        setSubmitted(true)
-        setEmail('')
-        setError('')
+        // Check for { ok: true } response (Cloudflare Worker format)
+        if (data.ok === true) {
+          setSubmitted(true)
+          setEmail('')
+          setError('')
+        } else {
+          throw new Error('Unexpected response from server')
+        }
       } catch (err) {
         setError(err.message || 'Something went wrong. Please try again.')
+      } finally {
+        setIsLoading(false)
       }
     } else {
       // Default behavior - just show success message (for development)
@@ -51,6 +66,7 @@ const EmailSignup = ({ config, onSubmit }) => {
       setSubmitted(true)
       setEmail('')
       setError('')
+      setIsLoading(false)
     }
   }
 
@@ -82,9 +98,10 @@ const EmailSignup = ({ config, onSubmit }) => {
         />
         <button
           type="submit"
-          className="px-6 py-2.5 bg-gray-900 text-white rounded-full text-sm font-normal hover:bg-gray-800 transition-colors whitespace-nowrap shadow-lg"
+          disabled={isLoading}
+          className="px-6 py-2.5 bg-gray-900 text-white rounded-full text-sm font-normal hover:bg-gray-800 transition-colors whitespace-nowrap shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {config.buttonText || "Join Waitlist"}
+          {isLoading ? 'Submitting...' : (config.buttonText || "Join Waitlist")}
         </button>
       </div>
       {error && (
