@@ -62,7 +62,15 @@ const Features = ({ config }) => {
                   <div className="flex items-start gap-4">
                     {/* Avatar/Icon */}
                     <div className="flex-shrink-0">
-                      {feature.avatar ? (
+                      {feature.icon ? (
+                        <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${avatarGradients[0]?.from || 'from-blue-500'} ${avatarGradients[0]?.to || 'to-cyan-500'} flex items-center justify-center`}>
+                          <img
+                            src={feature.icon}
+                            alt={feature.name || feature.title}
+                            className="w-6 h-6 object-contain brightness-0 invert"
+                          />
+                        </div>
+                      ) : feature.avatar ? (
                         <img
                           src={feature.avatar}
                           alt={feature.name || feature.title}
@@ -128,7 +136,15 @@ const Features = ({ config }) => {
                   <div className="flex items-start gap-4">
                     {/* Avatar/Icon */}
                     <div className="flex-shrink-0">
-                      {feature.avatar ? (
+                      {feature.icon ? (
+                        <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${avatarGradients[1]?.from || 'from-purple-500'} ${avatarGradients[1]?.to || 'to-pink-500'} flex items-center justify-center`}>
+                          <img
+                            src={feature.icon}
+                            alt={feature.name || feature.title}
+                            className="w-6 h-6 object-contain brightness-0 invert"
+                          />
+                        </div>
+                      ) : feature.avatar ? (
                         <img
                           src={feature.avatar}
                           alt={feature.name || feature.title}

@@ -30,73 +30,47 @@ const Integrations = ({ config }) => {
         </div>
 
         {/* Grid layout - 2 columns on desktop, 1 on mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {config.items?.map((integration, index) => {
             return (
               <div
                 key={index}
-                className={`${cardStyles.defaultBg || 'bg-white'} rounded-lg p-6 border-l-4 ${
-                  index % 3 === 0 
-                    ? 'border-l-blue-500' 
-                    : index % 3 === 1 
-                    ? 'border-l-purple-500' 
-                    : 'border-l-pink-500'
-                } border-t border-r border-b ${cardStyles.defaultBorder || 'border-gray-100'} ${cardStyles.defaultHoverBorder || 'hover:border-gray-200'} hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1`}
+                className={`${cardStyles.defaultBg || 'bg-white'} rounded-lg p-4 border ${cardStyles.defaultBorder || 'border-gray-100'} ${cardStyles.defaultHoverBorder || 'hover:border-gray-200'} hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 flex flex-col items-start text-left`}
               >
-                {/* Integration icon */}
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 mt-1">
-                    {integration.icon ? (
-                      <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-white border border-gray-100 p-2">
-                        <img 
-                          src={integration.icon} 
-                          alt={`${integration.name} logo`}
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                    ) : (
-                      <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-                        index % 3 === 0 
-                          ? 'bg-blue-100' 
-                          : index % 3 === 1 
-                          ? 'bg-purple-100' 
-                          : 'bg-pink-100'
-                      }`}>
-                        <svg 
-                          className={`w-6 h-6 ${
-                            index % 3 === 0 
-                              ? 'text-blue-600' 
-                              : index % 3 === 1 
-                              ? 'text-purple-600' 
-                              : 'text-pink-600'
-                          }`} 
-                          fill="none" 
-                          stroke="currentColor" 
-                          viewBox="0 0 24 24"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Content */}
-                  <div className="flex-1">
-                    <h3 className={`text-lg font-semibold ${cardStyles.titleColor || 'text-gray-900'} mb-1`}>
-                      {integration.name}
-                    </h3>
-                    {integration.category && (
-                      <p className={`text-xs font-medium uppercase tracking-wide ${
-                        index % 3 === 0 
-                          ? 'text-blue-600' 
-                          : index % 3 === 1 
-                          ? 'text-purple-600' 
-                          : 'text-pink-600'
-                      }`}>
-                        {integration.category}
-                      </p>
-                    )}
-                  </div>
+                {/* Integration logo at the top */}
+                <div className="mb-3">
+                  {integration.icon ? (
+                    <div className="w-6 h-6 flex items-center justify-start">
+                      <img 
+                        src={integration.icon} 
+                        alt={`${integration.name} logo`}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-6 h-6 rounded-lg flex items-center justify-center bg-gray-100">
+                      <svg 
+                        className="w-3 h-3 text-gray-400" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  )}
+                </div>
+                
+                {/* Name and description */}
+                <div className="flex-1">
+                  <h3 className={`text-base font-semibold ${cardStyles.titleColor || 'text-gray-900'} mb-1.5`}>
+                    {integration.name}
+                  </h3>
+                  {integration.description && (
+                    <p className={`text-xs ${cardStyles.descriptionColor || 'text-gray-600'}`}>
+                      {integration.description}
+                    </p>
+                  )}
                 </div>
               </div>
             )

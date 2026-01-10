@@ -156,11 +156,11 @@ export const featherConfig = {
       geometricShapes: {
         enabled: true,
         shapes: [
-          { type: "circle", size: 54, x: 12, y: 18, duration: 28, delay: 0.5, opacity: 0.5, color: "#EC4899" },
-          { type: "triangle", size: 48, x: 62, y: 22, duration: 30, delay: 1.2, opacity: 0.45, color: "#EC4899" },
-          { type: "hexagon", size: 56, x: 86, y: 48, duration: 34, delay: 2.0, opacity: 0.5, color: "#EC4899" },
-          { type: "circle", size: 44, x: 76, y: 74, duration: 26, delay: 2.6, opacity: 0.48, color: "#EC4899" },
-          { type: "hexagon", size: 46, x: 22, y: 70, duration: 32, delay: 1.8, opacity: 0.45, color: "#EC4899" },
+          { type: "circle", size: 54, x: 12, y: 18, duration: 14, delay: 0.5, opacity: 0.5, color: "#EC4899" },
+          { type: "triangle", size: 48, x: 62, y: 22, duration: 15, delay: 1.2, opacity: 0.45, color: "#EC4899" },
+          { type: "hexagon", size: 56, x: 86, y: 48, duration: 17, delay: 2.0, opacity: 0.5, color: "#EC4899" },
+          { type: "circle", size: 44, x: 76, y: 74, duration: 13, delay: 2.6, opacity: 0.48, color: "#EC4899" },
+          { type: "hexagon", size: 46, x: 22, y: 70, duration: 16, delay: 1.8, opacity: 0.45, color: "#EC4899" },
         ],
       },
       // Text Entrance Animation
@@ -209,6 +209,7 @@ export const featherConfig = {
         name: "LLM suggestions, human control",
         description:
           "LLMs pre-label fast. Humans approve/edit with required rationale on overrides — no silent drift.",
+        icon: "/icons/brain.svg",
         avatar: null,
         role: "Human-in-the-loop",
         platform: null,
@@ -220,6 +221,7 @@ export const featherConfig = {
         name: "Versioned label definitions",
         description:
           "Schemas evolve on purpose. Track meaning changes and link them to every label update.",
+        icon: "/icons/version.svg",
         avatar: null,
         role: "Schema & governance",
         platform: null,
@@ -231,6 +233,7 @@ export const featherConfig = {
         name: "Dataset diffs & audit trail",
         description:
           "See what changed, who approved it, and why — down to per-record before/after and comments.",
+        icon: "/icons/audit.svg",
         avatar: null,
         role: "Traceability",
         platform: null,
@@ -242,6 +245,7 @@ export const featherConfig = {
         name: "Reproducible training exports",
         description:
           "Export clean, approved datasets with schema version + hashes — so models stay debuggable.",
+        icon: "/icons/export.svg",
         avatar: null,
         role: "Reproducibility",
         platform: null,
@@ -383,9 +387,12 @@ export const featherConfig = {
       geometricShapes: {
         enabled: true,
         shapes: [
-          { type: "circle", size: 52, x: 12, y: 24, duration: 26, delay: 0.2, opacity: 0.16, color: "#EC4899" },
-          { type: "triangle", size: 54, x: 82, y: 52, duration: 30, delay: 1.4, opacity: 0.14, color: "#EC4899" },
-          { type: "hexagon", size: 50, x: 36, y: 74, duration: 34, delay: 2.8, opacity: 0.12, color: "#EC4899" },
+          { type: "circle", size: 52, x: 12, y: 24, duration: 13, delay: 0.2, opacity: 1.0, color: "#EC4899" },
+          { type: "triangle", size: 54, x: 82, y: 52, duration: 15, delay: 1.4, opacity: 1.0, color: "#EC4899" },
+          { type: "hexagon", size: 50, x: 36, y: 74, duration: 17, delay: 2.8, opacity: 1.0, color: "#EC4899" },
+          { type: "circle", size: 48, x: 65, y: 18, duration: 14, delay: 0.8, opacity: 1.0, color: "#EC4899" },
+          { type: "triangle", size: 46, x: 25, y: 58, duration: 16, delay: 2.2, opacity: 1.0, color: "#EC4899" },
+          { type: "hexagon", size: 44, x: 75, y: 80, duration: 14.5, delay: 3.6, opacity: 1.0, color: "#EC4899" },
         ],
       },
     },
