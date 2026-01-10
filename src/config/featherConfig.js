@@ -85,7 +85,7 @@ export const featherConfig = {
       placeholder: "Work email",
       buttonText: "Join the waitlist",
       successMessage: "You're in. We'll reach out when early access opens.",
-      apiEndpoint: "/api/subscribe",
+      apiEndpoint: "https://api.feathersai.app/subscribe",
     },
 
     // Alternative: Action Buttons
@@ -361,7 +361,7 @@ export const featherConfig = {
       placeholder: "Work email",
       buttonText: "Request early access",
       successMessage: "Got it — we'll reach out with next steps.",
-      apiEndpoint: "/api/subscribe",
+      apiEndpoint: "https://api.feathersai.app/subscribe",
     },
 
     // Alternative: Button

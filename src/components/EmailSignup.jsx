@@ -33,9 +33,11 @@ const EmailSignup = ({ config, onSubmit }) => {
     } else if (config.apiEndpoint) {
       // If API endpoint is configured, send to that endpoint
       try {
-        // Ensure the endpoint is a relative URL (starts with /)
-        const endpoint = config.apiEndpoint.startsWith('/') 
-          ? config.apiEndpoint 
+        // Use the endpoint as-is if it's a full URL, otherwise ensure it starts with /
+        const endpoint = config.apiEndpoint.startsWith('http://') || config.apiEndpoint.startsWith('https://')
+          ? config.apiEndpoint
+          : config.apiEndpoint.startsWith('/')
+          ? config.apiEndpoint
           : `/${config.apiEndpoint}`
         
         console.log('Submitting email to:', endpoint)
