@@ -206,12 +206,13 @@ const Hero = ({ config }) => {
                 <img
                   src={config.rightImage}
                   alt={config.rightImageAlt || "Hero Image"}
-                  className={`w-full h-full object-cover ${getImageAnimationClass()} ${getTextAnimationClass()}`}
+                  className={`w-full h-full object-cover ${getImageAnimationClass()}`}
                   style={{ 
-                    animationDelay: `${(textAnim.delay || 200) + 400}ms`,
                     transform: config.imageScale ? `scale(${config.imageScale})` : 'scale(1.3)',
                     transformOrigin: config.imageTransformOrigin || 'center center',
-                    objectPosition: config.imagePosition || 'center center'
+                    objectPosition: config.imagePosition || 'center center',
+                    opacity: textAnim.enabled === false ? 1 : 0,
+                    animation: textAnim.enabled === false ? 'none' : `fadeInImage 0.8s ease-out ${(textAnim.delay || 200) + 400}ms forwards`
                   }}
                 />
               </div>

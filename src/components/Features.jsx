@@ -151,7 +151,7 @@ const Features = ({ config }) => {
                       </p>
                     </div>
                   </div>
-                </article>
+                </div>
               )
             })}
           </div>

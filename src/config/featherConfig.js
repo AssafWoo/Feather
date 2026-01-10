@@ -115,7 +115,7 @@ export const featherConfig = {
     rightVideo: null, // Set to null to use image instead
     rightImageAlt: "Feather labeling workspace",
     rightImageWidth: "w-[60%]",
-    imageScale: 2.2, // Scale factor to make image bigger (2.2 = 220% size) without affecting layout
+    imageScale: 1.0, // Scale factor to make image bigger (1.0 = 100% size) without affecting layout
     // Image cropping options to focus on the feather
     imageAspectRatio: "1 / 1.5", // Container aspect ratio (width/height) - taller container crops more
     imagePosition: "center 35%", // object-position to center the feather (adjust second value: lower = move up, higher = move down)

@@ -14,6 +14,21 @@ const Header = ({ config }) => {
     }
   }
 
+  // Get responsive logo height classes
+  // Use smaller height on mobile, then config height on md+
+  const getLogoHeightClasses = () => {
+    const defaultHeight = config.logoHeight || "h-8"
+    // Map common heights to responsive classes
+    const heightMap = {
+      "h-8": "h-6 md:h-8",
+      "h-10": "h-7 md:h-10",
+      "h-12": "h-8 md:h-12",
+      "h-14": "h-10 md:h-14",
+      "h-16": "h-12 md:h-16",
+    }
+    return `${heightMap[defaultHeight] || "h-6 md:h-8"} w-auto`
+  }
+
   return (
     <header className="fixed top-4 left-0 right-0 z-50">
       <div className="px-4 sm:px-6 lg:px-8">
@@ -27,7 +42,7 @@ const Header = ({ config }) => {
                   <img
                     src={config.logo}
                     alt={config.logoAlt || "Logo"}
-                    className={config.logoHeight || "h-8 w-auto"}
+                    className={getLogoHeightClasses()}
                   />
                 ) : (
                   <span className={`text-lg font-medium ${styles.navTextColor || 'text-white'}`}>
