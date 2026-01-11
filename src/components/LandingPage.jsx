@@ -2,6 +2,7 @@ import Header from './Header'
 import Hero from './Hero'
 import Features from './Features'
 import Integrations from './Integrations'
+import FAQ from './FAQ'
 import CTA from './CTA'
 import Footer from './Footer'
 import SEO from './SEO'
@@ -27,10 +28,13 @@ const LandingPage = ({ config }) => {
       <SEO config={seoConfig} />
       <div className="min-h-screen bg-white overflow-y-scroll snap-y snap-mandatory scroll-smooth" style={{ height: '100vh', scrollBehavior: 'smooth' }}>
         {config.header?.enabled && <Header config={config.header} />}
-        <Hero config={config.hero} />
-        {config.features?.enabled && <Features config={config.features} />}
-        {config.integrations?.enabled && <Integrations config={config.integrations} />}
-        {config.cta?.enabled && <CTA config={config.cta} />}
+        <main id="main-content" role="main">
+          <Hero config={config.hero} />
+          {config.features?.enabled && <Features config={config.features} />}
+          {config.integrations?.enabled && <Integrations config={config.integrations} />}
+          {config.faq?.enabled && <FAQ config={config.faq} />}
+          {config.cta?.enabled && <CTA config={config.cta} />}
+        </main>
         {config.footer?.enabled && <Footer config={config.footer} />}
       </div>
     </>

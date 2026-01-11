@@ -2,6 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    
+    <!-- Preconnect hints for faster resource loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.feathersai.app" />
+    <link rel="dns-prefetch" href="https://api.feathersai.app" />
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="/feather-owl-navy-pink.png" as="image" />
+    <link rel="preload" href="/images/feather-hero.png" as="image" />
+    
     <!-- Favicons with transparency support -->
     <link rel="icon" type="image/png" sizes="32x32" href="/feather-favicon-32.png?v=2" />
     <link rel="icon" type="image/png" sizes="16x16" href="/feather-favicon-16.png?v=2" />
@@ -104,6 +115,120 @@
         "target": "https://feathersai.app/?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
+    }
+    </script>
+    
+    <!-- FAQ Structured Data for Google Featured Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Feather, exactly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Feather is a human-in-the-loop system for labeling data when LLMs are involved. It helps teams keep labels consistent, explainable, and reproducible over time — even as models, definitions, and datasets change."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is Feather different from labeling tools I already use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most labeling tools focus on getting labels done. Feather focuses on trusting those labels later. It treats labels as decisions, not just annotations — preserving who approved them, why they were chosen, which schema version they follow, and what changed over time. This becomes critical once LLMs enter the loop."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Feather replacing my existing stack?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Feather is designed to fit into how you already work, not replace it. You keep your storage, experiment tracking, and training pipelines. Feather sits between data → labels → training and makes that boundary reliable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Feather automatically label data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Feather can use LLMs to propose labels, but nothing is auto-accepted. Humans always approve, edit, or reject with rationale captured when decisions change. This is intentional — speed without accountability creates problems later."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who is Feather built for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Feather is built for ML research teams, applied AI teams using LLMs, data scientists training production models, and teams that care about reproducibility and audits. It's not built for crowdsourcing or one-off annotation tasks."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens when label definitions change?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "This is one of the core problems Feather solves. Label schemas are versioned explicitly, and changes are tracked. When a definition shifts, Feather shows what labels are affected, explains why changes happened, and keeps old versions accessible. No silent drift."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I see what changed between dataset versions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Feather provides dataset diffs, similar to code diffs: what changed, who approved it, and why — down to individual records."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Feather work with MLflow?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Feather can import datasets and context from MLflow runs and artifacts, and keep that lineage attached to labels. This makes it possible to answer 'Which dataset version trained this model?' without guessing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Feather only for text data?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At first — yes. We're starting with text-based datasets and LLM workflows, where labeling drift and audit pain are most acute. Other modalities may come later, but we're intentionally focused."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Feather production-ready?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Feather is currently in early access. We're onboarding teams carefully to validate real workflows, avoid building generic features, and get the foundations right. If this problem hurts you today, you're exactly who we want to work with."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When will Feather be available?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We don't have a public launch date yet. Early access will roll out gradually to teams on the waitlist. Joining the waitlist helps us prioritize who to onboard first."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will Feather be open source?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not at the core. Some integrations or components may be open in the future, but Feather itself is a commercial product focused on reliability and long-term maintenance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I join early access?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Join the waitlist using the form on our website. We'll reach out when early access opens — no spam, no mass emails."
+          }
+        }
+      ]
     }
     </script>
   </head>

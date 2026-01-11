@@ -14,7 +14,7 @@ export const featherConfig = {
     // Logo Configuration
     logo: "/feather-owl-navy-pink.png",
     logoText: "Feather",
-    logoAlt: "Feather Owl Logo",
+    logoAlt: "Feather AI - LLM-Assisted Labeling Platform Logo",
     logoHeight: "h-12",
 
     // Navigation Links
@@ -22,6 +22,7 @@ export const featherConfig = {
       { text: "How it works", link: "#why" },
       { text: "Why Feather", link: "#why" },
       { text: "Integrations", link: "#integrations" },
+      { text: "FAQ", link: "#faq" },
     ],
 
     // Help Link
@@ -113,7 +114,7 @@ export const featherConfig = {
     // Right Side Image/Video
     rightImage: "/images/feather-hero.png", // Image file path
     rightVideo: null, // Set to null to use image instead
-    rightImageAlt: "Feather labeling workspace",
+    rightImageAlt: "Feather AI labeling workspace interface showing human-in-the-loop data annotation with LLM suggestions, versioned schemas, and audit trails for machine learning teams",
     rightImageWidth: "w-[60%]",
     imageScale: 1.0, // Scale factor to make image bigger (1.0 = 100% size) without affecting layout
     // Image cropping options to focus on the feather
@@ -400,6 +401,90 @@ export const featherConfig = {
 
     // Optional: Custom email submit handler
     // onEmailSubmit: async (email) => { /* your API call here */ },
+  },
+
+  // ============================================
+  // FAQ SECTION
+  // ============================================
+  faq: {
+    enabled: true,
+
+    // Section Title
+    title: "Frequently Asked Questions",
+    highlightWord: "Questions",
+    subtitle: "Everything you need to know about Feather",
+
+    // Styling
+    styles: {
+      backgroundColor: "bg-gradient-to-b from-white to-slate-50",
+      titleColor: "text-slate-950",
+      subtitleColor: "text-slate-600",
+      highlightColor: "text-fuchsia-500",
+      decorationColor: "bg-slate-100",
+      decorationOpacity: "opacity-20",
+      cardBg: "bg-white",
+      cardBorder: "border-slate-200",
+      cardActiveBorder: "border-fuchsia-300",
+      questionColor: "text-slate-900",
+      answerColor: "text-slate-600",
+      iconColor: "text-slate-400",
+    },
+
+    // FAQ Items
+    items: [
+      {
+        question: "What is Feather, exactly?",
+        answer: "Feather is a human-in-the-loop system for labeling data when LLMs are involved. It helps teams keep labels consistent, explainable, and reproducible over time — even as models, definitions, and datasets change."
+      },
+      {
+        question: "How is Feather different from labeling tools I already use?",
+        answer: "Most labeling tools focus on getting labels done. Feather focuses on trusting those labels later. It treats labels as decisions, not just annotations — preserving who approved them, why they were chosen, which schema version they follow, and what changed over time. This becomes critical once LLMs enter the loop."
+      },
+      {
+        question: "Is Feather replacing my existing stack?",
+        answer: "No. Feather is designed to fit into how you already work, not replace it. You keep your storage, experiment tracking, and training pipelines. Feather sits between data → labels → training and makes that boundary reliable."
+      },
+      {
+        question: "Does Feather automatically label data?",
+        answer: "Feather can use LLMs to propose labels, but nothing is auto-accepted. Humans always approve, edit, or reject — with rationale captured when decisions change. This is intentional — speed without accountability creates problems later."
+      },
+      {
+        question: "Who is Feather built for?",
+        answer: "Feather is built for ML research teams, applied AI teams using LLMs, data scientists training production models, and teams that care about reproducibility and audits. It's not built for crowdsourcing or one-off annotation tasks."
+      },
+      {
+        question: "What happens when label definitions change?",
+        answer: "This is one of the core problems Feather solves. Label schemas are versioned explicitly, and changes are tracked. When a definition shifts, Feather shows what labels are affected, explains why changes happened, and keeps old versions accessible. No silent drift."
+      },
+      {
+        question: "Can I see what changed between dataset versions?",
+        answer: "Yes. Feather provides dataset diffs, similar to code diffs: what changed, who approved it, and why — down to individual records."
+      },
+      {
+        question: "How does Feather work with MLflow?",
+        answer: "Feather can import datasets and context from MLflow runs and artifacts, and keep that lineage attached to labels. This makes it possible to answer 'Which dataset version trained this model?' without guessing."
+      },
+      {
+        question: "Is Feather only for text data?",
+        answer: "At first — yes. We're starting with text-based datasets and LLM workflows, where labeling drift and audit pain are most acute. Other modalities may come later, but we're intentionally focused."
+      },
+      {
+        question: "Is Feather production-ready?",
+        answer: "Feather is currently in early access. We're onboarding teams carefully to validate real workflows, avoid building generic features, and get the foundations right. If this problem hurts you today, you're exactly who we want to work with."
+      },
+      {
+        question: "When will Feather be available?",
+        answer: "We don't have a public launch date yet. Early access will roll out gradually to teams on the waitlist. Joining the waitlist helps us prioritize who to onboard first."
+      },
+      {
+        question: "Will Feather be open source?",
+        answer: "Not at the core. Some integrations or components may be open in the future, but Feather itself is a commercial product focused on reliability and long-term maintenance."
+      },
+      {
+        question: "How do I join early access?",
+        answer: "Join the waitlist using the form above. We'll reach out when early access opens — no spam, no mass emails."
+      },
+    ],
   },
 
   // ============================================

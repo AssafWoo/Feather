@@ -87,8 +87,9 @@ const Integrations = ({ config }) => {
                     <div className="w-6 h-6 flex items-center justify-start">
                       <img 
                         src={integration.icon} 
-                        alt={`${integration.name} logo`}
+                        alt={`${integration.name} integration logo - ${integration.category || 'ML tool'}`}
                         className="w-full h-full object-contain"
+                        loading="lazy"
                       />
                     </div>
                   ) : (

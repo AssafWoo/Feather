@@ -110,15 +110,17 @@ const Features = ({ config }) => {
                         <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${avatarGradients[0]?.from || 'from-blue-500'} ${avatarGradients[0]?.to || 'to-cyan-500'} flex items-center justify-center`}>
                           <img
                             src={feature.icon}
-                            alt={feature.name || feature.title}
+                            alt={`${feature.name || feature.title} feature icon`}
                             className="w-6 h-6 object-contain brightness-0 invert"
+                            loading="lazy"
                           />
                         </div>
                       ) : feature.avatar ? (
                         <img
                           src={feature.avatar}
-                          alt={feature.name || feature.title}
+                          alt={`${feature.name || feature.title} avatar`}
                           className="w-12 h-12 rounded-full object-cover"
+                          loading="lazy"
                         />
                       ) : (
                         <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${avatarGradients[0]?.from || 'from-blue-500'} ${avatarGradients[0]?.to || 'to-cyan-500'} flex items-center justify-center text-white font-medium text-sm`}>
@@ -184,15 +186,17 @@ const Features = ({ config }) => {
                         <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${avatarGradients[1]?.from || 'from-purple-500'} ${avatarGradients[1]?.to || 'to-pink-500'} flex items-center justify-center`}>
                           <img
                             src={feature.icon}
-                            alt={feature.name || feature.title}
+                            alt={`${feature.name || feature.title} feature icon`}
                             className="w-6 h-6 object-contain brightness-0 invert"
+                            loading="lazy"
                           />
                         </div>
                       ) : feature.avatar ? (
                         <img
                           src={feature.avatar}
-                          alt={feature.name || feature.title}
+                          alt={`${feature.name || feature.title} avatar`}
                           className="w-12 h-12 rounded-full object-cover"
+                          loading="lazy"
                         />
                       ) : (
                         <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${avatarGradients[1]?.from || 'from-purple-500'} ${avatarGradients[1]?.to || 'to-pink-500'} flex items-center justify-center text-white font-medium text-sm`}>
