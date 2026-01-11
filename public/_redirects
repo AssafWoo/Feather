@@ -1,0 +1,6 @@
+# Serve static files directly (don't redirect to SPA)
+/sitemap.xml    /sitemap.xml    200
+/robots.txt     /robots.txt     200
+
+# SPA fallback - must be LAST
+/*    /index.html   200
