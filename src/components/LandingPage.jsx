@@ -1,5 +1,6 @@
 import Header from './Header'
 import Hero from './Hero'
+import Workflow from './Workflow'
 import Features from './Features'
 import Integrations from './Integrations'
 import FAQ from './FAQ'
@@ -30,6 +31,7 @@ const LandingPage = ({ config }) => {
         {config.header?.enabled && <Header config={config.header} />}
         <main id="main-content" role="main">
           <Hero config={config.hero} />
+          {config.workflow?.enabled && <Workflow config={config.workflow} />}
           {config.features?.enabled && <Features config={config.features} />}
           {config.integrations?.enabled && <Integrations config={config.integrations} />}
           {config.faq?.enabled && <FAQ config={config.faq} />}

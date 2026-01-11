@@ -19,7 +19,7 @@ export const featherConfig = {
 
     // Navigation Links
     navLinks: [
-      { text: "How it works", link: "#why" },
+      { text: "How it works", link: "#workflow" },
       { text: "Why Feather", link: "#why" },
       { text: "Integrations", link: "#integrations" },
       { text: "FAQ", link: "#faq" },
@@ -180,6 +180,69 @@ export const featherConfig = {
 
     // Optional: Custom email submit handler
     // onEmailSubmit: async (email) => { /* your API call here */ },
+  },
+
+  // ============================================
+  // WORKFLOW / "HOW IT WORKS" SECTION
+  // ============================================
+  workflow: {
+    enabled: true,
+
+    // Section Title
+    title: "How it works",
+    highlightWord: "works",
+    subtitle: "From raw data to trusted, reproducible labels in five steps.",
+
+    // Workflow Steps
+    steps: [
+      {
+        title: "Import",
+        description: "Connect your dataset",
+        iconType: "import",
+      },
+      {
+        title: "Define Schema",
+        description: "Version your labels",
+        iconType: "schema",
+      },
+      {
+        title: "Pre-label",
+        description: "LLM suggests labels",
+        iconType: "prelabel",
+      },
+      {
+        title: "Review",
+        description: "Human approves or edits",
+        iconType: "review",
+      },
+      {
+        title: "Export",
+        description: "Reproducible output",
+        iconType: "export",
+      },
+    ],
+
+    // Styling
+    styles: {
+      backgroundColor: "bg-slate-50",
+      titleColor: "text-slate-950",
+      subtitleColor: "text-slate-600",
+      highlightColor: "text-fuchsia-500",
+      decorationColor: "bg-fuchsia-100",
+      decorationOpacity: "opacity-20",
+      // Grid box container
+      cardBg: "bg-white",
+      cardBorder: "border border-slate-200/80",
+      // Timeline
+      lineColor: "bg-gradient-to-r from-fuchsia-400 to-fuchsia-600",
+      // Step circles
+      activeCircleBg: "bg-gradient-to-br from-fuchsia-500 to-fuchsia-600",
+      activeCircleText: "text-white",
+      // Step text
+      stepNumberColor: "text-fuchsia-500",
+      stepTitleColor: "text-slate-900",
+      stepDescriptionColor: "text-slate-500",
+    },
   },
 
   // ============================================
