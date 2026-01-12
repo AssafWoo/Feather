@@ -179,7 +179,7 @@ const Hero = ({ config }) => {
             {/* Floating Email Signup - Positioned below subtitle, extends into image area */}
             {config.showEmailSignup && (
               <div className="relative md:absolute left-0 top-full mt-4 z-20 w-full md:w-[85%]">
-                <EmailSignup config={config.emailSignup} onSubmit={config.onEmailSubmit} />
+                <EmailSignup config={config.emailSignup} onSubmit={config.onEmailSubmit} source="hero_form" />
               </div>
             )}
           </div>

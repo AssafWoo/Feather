@@ -576,5 +576,8 @@ export const featherConfig = {
     // Google Tag Manager Container ID
     // Format: GTM-XXXXXXX
     gtmContainerId: 'GTM-PH7R9KK2',
+    // Google Analytics 4 Measurement ID (configure in GTM, not loaded directly)
+    // Format: G-XXXXXXXXXX
+    ga4MeasurementId: 'G-WYBEDD4680', // For reference - configure GA4 tag in GTM with this ID
   },
 }

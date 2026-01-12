@@ -94,7 +94,7 @@ const CTA = ({ config }) => {
           {config.subtitle}
         </p>
         {config.showEmailSignup ? (
-          <EmailSignup config={config.emailSignup} onSubmit={config.onEmailSubmit} />
+          <EmailSignup config={config.emailSignup} onSubmit={config.onEmailSubmit} source="cta_form" />
         ) : (
           config.button?.enabled !== false && config.button && (
             <a
