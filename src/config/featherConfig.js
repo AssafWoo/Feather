@@ -567,4 +567,14 @@ export const featherConfig = {
     ],
     copyright: "© 2026 Feather. All rights reserved.",
   },
+
+  // ============================================
+  // ANALYTICS CONFIGURATION
+  // ============================================
+  analytics: {
+    enabled: true, // Set to true to enable Google Tag Manager
+    // Google Tag Manager Container ID
+    // Format: GTM-XXXXXXX
+    gtmContainerId: 'GTM-PH7R9KK2',
+  },
 }

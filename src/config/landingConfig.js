@@ -387,4 +387,14 @@ export const landingConfig = {
     ],
     copyright: "© 2024 Your Company. All rights reserved.",
   },
+
+  // ============================================
+  // ANALYTICS CONFIGURATION
+  // ============================================
+  analytics: {
+    enabled: false, // Set to true to enable Google Tag Manager
+    // Google Tag Manager Container ID
+    // Format: GTM-XXXXXXX
+    gtmContainerId: null, // e.g., 'GTM-XXXXXXX'
+  },
 }

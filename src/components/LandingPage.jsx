@@ -8,6 +8,7 @@ import FAQ from './FAQ'
 import CTA from './CTA'
 import Footer from './Footer'
 import SEO from './SEO'
+import GoogleTagManager from './GoogleTagManager'
 
 const LandingPage = ({ config, scrollToSignup = false }) => {
   // Get current path for SEO
@@ -58,6 +59,12 @@ const LandingPage = ({ config, scrollToSignup = false }) => {
   return (
     <>
       <SEO config={seoConfig} />
+      {config.analytics?.enabled && (
+        <GoogleTagManager 
+          containerId={config.analytics.gtmContainerId} 
+          enabled={config.analytics.enabled}
+        />
+      )}
       <div className="min-h-screen bg-white overflow-y-scroll snap-y snap-mandatory scroll-smooth" style={{ height: '100vh', scrollBehavior: 'smooth' }}>
         {config.header?.enabled && <Header config={config.header} />}
         <main id="main-content" role="main">

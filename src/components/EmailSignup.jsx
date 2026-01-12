@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { trackWaitlistSubmit } from './GoogleTagManager'
 
 const EmailSignup = ({ config, onSubmit }) => {
   const [email, setEmail] = useState('')
@@ -25,6 +26,8 @@ const EmailSignup = ({ config, onSubmit }) => {
         setSubmitted(true)
         setEmail('')
         setError('')
+        // Track conversion - fires only on successful submission
+        trackWaitlistSubmit('hero_form')
       } catch (err) {
         setError(err.message || 'Something went wrong. Please try again.')
       } finally {
@@ -82,6 +85,8 @@ const EmailSignup = ({ config, onSubmit }) => {
           setSubmitted(true)
           setEmail('')
           setError('')
+          // Track conversion - fires only on successful submission
+          trackWaitlistSubmit('api_endpoint')
         } else {
           throw new Error('Unexpected response from server')
         }
@@ -96,6 +101,8 @@ const EmailSignup = ({ config, onSubmit }) => {
       setEmail('')
       setError('')
       setIsLoading(false)
+      // Track conversion - fires only on successful submission
+      trackWaitlistSubmit('default')
     }
   }
 
