@@ -36,7 +36,7 @@ export const featherConfig = {
     ctaButton: {
       enabled: true,
       text: "Join waitlist",
-      link: "#waitlist",
+      link: "#cta",
     },
 
     // Styling
@@ -496,57 +496,60 @@ export const featherConfig = {
     // FAQ Items
     items: [
       {
-        question: "What is Feather, exactly?",
-        answer: "Feather is a human-in-the-loop system for labeling data when LLMs are involved. It helps teams keep labels consistent, explainable, and reproducible over time — even as models, definitions, and datasets change."
+        question: "What problem does Feather actually solve?",
+        answer:
+          "Feather solves the trust gap that appears when LLMs enter labeling workflows. It helps teams keep labels consistent, explainable, and reproducible over time — even as models, label definitions, and datasets evolve."
       },
       {
-        question: "How is Feather different from labeling tools I already use?",
-        answer: "Most labeling tools focus on getting labels done. Feather focuses on trusting those labels later. It treats labels as decisions, not just annotations — preserving who approved them, why they were chosen, which schema version they follow, and what changed over time. This becomes critical once LLMs enter the loop."
+        question: "How is Feather different from other labeling tools?",
+        answer:
+          "Most labeling tools optimize for throughput. Feather optimizes for long-term trust. It preserves who approved each label, why it was chosen, which schema version it followed, and how it changed over time — so labels remain usable months later, not just today."
       },
       {
-        question: "Is Feather replacing my existing stack?",
-        answer: "No. Feather is designed to fit into how you already work, not replace it. You keep your storage, experiment tracking, and training pipelines. Feather sits between data → labels → training and makes that boundary reliable."
+        question: "Will Feather replace tools like MLflow or my data stack?",
+        answer:
+          "No. Feather is designed to complement your existing stack. You keep your storage, experiment tracking, and training pipelines. Feather sits at the boundary between data, labels, and training — making that boundary reliable instead of implicit."
       },
       {
-        question: "Does Feather automatically label data?",
-        answer: "Feather can use LLMs to propose labels, but nothing is auto-accepted. Humans always approve, edit, or reject — with rationale captured when decisions change. This is intentional — speed without accountability creates problems later."
+        question: "Does Feather auto-label data?",
+        answer:
+          "Feather can use LLMs to propose labels, but nothing is auto-accepted. Humans always approve, edit, or reject labels. This ensures speed without losing accountability — a key failure mode of fully automated labeling."
       },
       {
         question: "Who is Feather built for?",
-        answer: "Feather is built for ML research teams, applied AI teams using LLMs, data scientists training production models, and teams that care about reproducibility and audits. It's not built for crowdsourcing or one-off annotation tasks."
+        answer:
+          "Feather is built for ML and applied AI teams using LLMs in real workflows — not crowdsourcing or one-off annotation jobs. It’s for teams that care about audits, reproducibility, and understanding how a model was trained."
       },
       {
         question: "What happens when label definitions change?",
-        answer: "This is one of the core problems Feather solves. Label schemas are versioned explicitly, and changes are tracked. When a definition shifts, Feather shows what labels are affected, explains why changes happened, and keeps old versions accessible. No silent drift."
+        answer:
+          "Label schemas in Feather are versioned explicitly. When a definition changes, Feather shows exactly which labels are affected, what changed, who approved it, and why. Old versions remain accessible — no silent drift."
       },
       {
-        question: "Can I see what changed between dataset versions?",
-        answer: "Yes. Feather provides dataset diffs, similar to code diffs: what changed, who approved it, and why — down to individual records."
+        question: "Can I see exactly what changed between dataset versions?",
+        answer:
+          "Yes. Feather provides dataset diffs similar to code diffs — down to individual records. You can see what changed, who approved it, and the rationale behind each change."
       },
       {
-        question: "How does Feather work with MLflow?",
-        answer: "Feather can import datasets and context from MLflow runs and artifacts, and keep that lineage attached to labels. This makes it possible to answer 'Which dataset version trained this model?' without guessing."
+        question: "How does Feather integrate with MLflow?",
+        answer:
+          "Feather can import datasets and context from MLflow runs and artifacts, and keep that lineage attached to labels. This makes it easy to answer questions like: ‘Which dataset version trained this model?’ without reverse engineering."
       },
       {
         question: "Is Feather only for text data?",
-        answer: "At first — yes. We're starting with text-based datasets and LLM workflows, where labeling drift and audit pain are most acute. Other modalities may come later, but we're intentionally focused."
+        answer:
+          "Initially, yes. We’re starting with text-based datasets and LLM workflows, where labeling drift and audit pain are most acute. We’re intentionally focused rather than building a shallow, generic tool."
       },
       {
         question: "Is Feather production-ready?",
-        answer: "Feather is currently in early access. We're onboarding teams carefully to validate real workflows, avoid building generic features, and get the foundations right. If this problem hurts you today, you're exactly who we want to work with."
+        answer:
+          "Feather is in early access. We’re onboarding teams carefully to validate real workflows, avoid unnecessary features, and ensure the core is solid. If this problem is already painful for you, early access is designed for teams like yours."
       },
       {
-        question: "When will Feather be available?",
-        answer: "We don't have a public launch date yet. Early access will roll out gradually to teams on the waitlist. Joining the waitlist helps us prioritize who to onboard first."
-      },
-      {
-        question: "Will Feather be open source?",
-        answer: "Not at the core. Some integrations or components may be open in the future, but Feather itself is a commercial product focused on reliability and long-term maintenance."
-      },
-      {
-        question: "How do I join early access?",
-        answer: "Join the waitlist using the form above. We'll reach out when early access opens — no spam, no mass emails."
-      },
+        question: "How do I get access?",
+        answer:
+          "Join the waitlist using the form above. We’ll reach out as early access opens — no spam, no mass emails, just direct contact."
+      }
     ],
   },
 

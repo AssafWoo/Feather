@@ -10,7 +10,7 @@ import Footer from './Footer'
 import SEO from './SEO'
 import GoogleTagManager from './GoogleTagManager'
 
-const LandingPage = ({ config, scrollToSignup = false }) => {
+const LandingPage = ({ config, scrollToSignup = false, scrollToWorkflow = false }) => {
   // Get current path for SEO
   const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/'
   const isSignupPage = currentPath === '/signup'
@@ -55,6 +55,20 @@ const LandingPage = ({ config, scrollToSignup = false }) => {
       return () => clearTimeout(timer)
     }
   }, [scrollToSignup])
+
+  // Handle scroll to workflow section when coming from /howitworks route
+  useEffect(() => {
+    if (scrollToWorkflow) {
+      const timer = setTimeout(() => {
+        const workflowSection = document.getElementById('workflow')
+        if (workflowSection) {
+          workflowSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 300)
+
+      return () => clearTimeout(timer)
+    }
+  }, [scrollToWorkflow])
 
   return (
     <>

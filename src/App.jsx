@@ -1,11 +1,15 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import LandingPage from './components/LandingPage'
-import { landingConfig } from './config/landingConfig'
 import { featherConfig } from './config/featherConfig'
 
 // Component to handle scroll to signup on /signup route
 function SignupRedirect() {
   return <LandingPage config={featherConfig} scrollToSignup={true} />
+}
+
+// Component to handle scroll to "How it works" on /howitworks route
+function HowItWorksRedirect() {
+  return <LandingPage config={featherConfig} scrollToWorkflow={true} />
 }
 
 function App() {
@@ -17,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage config={featherConfig} />} />
         <Route path="/signup" element={<SignupRedirect />} />
+        <Route path="/howitworks" element={<HowItWorksRedirect />} />
       </Routes>
     </BrowserRouter>
   )

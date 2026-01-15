@@ -1,18 +1,35 @@
+import { useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 const Header = ({ config }) => {
+  const navigate = useNavigate()
   if (!config?.enabled) return null
 
   const styles = config.styles || {}
 
-  const handleNavClick = (e, href) => {
-    if (href.startsWith('#')) {
-      e.preventDefault()
-      const targetId = href.substring(1)
-      const targetElement = document.getElementById(targetId)
-      if (targetElement) {
-        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const handleNavClick = useCallback(
+    (e, href) => {
+      if (!href) return
+
+      // In-page anchor scroll
+      if (href.startsWith('#')) {
+        e.preventDefault()
+        const targetId = href.substring(1)
+        const targetElement = document.getElementById(targetId)
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+        return
       }
-    }
-  }
+
+      // Client-side route navigation for internal paths (/signup, /howitworks, etc.)
+      if (href.startsWith('/')) {
+        e.preventDefault()
+        navigate(href)
+      }
+    },
+    [navigate]
+  )
 
   // Get responsive logo height classes
   // Use smaller height on mobile, then config height on md+
