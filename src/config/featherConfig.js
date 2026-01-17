@@ -28,8 +28,8 @@ export const featherConfig = {
     // Help Link
     helpLink: {
       enabled: false,
-      text: "Help!",
-      link: "#help",
+      text: "Want to hear more? Let's talk",
+      link: "#cta",
     },
 
     // CTA Button
@@ -83,8 +83,8 @@ export const featherConfig = {
     // Email Signup Configuration
     showEmailSignup: true,
     emailSignup: {
-      placeholder: "Work email",
-      buttonText: "Join the waitlist",
+      placeholder: "Want to hear more?",
+      buttonText: "Let's talk",
       successMessage: "You're in. We'll reach out when early access opens.",
       apiEndpoint: "https://api.feathersai.app/subscribe",
     },
