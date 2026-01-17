@@ -106,10 +106,12 @@ const EmailSignup = ({ config, onSubmit, source = 'unknown' }) => {
     }
   }
 
+  const alignmentClass = config.align === 'left' ? '' : 'mx-auto'
+
   if (submitted) {
     return (
-      <div className="max-w-md mx-auto">
-        <div className="bg-green-50 border border-green-200 rounded-md p-4 text-center">
+      <div className={`max-w-md ${alignmentClass}`}>
+        <div className={`bg-green-50 border border-green-200 rounded-md p-4 ${config.align === 'left' ? 'text-left' : 'text-center'}`}>
           <p className="text-sm text-green-800 font-medium">
             {config.successMessage || "Thanks! We'll be in touch soon."}
           </p>
@@ -119,7 +121,7 @@ const EmailSignup = ({ config, onSubmit, source = 'unknown' }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+    <form onSubmit={handleSubmit} className={`max-w-md ${alignmentClass}`}>
       <div className="flex flex-col sm:flex-row gap-2 bg-white p-4 rounded-2xl shadow-2xl border border-gray-100">
         <input
           type="email"
@@ -141,7 +143,7 @@ const EmailSignup = ({ config, onSubmit, source = 'unknown' }) => {
         </button>
       </div>
       {error && (
-        <p className="mt-2 text-sm text-red-600 text-center">{error}</p>
+        <p className={`mt-2 text-sm text-red-600 ${config.align === 'left' ? 'text-left' : 'text-center'}`}>{error}</p>
       )}
     </form>
   )

@@ -147,7 +147,7 @@ const Hero = ({ config }) => {
               {config.title}
             </h1>
             <p 
-              className={`text-sm sm:text-base md:text-lg lg:text-xl ${config.subtitleColor || 'text-gray-600'} mb-6 sm:mb-8 ${getTextAnimationClass()}`}
+              className={`text-sm sm:text-base md:text-lg lg:text-xl ${config.subtitleColor || 'text-gray-600'} ${config.subtitleLine2 ? 'mb-2 sm:mb-3' : 'mb-6 sm:mb-8'} ${getTextAnimationClass()}`}
               style={{ 
                 animationDelay: `${(textAnim.delay || 200) + 300}ms`,
                 opacity: textAnim.enabled === false ? 1 : 0
@@ -155,6 +155,17 @@ const Hero = ({ config }) => {
             >
               {config.subtitle}
             </p>
+            {config.subtitleLine2 && (
+              <p 
+                className={`text-sm sm:text-base md:text-lg lg:text-xl ${config.subtitleColor || 'text-gray-600'} mb-6 sm:mb-8 ${getTextAnimationClass()}`}
+                style={{ 
+                  animationDelay: `${(textAnim.delay || 200) + 450}ms`,
+                  opacity: textAnim.enabled === false ? 1 : 0
+                }}
+              >
+                {config.subtitleLine2}
+              </p>
+            )}
             {!config.showEmailSignup && (
               <div className="flex flex-col sm:flex-row gap-3">
                 {config.primaryButton?.enabled && config.primaryButton && (

@@ -72,9 +72,9 @@ export const featherConfig = {
     },
 
     // Main Content
-    title: "Labeling isn't the hard part. Trusting your labels is.",
-    subtitle:
-      "Feather turns LLM-assisted labeling into a controlled, auditable workflow — with versioned schemas, human approvals, and reproducible exports.",
+    title: "Training LLMs is continuous.",
+    subtitle: "Your labels should remember every decision, change, and training cycle.",
+    subtitleLine2: "Feather preserves context across training, retraining, and evaluation.",
     
     // Text Colors (for dark backgrounds)
     titleColor: "text-white",
@@ -87,6 +87,7 @@ export const featherConfig = {
       buttonText: "Let's talk",
       successMessage: "You're in. We'll reach out when early access opens.",
       apiEndpoint: "https://api.feathersai.app/subscribe",
+      align: "left", // "left" or "center"
     },
 
     // Alternative: Action Buttons
@@ -286,7 +287,7 @@ export const featherConfig = {
   },
 
   // ============================================
-  // FEATURES / "WHAT'S COMING" SECTION
+  // FEATURES / "WHY FEATHER" SECTION
   // ============================================
   features: {
     enabled: true,
@@ -296,87 +297,68 @@ export const featherConfig = {
     highlightWord: "Feather",
     subtitle: "Labels become decisions you can trust, explain, and reproduce.",
 
+    // Badge Configuration
+    badge: {
+      enabled: true,
+      text: "Why Feather",
+      bgColor: "bg-fuchsia-500",
+      textColor: "text-white",
+    },
+
+    // Illustration Configuration
+    illustration: {
+      enabled: true,
+      type: "generated", // "generated" for SVG spiral, "image" for custom image
+      imageSrc: null, // Path to custom image if type is "image"
+      imageAlt: "Feature illustration",
+      // Colors for generated SVG illustration (hex values)
+      primaryColor: "#D946EF", // fuchsia-500
+      secondaryColor: "#EC4899", // pink-500
+      tertiaryColor: "#F472B6", // pink-400
+    },
+
     // Styling
     styles: {
       backgroundColor: "bg-white",
       titleColor: "text-slate-950",
       subtitleColor: "text-slate-600",
       highlightColor: "text-fuchsia-500",
-      decorationColor: "bg-fuchsia-100",
-      decorationOpacity: "opacity-25",
+      // Icon box styling
+      iconBorderColor: "border-fuchsia-200",
+      iconHoverBorderColor: "hover:border-fuchsia-400",
+      iconHoverBgColor: "hover:bg-fuchsia-50",
+      // Feature item styling
+      featureTitleColor: "text-slate-900",
+      featureTitleHoverColor: "group-hover:text-fuchsia-600",
+      featureDescriptionColor: "text-slate-600",
     },
 
     // Feature Items
     items: [
       {
-        title: "LLM suggestions, human control",
-        name: "LLM suggestions, human control",
+        title: "LLM + Human",
         description:
           "LLMs pre-label fast. Humans approve/edit with required rationale on overrides — no silent drift.",
         icon: "/icons/brain.svg",
-        avatar: null,
-        role: "Human-in-the-loop",
-        platform: null,
-        special: true,
-        badge: "Core",
       },
       {
-        title: "Versioned label definitions",
-        name: "Versioned label definitions",
+        title: "Versioned Schemas",
         description:
           "Schemas evolve on purpose. Track meaning changes and link them to every label update.",
         icon: "/icons/version.svg",
-        avatar: null,
-        role: "Schema & governance",
-        platform: null,
-        special: false,
-        badge: null,
       },
       {
-        title: "Dataset diffs & audit trail",
-        name: "Dataset diffs & audit trail",
+        title: "Dataset Diffs",
         description:
           "See what changed, who approved it, and why — down to per-record before/after and comments.",
         icon: "/icons/audit.svg",
-        avatar: null,
-        role: "Traceability",
-        platform: null,
-        special: false,
-        badge: null,
       },
       {
-        title: "Reproducible training exports",
-        name: "Reproducible training exports",
+        title: "Reproducible Exports",
         description:
           "Export clean, approved datasets with schema version + hashes — so models stay debuggable.",
         icon: "/icons/export.svg",
-        avatar: null,
-        role: "Reproducibility",
-        platform: null,
-        special: false,
-        badge: null,
       },
-    ],
-
-    // Card Styling
-    cardStyles: {
-      defaultBg: "bg-white",
-      defaultBorder: "border-slate-200/70",
-      defaultHoverBorder: "hover:border-fuchsia-200",
-      specialBg: "bg-fuchsia-50/60",
-      specialBorder: "border-fuchsia-200",
-      badgeBg: "bg-fuchsia-500",
-      badgeText: "text-white",
-      titleColor: "text-slate-950",
-      roleColor: "text-slate-500",
-      descriptionColor: "text-slate-600",
-      platformColor: "text-slate-400",
-    },
-
-    // Avatar Gradient Colors
-    avatarGradients: [
-      { from: "from-slate-950", to: "to-fuchsia-500" },
-      { from: "from-slate-900", to: "to-fuchsia-400" },
     ],
   },
 
