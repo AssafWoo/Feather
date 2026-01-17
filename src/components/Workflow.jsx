@@ -9,6 +9,8 @@ const Workflow = ({ config }) => {
 
   const steps = config.steps || []
   const maxStep = steps.length - 1
+  const foundationalLayer = config.foundationalLayer || { enabled: false, items: [] }
+  const feedbackLoops = config.feedbackLoops || { enabled: false, loops: [] }
 
   useEffect(() => {
     const section = sectionRef.current
@@ -274,13 +276,15 @@ const Workflow = ({ config }) => {
               backgroundSize: '20px 20px'
             }}
           >
-            {/* Desktop Layout - Single Row with All Steps */}
+            {/* Desktop Layout - Redesigned with Foundational Layer and Feedback Loops */}
             <div className="hidden lg:block">
-              <div className="relative py-4">
+              <div className="relative py-8">
                 <div className="max-w-7xl mx-auto">
-                  <div className="flex items-center justify-center gap-4 relative">
+                  {/* Main Happy Path Flow */}
+                  <div className="relative flex items-center justify-center gap-4 mb-6" style={{ minHeight: '200px' }}>
+
                     {/* Input Sources around Step 0 */}
-                    <div className="flex flex-col items-center gap-2">
+                    <div className="flex flex-col items-center gap-2 relative z-10">
                       {inputSources.map((source, i) => (
                         <div key={i} className="flex flex-col items-center gap-1">
                           <div 
@@ -300,7 +304,7 @@ const Workflow = ({ config }) => {
                     </div>
 
                     {/* Connector from inputs to Step 0 */}
-                    <div className="flex items-center">
+                    <div className="flex items-center relative z-10">
                       <div 
                         className={`w-4 h-[2px] transition-all duration-500 ease-in-out ${
                           isStepActive(0) ? 'bg-fuchsia-500' : 'bg-slate-200'
@@ -314,9 +318,12 @@ const Workflow = ({ config }) => {
                       const isLast = index === steps.length - 1
                       
                       return (
-                        <div key={index} className="flex items-center">
+                        <div 
+                          key={index} 
+                          className="flex items-center relative z-10"
+                        >
                           <div
-                            className="flex flex-col items-center"
+                            className="flex flex-col items-center relative"
                             style={{
                               opacity: isVisible ? 1 : 0,
                               transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
@@ -368,7 +375,7 @@ const Workflow = ({ config }) => {
                     })}
 
                     {/* Connector from Step 4 to outputs */}
-                    <div className="flex items-center">
+                    <div className="flex items-center relative z-10">
                       <div 
                         className={`w-4 h-[2px] transition-all duration-500 ease-in-out ${
                           isStepActive(steps.length - 1) ? 'bg-fuchsia-500' : 'bg-slate-200'
@@ -377,7 +384,7 @@ const Workflow = ({ config }) => {
                     </div>
 
                     {/* Export Formats around Step 4 */}
-                    <div className="flex flex-col items-center gap-2">
+                    <div className="flex flex-col items-center gap-2 relative z-10">
                       {exportFormats.map((format, i) => (
                         <div key={i} className="flex flex-col items-center gap-1">
                           <span className={`text-[10px] font-medium transition-colors duration-500 ease-in-out ${
@@ -396,6 +403,52 @@ const Workflow = ({ config }) => {
                       ))}
                     </div>
                   </div>
+
+                  {/* Foundational Layer - Persistent Background System as a horizontal rail */}
+                  {foundationalLayer.enabled && foundationalLayer.items && foundationalLayer.items.length > 0 && (
+                    <div 
+                      className="relative mt-8"
+                      style={{
+                        opacity: isVisible ? 1 : 0,
+                        transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
+                        transition: 'all 0.6s ease-out 0.8s'
+                      }}
+                    >
+                      {/* Full-width rail background */}
+                      <div className="relative bg-slate-100/60 rounded-xl py-4 px-6 border border-slate-200/50">
+                        {/* Rail track line */}
+                        <div className="absolute top-1/2 left-6 right-6 h-[2px] bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200 transform -translate-y-1/2 rounded-full" />
+                        
+                        {/* Items distributed across the rail */}
+                        <div className="relative flex items-center justify-between">
+                          {foundationalLayer.items.map((item, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center gap-2 bg-white/80 px-3 py-2 rounded-lg border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow"
+                            >
+                              {/* Small icon */}
+                              <div className="w-5 h-5 rounded-md bg-slate-200/80 flex items-center justify-center text-slate-500">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
+                                  {index === 0 && <path d="M4 7v10M4 7l4-4M4 7l4 4M20 17V7" />}
+                                  {index === 1 && <path d="M12 8v8M8 12h8M3 12a9 9 0 1018 0 9 9 0 00-18 0z" />}
+                                  {index === 2 && <path d="M9 5H5v4M15 5h4v4M9 19H5v-4M15 19h4v-4" />}
+                                  {index === 3 && <path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
+                                </svg>
+                              </div>
+                              <div className="flex flex-col">
+                                <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide leading-tight">
+                                  {item.title}
+                                </span>
+                                <span className="text-[9px] text-slate-500 leading-tight">
+                                  {item.description}
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -488,6 +541,41 @@ const Workflow = ({ config }) => {
                     </div>
                   ))}
                 </div>
+
+                {/* Foundational Layer - Tablet */}
+                {foundationalLayer.enabled && foundationalLayer.items && foundationalLayer.items.length > 0 && (
+                  <div 
+                    className="mt-8"
+                    style={{
+                      opacity: isVisible ? 1 : 0,
+                      transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
+                      transition: 'all 0.6s ease-out 0.8s'
+                    }}
+                  >
+                    <div className="bg-slate-100/60 rounded-xl py-3 px-4 border border-slate-200/50">
+                      <div className="grid grid-cols-2 gap-3">
+                        {foundationalLayer.items.map((item, index) => (
+                          <div
+                            key={index}
+                            className="flex items-center gap-2 bg-white/80 px-3 py-2 rounded-lg border border-slate-200/60"
+                          >
+                            <div className="w-4 h-4 rounded bg-slate-200/80 flex items-center justify-center text-slate-500 flex-shrink-0">
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-2.5 h-2.5">
+                                {index === 0 && <path d="M4 7v10M4 7l4-4M4 7l4 4M20 17V7" />}
+                                {index === 1 && <path d="M12 8v8M8 12h8M3 12a9 9 0 1018 0 9 9 0 00-18 0z" />}
+                                {index === 2 && <path d="M9 5H5v4M15 5h4v4M9 19H5v-4M15 19h4v-4" />}
+                                {index === 3 && <path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
+                              </svg>
+                            </div>
+                            <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide">
+                              {item.title}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -617,6 +705,50 @@ const Workflow = ({ config }) => {
                   ))}
                 </div>
               </div>
+
+              {/* Foundational Layer - Mobile */}
+              {foundationalLayer.enabled && foundationalLayer.items && foundationalLayer.items.length > 0 && (
+                <div 
+                  className="mt-8 pt-6 border-t border-slate-200"
+                  style={{
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
+                    transition: 'all 0.6s ease-out 0.8s'
+                  }}
+                >
+                  <div className="text-center mb-4">
+                    <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">System of Record</p>
+                    <p className="text-[10px] text-slate-400">Built-in throughout your workflow</p>
+                  </div>
+                  <div className="bg-slate-100/60 rounded-xl py-3 px-3 border border-slate-200/50">
+                    <div className="grid grid-cols-2 gap-2">
+                      {foundationalLayer.items.map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center gap-2 bg-white/80 px-2.5 py-2 rounded-lg border border-slate-200/60"
+                        >
+                          <div className="w-5 h-5 rounded bg-slate-200/80 flex items-center justify-center text-slate-500 flex-shrink-0">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
+                              {index === 0 && <path d="M4 7v10M4 7l4-4M4 7l4 4M20 17V7" />}
+                              {index === 1 && <path d="M12 8v8M8 12h8M3 12a9 9 0 1018 0 9 9 0 00-18 0z" />}
+                              {index === 2 && <path d="M9 5H5v4M15 5h4v4M9 19H5v-4M15 19h4v-4" />}
+                              {index === 3 && <path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
+                            </svg>
+                          </div>
+                          <div className="flex flex-col min-w-0">
+                            <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide leading-tight truncate">
+                              {item.title}
+                            </span>
+                            <span className="text-[9px] text-slate-500 leading-tight truncate">
+                              {item.description}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -193,7 +193,7 @@ export const featherConfig = {
     highlightWord: "works",
     subtitle: "From raw data to trusted, reproducible labels in five steps.",
 
-    // Workflow Steps
+    // Workflow Steps (Happy Path)
     steps: [
       {
         title: "Import",
@@ -221,6 +221,46 @@ export const featherConfig = {
         iconType: "export",
       },
     ],
+
+    // Foundational Layer - Persistent system features
+    foundationalLayer: {
+      enabled: true,
+      items: [
+        {
+          title: "Versioned schemas",
+          description: "Track schema evolution",
+        },
+        {
+          title: "Decision history",
+          description: "Who approved what",
+        },
+        {
+          title: "Dataset diffs",
+          description: "See what changed",
+        },
+        {
+          title: "Audit trail",
+          description: "Complete lineage",
+        },
+      ],
+    },
+
+    // Feedback Loops
+    feedbackLoops: {
+      enabled: true,
+      loops: [
+        {
+          from: "Review",
+          to: "Define Schema",
+          label: "Schema updates",
+        },
+        {
+          from: "Export",
+          to: "Pre-label",
+          label: "Iterate",
+        },
+      ],
+    },
 
     // Styling
     styles: {
