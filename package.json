@@ -4,7 +4,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:feather": "VITE_PRODUCT=feather vite",
+    "dev:base": "VITE_PRODUCT=base vite",
     "build": "vite build",
+    "build:feather": "VITE_PRODUCT=feather vite build",
+    "build:base": "VITE_PRODUCT=base vite build",
     "preview": "vite preview"
   },
   "dependencies": {

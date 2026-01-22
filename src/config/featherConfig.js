@@ -12,7 +12,7 @@ export const featherConfig = {
     enabled: true,
 
     // Logo Configuration
-    logo: "/feather-owl-navy-pink.png",
+    logo: "/feather/logo.png",
     logoText: "Feather",
     logoAlt: "Feather AI - LLM-Assisted Labeling Platform Logo",
     logoHeight: "h-12",
@@ -113,7 +113,7 @@ export const featherConfig = {
     backgroundOverlay: "bg-black/20",
 
     // Right Side Image/Video
-    rightImage: "/images/feather-hero.png", // Image file path
+    rightImage: "/feather/images/feather-hero.png", // Image file path
     rightVideo: null, // Set to null to use image instead
     rightImageAlt: "Feather AI labeling workspace interface showing human-in-the-loop data annotation with LLM suggestions, versioned schemas, and audit trails for machine learning teams",
     rightImageWidth: "w-[60%]",
@@ -339,25 +339,25 @@ export const featherConfig = {
         title: "LLM + Human",
         description:
           "LLMs pre-label fast. Humans approve/edit with required rationale on overrides — no silent drift.",
-        icon: "/icons/brain.svg",
+        icon: "/feather/icons/brain.svg",
       },
       {
         title: "Versioned Schemas",
         description:
           "Schemas evolve on purpose. Track meaning changes and link them to every label update.",
-        icon: "/icons/version.svg",
+        icon: "/feather/icons/version.svg",
       },
       {
         title: "Dataset Diffs",
         description:
           "See what changed, who approved it, and why — down to per-record before/after and comments.",
-        icon: "/icons/audit.svg",
+        icon: "/feather/icons/audit.svg",
       },
       {
         title: "Reproducible Exports",
         description:
           "Export clean, approved datasets with schema version + hashes — so models stay debuggable.",
-        icon: "/icons/export.svg",
+        icon: "/feather/icons/export.svg",
       },
     ],
   },
@@ -389,37 +389,37 @@ export const featherConfig = {
         name: "MLflow",
         category: "Experiment & Artifact Tracking",
         description: "A staple open-source tool for experiment tracking, metadata, and model lifecycle management; great for linking datasets and labels back to runs.",
-        icon: "/integrations/mlflow.svg",
+        icon: "/feather/integrations/mlflow.svg",
       },
       {
         name: "Weights & Biases (W&B)",
         category: "Experiment & Metrics Dashboard",
         description: "Highly popular for tracking experiments, metrics, datasets, and artifacts with rich visualization — commonly used alongside MLflow or as an alternative.",
-        icon: "/integrations/wandb.svg",
+        icon: "/feather/integrations/wandb.svg",
       },
       {
         name: "DVC (Data Version Control)",
         category: "Data & Pipeline Versioning",
         description: "A Git-based data versioning tool that tracks datasets and models; very useful for reproducibility and linking label changes to specific data versions.",
-        icon: "/integrations/dvc.svg",
+        icon: "/feather/integrations/dvc.svg",
       },
       {
         name: "lakeFS",
         category: "Git-Like Data Lake Version Control",
         description: "Provides Git-style branching and versioning for object stores (S3, GCS, Azure Blob), enhancing Feather's lineage and reproducibility story.",
-        icon: "/integrations/lakefs.svg",
+        icon: "/feather/integrations/lakefs.svg",
       },
       {
         name: "Apache Airflow",
         category: "Workflow Orchestration",
         description: "One of the most widely used workflow tools for ML and data pipelines; integrates with experimentation tools, storage, and model training pipelines.",
-        icon: "/integrations/airflow.svg",
+        icon: "/feather/integrations/airflow.svg",
       },
       {
         name: "Kubeflow",
         category: "ML Lifecycle Orchestration on Kubernetes",
         description: "Specifically for Kubernetes-native teams; covers experiment tracking, pipelines, training, and serving — valuable for enterprise ML operations.",
-        icon: "/integrations/kubeflow.svg",
+        icon: "/feather/integrations/kubeflow.svg",
       },
     ],
 
