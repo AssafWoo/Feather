@@ -11,6 +11,9 @@ const Workflow = ({ config }) => {
   const maxStep = steps.length - 1
   const foundationalLayer = config.foundationalLayer || { enabled: false, items: [] }
   const feedbackLoops = config.feedbackLoops || { enabled: false, loops: [] }
+  
+  // Layout type: 'classic' (default/Feather) or 'orbital' (Plain)
+  const layout = config.layout || 'classic'
 
   useEffect(() => {
     const section = sectionRef.current
@@ -23,8 +26,8 @@ const Workflow = ({ config }) => {
         if (isIntersecting) {
           setIsVisible(true)
           
-          // When first entering the section, start the progress animation
-          if (!hasAnimated.current) {
+          // When first entering the section, start the progress animation (only for classic layout)
+          if (!hasAnimated.current && layout === 'classic') {
             hasAnimated.current = true
             setProgress(0)
             
@@ -77,7 +80,7 @@ const Workflow = ({ config }) => {
     return () => {
       observer.disconnect()
     }
-  }, [])
+  }, [layout])
 
   if (!config?.enabled) return null
 
@@ -215,12 +218,663 @@ const Workflow = ({ config }) => {
     return stepIcons[iconKey] || stepIcons.import
   }
 
+  // ============================================
+  // ORBITAL LAYOUT (Plain style)
+  // ============================================
+  const renderOrbitalLayout = () => {
+    // Get orbital config from config or use defaults
+    const orbitalConfig = config.orbitalCenter || {}
+    const brandName = orbitalConfig.brandName || 'Plain'
+    const brandAccentColor = orbitalConfig.brandAccentColor || '#7C3AED'
+    const centerTitle = orbitalConfig.title || 'Continuous Learning'
+    const centerDescription = orbitalConfig.description || 'Your data meaning evolves. We make sure your training keeps up.'
+
+    return (
+      <div className="relative">
+        {/* Desktop Layout: Circle Left + Curved Steps Right */}
+        <div className="hidden lg:flex items-center justify-center gap-12 xl:gap-20 relative min-h-[450px]">
+          
+          {/* Center Visual Circle */}
+          <div 
+            className="relative lg:w-80 lg:h-80 xl:w-96 xl:h-96 shrink-0 rounded-full bg-gradient-to-br from-white to-slate-50 shadow-xl border border-slate-100 flex items-center justify-center overflow-hidden"
+            style={{
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? 'scale(1)' : 'scale(0.9)',
+              transition: 'all 0.8s ease-out 0.2s'
+            }}
+          >
+            {/* Inner content of the circle */}
+            <div className="absolute inset-0 bg-white opacity-10" />
+            <div className="relative z-10 flex flex-col items-center justify-center text-center p-8">
+              {/* Central Brand Name */}
+              <div className="mb-2">
+                <span className="text-6xl font-bold text-slate-900 tracking-tighter" style={{ fontFamily: 'system-ui, sans-serif' }}>
+                  {brandName}<span style={{ color: brandAccentColor }}>.</span>
+                </span>
+              </div>
+              <h3 className="text-xl font-semibold text-slate-800 mb-2">{centerTitle}</h3>
+              <p className="text-sm text-slate-500 max-w-[200px]">{centerDescription}</p>
+            </div>
+            
+            {/* Decorative orbital rings */}
+            <div className="absolute inset-0 border border-slate-100 rounded-full scale-[0.85]" />
+            <div className="absolute inset-0 border border-slate-100 rounded-full scale-[0.7]" />
+          </div>
+
+          {/* Right Side: Curved Steps */}
+          <div className="relative h-[420px] flex flex-col justify-between py-4 w-full max-w-lg">
+            {/* Connecting Curved Dashed Line */}
+            <svg 
+              className="absolute left-[-20px] top-0 h-full w-32 overflow-visible pointer-events-none"
+              style={{
+                opacity: isVisible ? 1 : 0,
+                transition: 'opacity 1s ease-in 0.5s'
+              }}
+            >
+              {/* Quadratic Bezier Curve: Starts top, curves right, ends bottom */}
+              <path 
+                d="M 20 40 Q 80 210 20 380" 
+                fill="none"  
+                stroke="#cbd5e1" 
+                strokeWidth="2" 
+                strokeDasharray="8 8"
+                strokeLinecap="round"
+              />
+            </svg>
+
+            {steps.map((step, index) => {
+              // Adjust margin based on index to follow the curve visually
+              const marginLeft = index === 1 ? 'ml-12' : 'ml-0'
+              
+              return (
+                <div 
+                  key={index} 
+                  className={`flex items-start gap-6 relative z-10 group ${marginLeft}`}
+                  style={{
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible ? 'translateX(0)' : 'translateX(30px)',
+                    transition: `all 0.6s ease-out ${0.4 + index * 0.2}s`
+                  }}
+                >
+                  {/* Number Circle */}
+                  <div className="relative shrink-0">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold border-2 transition-all duration-300 group-hover:scale-110 ${
+                      styles.activeCircleBg ? 'bg-white text-fuchsia-600 border-fuchsia-200 shadow-md' : 'bg-white text-slate-400 border-slate-200'
+                    }`}>
+                      {index + 1}
+                    </div>
+                    {/* Connector dot on the line */}
+                    <div className="absolute top-1/2 -left-[26px] -translate-y-1/2 w-3 h-3 bg-white border-2 border-fuchsia-300 rounded-full" 
+                         style={{ left: index === 1 ? '-54px' : '-26px' }}
+                    />
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="pt-1">
+                    <h3 className={`text-xl font-bold mb-2 group-hover:text-fuchsia-600 transition-colors ${styles.stepTitleColor || 'text-slate-800'}`}>
+                      {step.title}
+                    </h3>
+                    <p className={`text-sm leading-relaxed ${styles.stepDescriptionColor || 'text-slate-500'} max-w-xs`}>
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Mobile/Tablet Layout: Vertical List */}
+        <div className="lg:hidden flex flex-col gap-6 relative px-4">
+          {/* Vertical dashed line */}
+          <div className="absolute left-[39px] top-8 bottom-8 w-[2px] border-l-2 border-dashed border-slate-200" />
+
+          {steps.map((step, index) => (
+            <div 
+              key={index} 
+              className="relative flex items-start gap-6"
+              style={{
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                transition: `all 0.5s ease-out ${0.2 + index * 0.1}s`
+              }}
+            >
+              {/* Number Circle */}
+              <div className={`relative z-10 w-12 h-12 shrink-0 rounded-full flex items-center justify-center text-lg font-bold bg-white border-2 ${
+                'text-fuchsia-600 border-fuchsia-200 shadow-sm'
+              }`}>
+                {index + 1}
+              </div>
+
+              {/* Content */}
+              <div className="pt-1 pb-4 bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-slate-100 shadow-sm w-full">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="text-fuchsia-500 w-5 h-5">
+                    {getStepIcon(step, index)}
+                  </div>
+                  <h3 className="text-lg font-bold text-slate-800">
+                    {step.title}
+                  </h3>
+                </div>
+                <p className="text-sm text-slate-500 leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  // ============================================
+  // CLASSIC LAYOUT (Feather style)
+  // ============================================
+  const renderClassicLayout = () => (
+    <div 
+      className={`${styles.cardBg || 'bg-white'} rounded-xl sm:rounded-2xl ${styles.cardBorder || 'border border-slate-200/80'} shadow-lg sm:shadow-xl overflow-hidden`}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+        transition: 'all 0.7s ease-out 0.2s'
+      }}
+    >
+      {/* Grid Background Pattern */}
+      <div 
+        className="relative py-6 px-4 sm:py-7 sm:px-5 md:py-8 md:px-6"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, rgba(148, 163, 184, 0.15) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(148, 163, 184, 0.15) 1px, transparent 1px)
+          `,
+          backgroundSize: '20px 20px'
+        }}
+      >
+        {/* Desktop Layout - Redesigned with Foundational Layer and Feedback Loops */}
+        <div className="hidden lg:block">
+          <div className="relative py-8">
+            <div className="max-w-7xl mx-auto">
+              {/* Main Happy Path Flow */}
+              <div className="relative flex items-center justify-center gap-4 mb-6" style={{ minHeight: '200px' }}>
+
+                {/* Input Sources around Step 0 */}
+                <div className="flex flex-col items-center gap-2 relative z-10">
+                  {inputSources.map((source, i) => (
+                    <div key={i} className="flex flex-col items-center gap-1">
+                      <div 
+                        className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-500 ease-in-out ${
+                          isStepActive(0) 
+                            ? 'bg-fuchsia-500 text-white shadow-md scale-105' 
+                            : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
+                        }`}
+                      >
+                        <div className="w-3 h-3">{smallIcons[source.icon]}</div>
+                      </div>
+                      <span className={`text-[10px] font-medium transition-colors duration-500 ease-in-out ${
+                        isStepActive(0) ? 'text-fuchsia-500' : 'text-slate-400'
+                      }`}>{source.label}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Connector from inputs to Step 0 */}
+                <div className="flex items-center relative z-10">
+                  <div 
+                    className={`w-4 h-[2px] transition-all duration-500 ease-in-out ${
+                      isStepActive(0) ? 'bg-fuchsia-500' : 'bg-slate-200'
+                    }`}
+                  />
+                </div>
+
+                {/* All Steps in a Row */}
+                {steps.map((step, index) => {
+                  const active = isStepActive(index)
+                  const isLast = index === steps.length - 1
+                  
+                  return (
+                    <div 
+                      key={index} 
+                      className="flex items-center relative z-10"
+                    >
+                      <div
+                        className="flex flex-col items-center relative"
+                        style={{
+                          opacity: isVisible ? 1 : 0,
+                          transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                          transition: `all 0.5s ease-out ${0.3 + index * 0.1}s`
+                        }}
+                      >
+                        <div 
+                          className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-700 ease-in-out ${
+                            active
+                              ? 'bg-fuchsia-500 text-white shadow-lg shadow-fuchsia-500/25 scale-105'
+                              : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
+                          }`}
+                        >
+                          <div className="w-4 h-4">
+                            {getStepIcon(step, index)}
+                          </div>
+                        </div>
+                        <div className="mt-2 text-center">
+                          <div className={`text-[10px] font-medium uppercase tracking-wider mb-0.5 transition-colors duration-500 ease-in-out ${
+                            active ? 'text-fuchsia-500' : 'text-slate-400'
+                          }`}>
+                            {step.title}
+                          </div>
+                          <div className={`text-[11px] leading-tight max-w-[90px] transition-colors duration-500 ease-in-out ${
+                            active ? 'text-slate-700' : 'text-slate-400'
+                          }`}>
+                            {step.description}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Curved connector line between steps */}
+                      {!isLast && (
+                        <div className="relative mx-3 w-16" style={{ height: '2px' }}>
+                          {/* Background line */}
+                          <div className="absolute inset-0 h-[2px] bg-slate-200 rounded-full" />
+                          {/* Animated progress line */}
+                          <div 
+                            className="absolute top-0 left-0 h-[2px] bg-fuchsia-500 rounded-full transition-all duration-500 ease-in-out"
+                            style={{
+                              width: `${getLineProgress(index)}%`,
+                              transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )
+                })}
+
+                {/* Connector from Step 4 to outputs */}
+                <div className="flex items-center relative z-10">
+                  <div 
+                    className={`w-4 h-[2px] transition-all duration-500 ease-in-out ${
+                      isStepActive(steps.length - 1) ? 'bg-fuchsia-500' : 'bg-slate-200'
+                    }`}
+                  />
+                </div>
+
+                {/* Export Formats around Step 4 */}
+                <div className="flex flex-col items-center gap-2 relative z-10">
+                  {exportFormats.map((format, i) => (
+                    <div key={i} className="flex flex-col items-center gap-1">
+                      <span className={`text-[10px] font-medium transition-colors duration-500 ease-in-out ${
+                        isStepActive(steps.length - 1) ? 'text-fuchsia-500' : 'text-slate-400'
+                      }`}>{format.label}</span>
+                      <div 
+                        className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-500 ease-in-out ${
+                          isStepActive(steps.length - 1) 
+                            ? 'bg-fuchsia-500 text-white shadow-md scale-105' 
+                            : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
+                        }`}
+                      >
+                        <div className="w-3 h-3">{smallIcons[format.icon]}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Foundational Layer - Persistent Background System as a horizontal rail */}
+              {foundationalLayer.enabled && foundationalLayer.items && foundationalLayer.items.length > 0 && (
+                <div 
+                  className="relative mt-8"
+                  style={{
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
+                    transition: 'all 0.6s ease-out 0.8s'
+                  }}
+                >
+                  {/* Full-width rail background */}
+                  <div className="relative bg-slate-100/60 rounded-xl py-4 px-6 border border-slate-200/50">
+                    {/* Rail track line */}
+                    <div className="absolute top-1/2 left-6 right-6 h-[2px] bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200 transform -translate-y-1/2 rounded-full" />
+                    
+                    {/* Items distributed across the rail */}
+                    <div className="relative flex items-center justify-between">
+                      {foundationalLayer.items.map((item, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center gap-2 bg-white/80 px-3 py-2 rounded-lg border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow"
+                        >
+                          {/* Small icon */}
+                          <div className="w-5 h-5 rounded-md bg-slate-200/80 flex items-center justify-center text-slate-500">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
+                              {index === 0 && <path d="M4 7v10M4 7l4-4M4 7l4 4M20 17V7" />}
+                              {index === 1 && <path d="M12 8v8M8 12h8M3 12a9 9 0 1018 0 9 9 0 00-18 0z" />}
+                              {index === 2 && <path d="M9 5H5v4M15 5h4v4M9 19H5v-4M15 19h4v-4" />}
+                              {index === 3 && <path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
+                            </svg>
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide leading-tight">
+                              {item.title}
+                            </span>
+                            <span className="text-[9px] text-slate-500 leading-tight">
+                              {item.description}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Tablet/Medium Layout */}
+        <div className="hidden md:block lg:hidden">
+          <div className="flex flex-col items-center gap-6">
+            {/* Input sources row */}
+            <div className="flex items-center gap-4 mb-2">
+              {inputSources.map((source, i) => (
+                <div key={i} className="flex flex-col items-center gap-1">
+                  <div 
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 ease-in-out ${
+                      isStepActive(0) 
+                        ? 'bg-fuchsia-500 text-white shadow-md scale-105' 
+                        : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
+                    }`}
+                  >
+                    <div className="w-3.5 h-3.5">{smallIcons[source.icon]}</div>
+                  </div>
+                  <span className="text-[10px] font-medium text-slate-500">{source.label}</span>
+                </div>
+              ))}
+            </div>
+            
+            {/* Vertical connector */}
+            <div className={`w-[2px] h-4 transition-colors duration-500 ease-in-out ${isStepActive(0) ? 'bg-fuchsia-500' : 'bg-slate-200'}`} />
+
+            {/* Steps in a row */}
+            <div className="flex items-center gap-4">
+              {steps.map((step, index) => {
+                const active = isStepActive(index)
+                const isLast = index === steps.length - 1
+                
+                return (
+                  <div key={index} className="flex items-center">
+                    <div className="flex flex-col items-center">
+                      <div 
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-700 ease-in-out ${
+                          active
+                            ? 'bg-fuchsia-500 text-white shadow-lg shadow-fuchsia-500/25 scale-105'
+                            : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
+                        }`}
+                      >
+                        <div className={`w-5 h-5 transition-all duration-500 ease-in-out ${active ? 'scale-110' : 'scale-100'}`}>
+                          {getStepIcon(step, index)}
+                        </div>
+                      </div>
+                      <div className="mt-3 text-center">
+                        <div className={`text-[10px] font-medium uppercase tracking-wider transition-colors duration-500 ease-in-out ${active ? 'text-fuchsia-500' : 'text-slate-400'}`}>
+                          {step.title}
+                        </div>
+                      </div>
+                    </div>
+                    {!isLast && (
+                      <div className="mx-2 w-10 h-[2px] bg-slate-200 relative">
+                        <div 
+                          className="absolute top-0 left-0 h-full bg-fuchsia-500 transition-all duration-500 ease-in-out"
+                          style={{ 
+                            width: `${getLineProgress(index)}%`,
+                            transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* Vertical connector */}
+            <div className={`w-[2px] h-4 transition-colors duration-500 ease-in-out ${isStepActive(steps.length - 1) ? 'bg-fuchsia-500' : 'bg-slate-200'}`} />
+
+            {/* Export formats row */}
+            <div className="flex items-center gap-4 mt-2">
+              {exportFormats.map((format, i) => (
+                <div key={i} className="flex flex-col items-center gap-1">
+                  <div 
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 ease-in-out ${
+                      isStepActive(steps.length - 1) 
+                        ? 'bg-fuchsia-500 text-white shadow-md scale-105' 
+                        : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
+                    }`}
+                  >
+                    <div className="w-3.5 h-3.5">{smallIcons[format.icon]}</div>
+                  </div>
+                  <span className={`text-[10px] font-medium transition-colors duration-500 ease-in-out ${
+                    isStepActive(steps.length - 1) ? 'text-fuchsia-500' : 'text-slate-500'
+                  }`}>{format.label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Foundational Layer - Tablet */}
+            {foundationalLayer.enabled && foundationalLayer.items && foundationalLayer.items.length > 0 && (
+              <div 
+                className="mt-8"
+                style={{
+                  opacity: isVisible ? 1 : 0,
+                  transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
+                  transition: 'all 0.6s ease-out 0.8s'
+                }}
+              >
+                <div className="bg-slate-100/60 rounded-xl py-3 px-4 border border-slate-200/50">
+                  <div className="grid grid-cols-2 gap-3">
+                    {foundationalLayer.items.map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center gap-2 bg-white/80 px-3 py-2 rounded-lg border border-slate-200/60"
+                      >
+                        <div className="w-4 h-4 rounded bg-slate-200/80 flex items-center justify-center text-slate-500 flex-shrink-0">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-2.5 h-2.5">
+                            {index === 0 && <path d="M4 7v10M4 7l4-4M4 7l4 4M20 17V7" />}
+                            {index === 1 && <path d="M12 8v8M8 12h8M3 12a9 9 0 1018 0 9 9 0 00-18 0z" />}
+                            {index === 2 && <path d="M9 5H5v4M15 5h4v4M9 19H5v-4M15 19h4v-4" />}
+                            {index === 3 && <path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
+                          </svg>
+                        </div>
+                        <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide">
+                          {item.title}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Mobile Layout - Vertical */}
+        <div className="md:hidden">
+          {/* Input Sources Section */}
+          <div className="mb-6 pb-6 border-b border-slate-200">
+            <div className="text-center mb-4">
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-3">Input Sources</p>
+            </div>
+            <div className="flex items-center justify-center gap-4 flex-wrap">
+              {inputSources.map((source, i) => (
+                <div key={i} className="flex flex-col items-center gap-2">
+                  <div 
+                    className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 ease-in-out ${
+                      isStepActive(0) 
+                        ? 'bg-fuchsia-500 text-white shadow-md scale-105' 
+                        : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
+                    }`}
+                  >
+                    <div className="w-5 h-5">{smallIcons[source.icon]}</div>
+                  </div>
+                  <span className={`text-xs font-medium transition-colors duration-500 ease-in-out ${
+                    isStepActive(0) ? 'text-fuchsia-500' : 'text-slate-500'
+                  }`}>{source.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative pl-14 sm:pl-16 md:pl-20">
+            {/* Steps Container with Timeline */}
+            <div className="relative">
+              {/* Vertical timeline line - connects from first icon center to last icon center */}
+              <div 
+                className="absolute left-5 sm:left-7 md:left-8 w-[3px] bg-slate-200 rounded-full"
+                style={{
+                  // Start from center of first icon: h-11 (2.75rem) / 2 = 1.375rem on mobile
+                  // On sm: h-12 (3rem) / 2 = 1.5rem, on md: h-14 (3.5rem) / 2 = 1.75rem
+                  top: 'calc(2.75rem / 2)',
+                  // End at center of last icon (same offset from bottom)
+                  bottom: 'calc(2.75rem / 2)'
+                }}
+              >
+                <div 
+                  className="w-full bg-fuchsia-500 rounded-full transition-all duration-500 ease-in-out origin-top"
+                  style={{ 
+                    height: `${progress}%`,
+                    transition: 'height 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                />
+              </div>
+
+              {/* Steps */}
+              <div className="space-y-8 sm:space-y-10 md:space-y-12">
+                {steps.map((step, index) => {
+                  const active = isStepActive(index)
+                  
+                  return (
+                    <div
+                      key={index}
+                      className="relative"
+                      style={{
+                        opacity: isVisible ? 1 : 0,
+                        transform: isVisible ? 'translateX(0)' : 'translateX(-20px)',
+                        transition: `all 0.5s ease-out ${0.2 + index * 0.1}s`
+                      }}
+                    >
+                      {/* Step Circle */}
+                      <div 
+                        className={`absolute -left-[48px] sm:-left-[56px] md:-left-[60px] w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center transition-all duration-700 ease-in-out z-10 ${
+                          active
+                            ? 'bg-fuchsia-500 text-white shadow-lg shadow-fuchsia-500/30 scale-105'
+                            : 'bg-white border-[3px] border-slate-200 text-slate-400 scale-100'
+                        }`}
+                      >
+                        <div className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 transition-all duration-500 ease-in-out ${active ? 'scale-110' : 'scale-100'}`}>
+                          {getStepIcon(step, index)}
+                        </div>
+                      </div>
+
+                    {/* Content Card */}
+                    <div className={`bg-white rounded-xl p-4 sm:p-5 md:p-6 border-2 transition-all duration-500 ease-in-out ${
+                      active 
+                        ? 'border-fuchsia-200 shadow-md shadow-fuchsia-500/10' 
+                        : 'border-slate-100 shadow-sm'
+                    }`}>
+                      <div className={`text-sm sm:text-base font-semibold uppercase tracking-wider mb-2 sm:mb-3 transition-colors duration-500 ease-in-out ${
+                        active ? 'text-fuchsia-500' : 'text-slate-500'
+                      }`}>
+                        {step.title}
+                      </div>
+                      <div className={`text-base sm:text-lg leading-relaxed transition-colors duration-500 ease-in-out ${
+                        active ? 'text-slate-800' : 'text-slate-600'
+                      }`}>
+                        {step.description}
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+              </div>
+            </div>
+          </div>
+
+          {/* Export Formats Section - Centered */}
+          <div className="mt-8 pt-6 border-t border-slate-200">
+            <div className="text-center mb-4">
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-3">Export Formats</p>
+            </div>
+            <div className="flex items-center justify-center gap-4 flex-wrap">
+              {exportFormats.map((format, i) => (
+                <div key={i} className="flex flex-col items-center gap-2">
+                  <div 
+                    className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 ease-in-out ${
+                      isStepActive(steps.length - 1) 
+                        ? 'bg-fuchsia-500 text-white shadow-md scale-105' 
+                        : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
+                    }`}
+                  >
+                    <div className="w-5 h-5">{smallIcons[format.icon]}</div>
+                  </div>
+                  <span className={`text-xs font-medium transition-colors duration-500 ease-in-out ${
+                    isStepActive(steps.length - 1) ? 'text-fuchsia-500' : 'text-slate-500'
+                  }`}>{format.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Foundational Layer - Mobile */}
+          {foundationalLayer.enabled && foundationalLayer.items && foundationalLayer.items.length > 0 && (
+            <div 
+              className="mt-8 pt-6 border-t border-slate-200"
+              style={{
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
+                transition: 'all 0.6s ease-out 0.8s'
+              }}
+            >
+              <div className="text-center mb-4">
+                <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">System of Record</p>
+                <p className="text-[10px] text-slate-400">Built-in throughout your workflow</p>
+              </div>
+              <div className="bg-slate-100/60 rounded-xl py-3 px-3 border border-slate-200/50">
+                <div className="grid grid-cols-2 gap-2">
+                  {foundationalLayer.items.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-2 bg-white/80 px-2.5 py-2 rounded-lg border border-slate-200/60"
+                    >
+                      <div className="w-5 h-5 rounded bg-slate-200/80 flex items-center justify-center text-slate-500 flex-shrink-0">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
+                          {index === 0 && <path d="M4 7v10M4 7l4-4M4 7l4 4M20 17V7" />}
+                          {index === 1 && <path d="M12 8v8M8 12h8M3 12a9 9 0 1018 0 9 9 0 00-18 0z" />}
+                          {index === 2 && <path d="M9 5H5v4M15 5h4v4M9 19H5v-4M15 19h4v-4" />}
+                          {index === 3 && <path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
+                        </svg>
+                      </div>
+                      <div className="flex flex-col min-w-0">
+                        <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide leading-tight truncate">
+                          {item.title}
+                        </span>
+                        <span className="text-[9px] text-slate-500 leading-tight truncate">
+                          {item.description}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+
   return (
     <section
       id="workflow"
       ref={sectionRef}
       aria-label={config.title || "How it works"}
       className={`py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 ${styles.backgroundColor || 'bg-slate-50'} relative overflow-hidden min-h-screen snap-start flex items-center`}
+      style={{ scrollSnapStop: 'always' }}
     >
       {/* Subtle background decoration */}
       <div className={`absolute top-10 right-10 sm:top-20 sm:right-20 w-48 h-48 sm:w-72 sm:h-72 ${styles.decorationColor || 'bg-slate-100'} rounded-full blur-3xl ${styles.decorationOpacity || 'opacity-30'}`} />
@@ -256,502 +910,8 @@ const Workflow = ({ config }) => {
           )}
         </div>
 
-        {/* Grid Box Container */}
-        <div 
-          className={`${styles.cardBg || 'bg-white'} rounded-xl sm:rounded-2xl ${styles.cardBorder || 'border border-slate-200/80'} shadow-lg sm:shadow-xl overflow-hidden`}
-          style={{
-            opacity: isVisible ? 1 : 0,
-            transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-            transition: 'all 0.7s ease-out 0.2s'
-          }}
-        >
-          {/* Grid Background Pattern */}
-          <div 
-            className="relative py-6 px-4 sm:py-7 sm:px-5 md:py-8 md:px-6"
-            style={{
-              backgroundImage: `
-                linear-gradient(to right, rgba(148, 163, 184, 0.15) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(148, 163, 184, 0.15) 1px, transparent 1px)
-              `,
-              backgroundSize: '20px 20px'
-            }}
-          >
-            {/* Desktop Layout - Redesigned with Foundational Layer and Feedback Loops */}
-            <div className="hidden lg:block">
-              <div className="relative py-8">
-                <div className="max-w-7xl mx-auto">
-                  {/* Main Happy Path Flow */}
-                  <div className="relative flex items-center justify-center gap-4 mb-6" style={{ minHeight: '200px' }}>
-
-                    {/* Input Sources around Step 0 */}
-                    <div className="flex flex-col items-center gap-2 relative z-10">
-                      {inputSources.map((source, i) => (
-                        <div key={i} className="flex flex-col items-center gap-1">
-                          <div 
-                            className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-500 ease-in-out ${
-                              isStepActive(0) 
-                                ? 'bg-fuchsia-500 text-white shadow-md scale-105' 
-                                : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
-                            }`}
-                          >
-                            <div className="w-3 h-3">{smallIcons[source.icon]}</div>
-                          </div>
-                          <span className={`text-[10px] font-medium transition-colors duration-500 ease-in-out ${
-                            isStepActive(0) ? 'text-fuchsia-500' : 'text-slate-400'
-                          }`}>{source.label}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Connector from inputs to Step 0 */}
-                    <div className="flex items-center relative z-10">
-                      <div 
-                        className={`w-4 h-[2px] transition-all duration-500 ease-in-out ${
-                          isStepActive(0) ? 'bg-fuchsia-500' : 'bg-slate-200'
-                        }`}
-                      />
-                    </div>
-
-                    {/* All Steps in a Row */}
-                    {steps.map((step, index) => {
-                      const active = isStepActive(index)
-                      const isLast = index === steps.length - 1
-                      
-                      return (
-                        <div 
-                          key={index} 
-                          className="flex items-center relative z-10"
-                        >
-                          <div
-                            className="flex flex-col items-center relative"
-                            style={{
-                              opacity: isVisible ? 1 : 0,
-                              transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-                              transition: `all 0.5s ease-out ${0.3 + index * 0.1}s`
-                            }}
-                          >
-                            <div 
-                              className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-700 ease-in-out ${
-                                active
-                                  ? 'bg-fuchsia-500 text-white shadow-lg shadow-fuchsia-500/25 scale-105'
-                                  : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
-                              }`}
-                            >
-                              <div className="w-4 h-4">
-                                {getStepIcon(step, index)}
-                              </div>
-                            </div>
-                            <div className="mt-2 text-center">
-                              <div className={`text-[10px] font-medium uppercase tracking-wider mb-0.5 transition-colors duration-500 ease-in-out ${
-                                active ? 'text-fuchsia-500' : 'text-slate-400'
-                              }`}>
-                                {step.title}
-                              </div>
-                              <div className={`text-[11px] leading-tight max-w-[90px] transition-colors duration-500 ease-in-out ${
-                                active ? 'text-slate-700' : 'text-slate-400'
-                              }`}>
-                                {step.description}
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Curved connector line between steps */}
-                          {!isLast && (
-                            <div className="relative mx-3 w-16" style={{ height: '2px' }}>
-                              {/* Background line */}
-                              <div className="absolute inset-0 h-[2px] bg-slate-200 rounded-full" />
-                              {/* Animated progress line */}
-                              <div 
-                                className="absolute top-0 left-0 h-[2px] bg-fuchsia-500 rounded-full transition-all duration-500 ease-in-out"
-                                style={{
-                                  width: `${getLineProgress(index)}%`,
-                                  transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-                                }}
-                              />
-                            </div>
-                          )}
-                        </div>
-                      )
-                    })}
-
-                    {/* Connector from Step 4 to outputs */}
-                    <div className="flex items-center relative z-10">
-                      <div 
-                        className={`w-4 h-[2px] transition-all duration-500 ease-in-out ${
-                          isStepActive(steps.length - 1) ? 'bg-fuchsia-500' : 'bg-slate-200'
-                        }`}
-                      />
-                    </div>
-
-                    {/* Export Formats around Step 4 */}
-                    <div className="flex flex-col items-center gap-2 relative z-10">
-                      {exportFormats.map((format, i) => (
-                        <div key={i} className="flex flex-col items-center gap-1">
-                          <span className={`text-[10px] font-medium transition-colors duration-500 ease-in-out ${
-                            isStepActive(steps.length - 1) ? 'text-fuchsia-500' : 'text-slate-400'
-                          }`}>{format.label}</span>
-                          <div 
-                            className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-500 ease-in-out ${
-                              isStepActive(steps.length - 1) 
-                                ? 'bg-fuchsia-500 text-white shadow-md scale-105' 
-                                : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
-                            }`}
-                          >
-                            <div className="w-3 h-3">{smallIcons[format.icon]}</div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Foundational Layer - Persistent Background System as a horizontal rail */}
-                  {foundationalLayer.enabled && foundationalLayer.items && foundationalLayer.items.length > 0 && (
-                    <div 
-                      className="relative mt-8"
-                      style={{
-                        opacity: isVisible ? 1 : 0,
-                        transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
-                        transition: 'all 0.6s ease-out 0.8s'
-                      }}
-                    >
-                      {/* Full-width rail background */}
-                      <div className="relative bg-slate-100/60 rounded-xl py-4 px-6 border border-slate-200/50">
-                        {/* Rail track line */}
-                        <div className="absolute top-1/2 left-6 right-6 h-[2px] bg-gradient-to-r from-slate-200 via-slate-300 to-slate-200 transform -translate-y-1/2 rounded-full" />
-                        
-                        {/* Items distributed across the rail */}
-                        <div className="relative flex items-center justify-between">
-                          {foundationalLayer.items.map((item, index) => (
-                            <div
-                              key={index}
-                              className="flex items-center gap-2 bg-white/80 px-3 py-2 rounded-lg border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow"
-                            >
-                              {/* Small icon */}
-                              <div className="w-5 h-5 rounded-md bg-slate-200/80 flex items-center justify-center text-slate-500">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
-                                  {index === 0 && <path d="M4 7v10M4 7l4-4M4 7l4 4M20 17V7" />}
-                                  {index === 1 && <path d="M12 8v8M8 12h8M3 12a9 9 0 1018 0 9 9 0 00-18 0z" />}
-                                  {index === 2 && <path d="M9 5H5v4M15 5h4v4M9 19H5v-4M15 19h4v-4" />}
-                                  {index === 3 && <path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
-                                </svg>
-                              </div>
-                              <div className="flex flex-col">
-                                <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide leading-tight">
-                                  {item.title}
-                                </span>
-                                <span className="text-[9px] text-slate-500 leading-tight">
-                                  {item.description}
-                                </span>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Tablet/Medium Layout */}
-            <div className="hidden md:block lg:hidden">
-              <div className="flex flex-col items-center gap-6">
-                {/* Input sources row */}
-                <div className="flex items-center gap-4 mb-2">
-                  {inputSources.map((source, i) => (
-                    <div key={i} className="flex flex-col items-center gap-1">
-                      <div 
-                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 ease-in-out ${
-                          isStepActive(0) 
-                            ? 'bg-fuchsia-500 text-white shadow-md scale-105' 
-                            : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
-                        }`}
-                      >
-                        <div className="w-3.5 h-3.5">{smallIcons[source.icon]}</div>
-                      </div>
-                      <span className="text-[10px] font-medium text-slate-500">{source.label}</span>
-                    </div>
-                  ))}
-                </div>
-                
-                {/* Vertical connector */}
-                <div className={`w-[2px] h-4 transition-colors duration-500 ease-in-out ${isStepActive(0) ? 'bg-fuchsia-500' : 'bg-slate-200'}`} />
-
-                {/* Steps in a row */}
-                <div className="flex items-center gap-4">
-                  {steps.map((step, index) => {
-                    const active = isStepActive(index)
-                    const isLast = index === steps.length - 1
-                    
-                    return (
-                      <div key={index} className="flex items-center">
-                        <div className="flex flex-col items-center">
-                          <div 
-                            className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-700 ease-in-out ${
-                              active
-                                ? 'bg-fuchsia-500 text-white shadow-lg shadow-fuchsia-500/25 scale-105'
-                                : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
-                            }`}
-                          >
-                            <div className={`w-5 h-5 transition-all duration-500 ease-in-out ${active ? 'scale-110' : 'scale-100'}`}>
-                              {getStepIcon(step, index)}
-                            </div>
-                          </div>
-                          <div className="mt-3 text-center">
-                            <div className={`text-[10px] font-medium uppercase tracking-wider transition-colors duration-500 ease-in-out ${active ? 'text-fuchsia-500' : 'text-slate-400'}`}>
-                              {step.title}
-                            </div>
-                          </div>
-                        </div>
-                        {!isLast && (
-                          <div className="mx-2 w-10 h-[2px] bg-slate-200 relative">
-                            <div 
-                              className="absolute top-0 left-0 h-full bg-fuchsia-500 transition-all duration-500 ease-in-out"
-                              style={{ 
-                                width: `${getLineProgress(index)}%`,
-                                transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-                              }}
-                            />
-                          </div>
-                        )}
-                      </div>
-                    )
-                  })}
-                </div>
-
-                {/* Vertical connector */}
-                <div className={`w-[2px] h-4 transition-colors duration-500 ease-in-out ${isStepActive(steps.length - 1) ? 'bg-fuchsia-500' : 'bg-slate-200'}`} />
-
-                {/* Export formats row */}
-                <div className="flex items-center gap-4 mt-2">
-                  {exportFormats.map((format, i) => (
-                    <div key={i} className="flex flex-col items-center gap-1">
-                      <div 
-                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 ease-in-out ${
-                          isStepActive(steps.length - 1) 
-                            ? 'bg-fuchsia-500 text-white shadow-md scale-105' 
-                            : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
-                        }`}
-                      >
-                        <div className="w-3.5 h-3.5">{smallIcons[format.icon]}</div>
-                      </div>
-                      <span className={`text-[10px] font-medium transition-colors duration-500 ease-in-out ${
-                        isStepActive(steps.length - 1) ? 'text-fuchsia-500' : 'text-slate-500'
-                      }`}>{format.label}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Foundational Layer - Tablet */}
-                {foundationalLayer.enabled && foundationalLayer.items && foundationalLayer.items.length > 0 && (
-                  <div 
-                    className="mt-8"
-                    style={{
-                      opacity: isVisible ? 1 : 0,
-                      transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
-                      transition: 'all 0.6s ease-out 0.8s'
-                    }}
-                  >
-                    <div className="bg-slate-100/60 rounded-xl py-3 px-4 border border-slate-200/50">
-                      <div className="grid grid-cols-2 gap-3">
-                        {foundationalLayer.items.map((item, index) => (
-                          <div
-                            key={index}
-                            className="flex items-center gap-2 bg-white/80 px-3 py-2 rounded-lg border border-slate-200/60"
-                          >
-                            <div className="w-4 h-4 rounded bg-slate-200/80 flex items-center justify-center text-slate-500 flex-shrink-0">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-2.5 h-2.5">
-                                {index === 0 && <path d="M4 7v10M4 7l4-4M4 7l4 4M20 17V7" />}
-                                {index === 1 && <path d="M12 8v8M8 12h8M3 12a9 9 0 1018 0 9 9 0 00-18 0z" />}
-                                {index === 2 && <path d="M9 5H5v4M15 5h4v4M9 19H5v-4M15 19h4v-4" />}
-                                {index === 3 && <path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
-                              </svg>
-                            </div>
-                            <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide">
-                              {item.title}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Mobile Layout - Vertical */}
-            <div className="md:hidden">
-              {/* Input Sources Section */}
-              <div className="mb-6 pb-6 border-b border-slate-200">
-                <div className="text-center mb-4">
-                  <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-3">Input Sources</p>
-                </div>
-                <div className="flex items-center justify-center gap-4 flex-wrap">
-                  {inputSources.map((source, i) => (
-                    <div key={i} className="flex flex-col items-center gap-2">
-                      <div 
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 ease-in-out ${
-                          isStepActive(0) 
-                            ? 'bg-fuchsia-500 text-white shadow-md scale-105' 
-                            : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
-                        }`}
-                      >
-                        <div className="w-5 h-5">{smallIcons[source.icon]}</div>
-                      </div>
-                      <span className={`text-xs font-medium transition-colors duration-500 ease-in-out ${
-                        isStepActive(0) ? 'text-fuchsia-500' : 'text-slate-500'
-                      }`}>{source.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="relative pl-14 sm:pl-16 md:pl-20">
-                {/* Steps Container with Timeline */}
-                <div className="relative">
-                  {/* Vertical timeline line - connects from first icon center to last icon center */}
-                  <div 
-                    className="absolute left-5 sm:left-7 md:left-8 w-[3px] bg-slate-200 rounded-full"
-                    style={{
-                      // Start from center of first icon: h-11 (2.75rem) / 2 = 1.375rem on mobile
-                      // On sm: h-12 (3rem) / 2 = 1.5rem, on md: h-14 (3.5rem) / 2 = 1.75rem
-                      top: 'calc(2.75rem / 2)',
-                      // End at center of last icon (same offset from bottom)
-                      bottom: 'calc(2.75rem / 2)'
-                    }}
-                  >
-                    <div 
-                      className="w-full bg-fuchsia-500 rounded-full transition-all duration-500 ease-in-out origin-top"
-                      style={{ 
-                        height: `${progress}%`,
-                        transition: 'height 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-                      }}
-                    />
-                  </div>
-
-                  {/* Steps */}
-                  <div className="space-y-8 sm:space-y-10 md:space-y-12">
-                    {steps.map((step, index) => {
-                      const active = isStepActive(index)
-                      
-                      return (
-                        <div
-                          key={index}
-                          className="relative"
-                          style={{
-                            opacity: isVisible ? 1 : 0,
-                            transform: isVisible ? 'translateX(0)' : 'translateX(-20px)',
-                            transition: `all 0.5s ease-out ${0.2 + index * 0.1}s`
-                          }}
-                        >
-                          {/* Step Circle */}
-                          <div 
-                            className={`absolute -left-[48px] sm:-left-[56px] md:-left-[60px] w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center transition-all duration-700 ease-in-out z-10 ${
-                              active
-                                ? 'bg-fuchsia-500 text-white shadow-lg shadow-fuchsia-500/30 scale-105'
-                                : 'bg-white border-[3px] border-slate-200 text-slate-400 scale-100'
-                            }`}
-                          >
-                            <div className={`w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 transition-all duration-500 ease-in-out ${active ? 'scale-110' : 'scale-100'}`}>
-                              {getStepIcon(step, index)}
-                            </div>
-                          </div>
-
-                        {/* Content Card */}
-                        <div className={`bg-white rounded-xl p-4 sm:p-5 md:p-6 border-2 transition-all duration-500 ease-in-out ${
-                          active 
-                            ? 'border-fuchsia-200 shadow-md shadow-fuchsia-500/10' 
-                            : 'border-slate-100 shadow-sm'
-                        }`}>
-                          <div className={`text-sm sm:text-base font-semibold uppercase tracking-wider mb-2 sm:mb-3 transition-colors duration-500 ease-in-out ${
-                            active ? 'text-fuchsia-500' : 'text-slate-500'
-                          }`}>
-                            {step.title}
-                          </div>
-                          <div className={`text-base sm:text-lg leading-relaxed transition-colors duration-500 ease-in-out ${
-                            active ? 'text-slate-800' : 'text-slate-600'
-                          }`}>
-                            {step.description}
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  })}
-                  </div>
-                </div>
-              </div>
-
-              {/* Export Formats Section - Centered */}
-              <div className="mt-8 pt-6 border-t border-slate-200">
-                <div className="text-center mb-4">
-                  <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-3">Export Formats</p>
-                </div>
-                <div className="flex items-center justify-center gap-4 flex-wrap">
-                  {exportFormats.map((format, i) => (
-                    <div key={i} className="flex flex-col items-center gap-2">
-                      <div 
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 ease-in-out ${
-                          isStepActive(steps.length - 1) 
-                            ? 'bg-fuchsia-500 text-white shadow-md scale-105' 
-                            : 'bg-slate-50 border-2 border-slate-200 text-slate-400 scale-100'
-                        }`}
-                      >
-                        <div className="w-5 h-5">{smallIcons[format.icon]}</div>
-                      </div>
-                      <span className={`text-xs font-medium transition-colors duration-500 ease-in-out ${
-                        isStepActive(steps.length - 1) ? 'text-fuchsia-500' : 'text-slate-500'
-                      }`}>{format.label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Foundational Layer - Mobile */}
-              {foundationalLayer.enabled && foundationalLayer.items && foundationalLayer.items.length > 0 && (
-                <div 
-                  className="mt-8 pt-6 border-t border-slate-200"
-                  style={{
-                    opacity: isVisible ? 1 : 0,
-                    transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
-                    transition: 'all 0.6s ease-out 0.8s'
-                  }}
-                >
-                  <div className="text-center mb-4">
-                    <p className="text-xs font-medium text-slate-500 uppercase tracking-wider mb-1">System of Record</p>
-                    <p className="text-[10px] text-slate-400">Built-in throughout your workflow</p>
-                  </div>
-                  <div className="bg-slate-100/60 rounded-xl py-3 px-3 border border-slate-200/50">
-                    <div className="grid grid-cols-2 gap-2">
-                      {foundationalLayer.items.map((item, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center gap-2 bg-white/80 px-2.5 py-2 rounded-lg border border-slate-200/60"
-                        >
-                          <div className="w-5 h-5 rounded bg-slate-200/80 flex items-center justify-center text-slate-500 flex-shrink-0">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-3 h-3">
-                              {index === 0 && <path d="M4 7v10M4 7l4-4M4 7l4 4M20 17V7" />}
-                              {index === 1 && <path d="M12 8v8M8 12h8M3 12a9 9 0 1018 0 9 9 0 00-18 0z" />}
-                              {index === 2 && <path d="M9 5H5v4M15 5h4v4M9 19H5v-4M15 19h4v-4" />}
-                              {index === 3 && <path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />}
-                            </svg>
-                          </div>
-                          <div className="flex flex-col min-w-0">
-                            <span className="text-[10px] font-semibold text-slate-700 uppercase tracking-wide leading-tight truncate">
-                              {item.title}
-                            </span>
-                            <span className="text-[9px] text-slate-500 leading-tight truncate">
-                              {item.description}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+        {/* Render appropriate layout based on config */}
+        {layout === 'orbital' ? renderOrbitalLayout() : renderClassicLayout()}
       </div>
     </section>
   )

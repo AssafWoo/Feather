@@ -48,6 +48,38 @@ const SEO = ({ config }) => {
       }
       canonical.setAttribute('href', config.canonicalUrl)
     }
+
+    // Update favicon dynamically
+    const updateFavicon = (size, href) => {
+      if (!href) return
+      let link = document.querySelector(`link[rel="icon"][sizes="${size}x${size}"]`)
+      if (!link) {
+        link = document.createElement('link')
+        link.setAttribute('rel', 'icon')
+        link.setAttribute('type', 'image/png')
+        link.setAttribute('sizes', `${size}x${size}`)
+        document.head.appendChild(link)
+      }
+      link.setAttribute('href', href)
+    }
+
+    if (config?.favicon32) {
+      updateFavicon(32, config.favicon32)
+      // Also update the shortcut icon
+      let shortcut = document.querySelector('link[rel="shortcut icon"]')
+      if (shortcut) {
+        shortcut.setAttribute('href', config.favicon32)
+      }
+    }
+    if (config?.favicon16) {
+      updateFavicon(16, config.favicon16)
+    }
+    if (config?.appleTouchIcon) {
+      let apple = document.querySelector('link[rel="apple-touch-icon"]')
+      if (apple) {
+        apple.setAttribute('href', config.appleTouchIcon)
+      }
+    }
   }, [config])
 
   return null // This component doesn't render anything

@@ -120,6 +120,14 @@ const EmailSignup = ({ config, onSubmit, source = 'unknown' }) => {
     )
   }
 
+  // Style configuration with purple defaults
+  const styles = config.styles || {}
+  const inputBorderColor = styles.inputBorderColor || 'border-[#7C3AED]/30'
+  const inputFocusRing = styles.inputFocusRing || 'focus:ring-[#7C3AED]'
+  const buttonBg = styles.buttonBg || 'bg-[#7C3AED]'
+  const buttonHover = styles.buttonHover || 'hover:bg-[#6D28D9]'
+  const buttonText = styles.buttonText || 'text-white'
+
   return (
     <form onSubmit={handleSubmit} className={`max-w-md ${alignmentClass}`}>
       <div className="flex flex-col sm:flex-row gap-2 bg-white p-4 rounded-2xl shadow-2xl border border-gray-100">
@@ -131,13 +139,13 @@ const EmailSignup = ({ config, onSubmit, source = 'unknown' }) => {
             setError('')
           }}
           placeholder={config.placeholder || "Enter your email"}
-          className="flex-1 px-4 py-2.5 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+          className={`flex-1 px-4 py-2.5 border ${inputBorderColor} rounded-full text-sm focus:outline-none focus:ring-2 ${inputFocusRing} focus:border-transparent`}
           required
         />
         <button
           type="submit"
           disabled={isLoading}
-          className="px-6 py-2.5 bg-gray-900 text-white rounded-full text-sm font-normal hover:bg-gray-800 transition-colors whitespace-nowrap shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          className={`px-6 py-2.5 ${buttonBg} ${buttonText} rounded-full text-sm font-normal ${buttonHover} transition-colors whitespace-nowrap shadow-lg disabled:opacity-50 disabled:cursor-not-allowed`}
         >
           {isLoading ? 'Submitting...' : (config.buttonText || "Join Waitlist")}
         </button>

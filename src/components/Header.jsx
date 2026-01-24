@@ -75,11 +75,15 @@ const Header = ({ config }) => {
   }
 
   return (
-    <header className="fixed top-4 left-0 right-0 z-50">
+    <header 
+      className="fixed top-4 left-0 right-0 z-50"
+    >
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
           {/* Dark Navigation Container */}
-          <div className={getNavContainerClasses()}>
+          <div 
+            className={getNavContainerClasses()}
+          >
             <div className="flex items-center justify-center gap-2 sm:gap-5 h-full w-full">
               {/* Logo */}
               <div className="flex items-center">

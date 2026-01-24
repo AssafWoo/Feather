@@ -5,6 +5,9 @@ const Features = ({ config }) => {
   const styles = config.styles || {}
   const badge = config.badge || {}
   const illustration = config.illustration || {}
+  
+  // Layout type: 'classic' (default/Feather) or 'glassy' (Plain)
+  const layout = config.layout || 'classic'
 
   // Default colors for illustration
   const primaryColor = illustration.primaryColor || '#D946EF'
@@ -218,8 +221,89 @@ const Features = ({ config }) => {
     return <DecorativeIllustration />
   }
 
+  // ============================================
+  // GLASSY LAYOUT (Plain style)
+  // ============================================
+  const renderGlassyLeftSide = () => (
+    <div className="text-center lg:text-left bg-white/80 backdrop-blur-md rounded-2xl p-8 lg:p-12 shadow-xl shadow-slate-200/50 border border-white/60 relative overflow-hidden">
+      {/* Ambient background glow */}
+      <div className={`absolute top-0 right-0 w-64 h-64 ${styles.decorationColor || 'bg-fuchsia-100'} rounded-full blur-3xl opacity-20 -mr-32 -mt-32`}></div>
+      <div className={`absolute bottom-0 left-0 w-64 h-64 ${styles.decorationColor || 'bg-fuchsia-100'} rounded-full blur-3xl opacity-20 -ml-32 -mb-32`}></div>
+      
+      {/* Decorative concentric lines matching Workflow circle style */}
+      <div className="absolute inset-4 border border-slate-200/50 rounded-xl pointer-events-none" />
+      <div className="absolute inset-8 border border-slate-200/50 rounded-lg pointer-events-none" />
+
+      <div className="relative z-10">
+        {/* Badge */}
+        {badge.enabled !== false && (
+          <div className={`inline-block px-4 py-1.5 ${badge.bgColor || 'bg-fuchsia-500'} ${badge.textColor || 'text-white'} text-xs font-semibold tracking-widest uppercase rounded mb-4 sm:mb-6 shadow-sm`}>
+            {badge.text || config.title || 'Features'}
+          </div>
+        )}
+        
+        {/* Title */}
+        <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium ${styles.titleColor || 'text-gray-900'} mb-4 sm:mb-6 leading-tight`}>
+          {config.title.split(' ').map((word, index) => {
+            const highlightWord = config.highlightWord || 'Features'
+            if (word.toLowerCase().includes(highlightWord.toLowerCase())) {
+              return (
+                <span key={index}>
+                  <span className={styles.highlightColor || 'text-fuchsia-500'}>{word}</span>{' '}
+                </span>
+              )
+            }
+            return <span key={index}>{word} </span>
+          })}
+        </h2>
+        
+        <p className={`text-sm sm:text-base md:text-lg ${styles.subtitleColor || 'text-gray-600'} mb-6 sm:mb-8 max-w-md mx-auto lg:mx-0 leading-relaxed`}>
+          {config.subtitle}
+        </p>
+      </div>
+    </div>
+  )
+
+  // ============================================
+  // CLASSIC LAYOUT (Feather style)
+  // ============================================
+  const renderClassicLeftSide = () => (
+    <div className="text-center lg:text-left">
+      {/* Badge */}
+      {badge.enabled !== false && (
+        <div className={`inline-block px-4 py-1.5 ${badge.bgColor || 'bg-fuchsia-500'} ${badge.textColor || 'text-white'} text-xs font-semibold tracking-widest uppercase rounded mb-4 sm:mb-6`}>
+          {badge.text || config.title || 'Features'}
+        </div>
+      )}
+      
+      {/* Title */}
+      <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium ${styles.titleColor || 'text-gray-900'} mb-4 sm:mb-6 leading-tight`}>
+        {config.title.split(' ').map((word, index) => {
+          const highlightWord = config.highlightWord || 'Features'
+          if (word.toLowerCase().includes(highlightWord.toLowerCase())) {
+            return (
+              <span key={index}>
+                <span className={styles.highlightColor || 'text-fuchsia-500'}>{word}</span>{' '}
+              </span>
+            )
+          }
+          return <span key={index}>{word} </span>
+        })}
+      </h2>
+      
+      <p className={`text-sm sm:text-base md:text-lg ${styles.subtitleColor || 'text-gray-600'} mb-6 sm:mb-8 max-w-md mx-auto lg:mx-0`}>
+        {config.subtitle}
+      </p>
+      
+      {/* Decorative Illustration - smaller to fit viewport */}
+      <div className="relative w-full max-w-[200px] sm:max-w-[240px] lg:max-w-[280px] mx-auto lg:mx-0">
+        {renderIllustration()}
+      </div>
+    </div>
+  )
+
   return (
-    <section id="why" aria-label={config.title || "Features"} className={`py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 ${styles.backgroundColor || 'bg-white'} relative overflow-hidden min-h-screen snap-start flex items-center`}>
+    <section id="why" aria-label={config.title || "Features"} className={`py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 ${styles.backgroundColor || 'bg-white'} relative overflow-hidden min-h-screen snap-start flex items-center`} style={{ scrollSnapStop: 'always' }}>
       {/* CSS for animations */}
       <style>{`
         @keyframes pulse {
@@ -247,38 +331,7 @@ const Features = ({ config }) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           
           {/* Left side: Badge + Title + Illustration */}
-          <div className="text-center lg:text-left">
-            {/* Badge */}
-            {badge.enabled !== false && (
-              <div className={`inline-block px-4 py-1.5 ${badge.bgColor || 'bg-fuchsia-500'} ${badge.textColor || 'text-white'} text-xs font-semibold tracking-widest uppercase rounded mb-4 sm:mb-6`}>
-                {badge.text || config.title || 'Features'}
-              </div>
-            )}
-            
-            {/* Title */}
-            <h2 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium ${styles.titleColor || 'text-gray-900'} mb-4 sm:mb-6 leading-tight`}>
-              {config.title.split(' ').map((word, index) => {
-                const highlightWord = config.highlightWord || 'Features'
-                if (word.toLowerCase().includes(highlightWord.toLowerCase())) {
-                  return (
-                    <span key={index}>
-                      <span className={styles.highlightColor || 'text-fuchsia-500'}>{word}</span>{' '}
-                    </span>
-                  )
-                }
-                return <span key={index}>{word} </span>
-              })}
-            </h2>
-            
-            <p className={`text-sm sm:text-base md:text-lg ${styles.subtitleColor || 'text-gray-600'} mb-6 sm:mb-8 max-w-md mx-auto lg:mx-0`}>
-              {config.subtitle}
-            </p>
-            
-            {/* Decorative Illustration - smaller to fit viewport */}
-            <div className="relative w-full max-w-[200px] sm:max-w-[240px] lg:max-w-[280px] mx-auto lg:mx-0">
-              {renderIllustration()}
-            </div>
-          </div>
+          {layout === 'glassy' ? renderGlassyLeftSide() : renderClassicLeftSide()}
           
           {/* Right side: Feature list */}
           <div className="space-y-4 sm:space-y-6 lg:space-y-7 mt-6 lg:mt-0">

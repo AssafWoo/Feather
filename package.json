@@ -6,15 +6,18 @@
     "dev": "vite",
     "dev:feather": "VITE_PRODUCT=feather vite",
     "dev:base": "VITE_PRODUCT=base vite",
+    "dev:plain": "VITE_PRODUCT=plain vite",
     "build": "vite build",
     "build:feather": "VITE_PRODUCT=feather vite build",
     "build:base": "VITE_PRODUCT=base vite build",
+    "build:plain": "VITE_PRODUCT=plain vite build",
     "preview": "vite preview"
   },
   "dependencies": {
     "lucide-react": "^0.562.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
     "react-router-dom": "^7.12.0"
   },
   "devDependencies": {

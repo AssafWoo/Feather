@@ -16,6 +16,7 @@ const FAQ = ({ config }) => {
       id="faq" 
       aria-label={config.title || "Frequently Asked Questions"} 
       className={`py-20 px-4 sm:px-6 lg:px-8 ${styles.backgroundColor || 'bg-white'} relative overflow-hidden min-h-screen snap-start flex items-center`}
+      style={{ scrollSnapStop: 'always' }}
     >
       {/* Background decoration */}
       <div className={`absolute top-0 left-0 w-96 h-96 ${styles.decorationColor || 'bg-slate-100'} rounded-full blur-3xl ${styles.decorationOpacity || 'opacity-20'}`}></div>

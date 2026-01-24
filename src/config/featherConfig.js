@@ -605,4 +605,20 @@ export const featherConfig = {
     // Format: G-XXXXXXXXXX
     ga4MeasurementId: 'G-WYBEDD4680', // For reference - configure GA4 tag in GTM with this ID
   },
+
+  // ============================================
+  // SEO CONFIGURATION
+  // ============================================
+  seo: {
+    title: "Feather - LLM-Assisted Labeling with Human Oversight",
+    description: "Trusted, auditable LLM-assisted labeling workflow with versioned schemas, human approvals, and reproducible exports. Training LLMs is continuous — your labels should remember every decision.",
+    favicon32: "/feather/feather-favicon-32.png",
+    favicon16: "/feather/feather-favicon-16.png",
+    appleTouchIcon: "/feather/logo.png",
+    ogTitle: "Feather - LLM-Assisted Labeling with Human Oversight",
+    ogDescription: "Trusted, auditable LLM-assisted labeling workflow with versioned schemas, human approvals, and reproducible exports.",
+    ogImage: "/feather/logo.png",
+    twitterTitle: "Feather - LLM-Assisted Labeling Platform",
+    twitterDescription: "Training LLMs is continuous. Your labels should remember every decision, change, and training cycle.",
+  },
 }

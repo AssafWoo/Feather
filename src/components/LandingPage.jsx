@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import Header from './Header'
 import Hero from './Hero'
+import Problem from './Problem'
 import Workflow from './Workflow'
 import Features from './Features'
 import Integrations from './Integrations'
@@ -15,23 +16,44 @@ const LandingPage = ({ config, scrollToSignup = false, scrollToWorkflow = false 
   const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/'
   const isSignupPage = currentPath === '/signup'
   
-  // Prepare SEO config from landing page content
-  const seoConfig = {
+  // Get product name from config (fallback to Feather for backwards compatibility)
+  const productName = config.header?.logoText || 'Feather AI'
+  const defaultDescription = config.hero?.subtitle || 'Trusted, auditable LLM-assisted labeling workflow with versioned schemas, human approvals, and reproducible exports.'
+  
+  // Prepare SEO config - use config.seo if available, otherwise build from landing page content
+  const seoConfig = config.seo ? {
+    // Use explicit SEO config when available
     title: isSignupPage 
-      ? `Join Waitlist | Feather AI - LLM-Assisted Labeling for Data Science Teams`
+      ? `Join Waitlist | ${config.seo.title}`
+      : config.seo.title,
+    ogTitle: config.seo.ogTitle || config.seo.title,
+    ogDescription: config.seo.ogDescription || config.seo.description,
+    ogImage: config.seo.ogImage,
+    ogUrl: config.seo.ogUrl,
+    twitterTitle: config.seo.twitterTitle || config.seo.title,
+    twitterDescription: config.seo.twitterDescription || config.seo.description,
+    twitterImage: config.seo.twitterImage || config.seo.ogImage,
+    canonicalUrl: config.seo.canonicalUrl,
+    favicon32: config.seo.favicon32,
+    favicon16: config.seo.favicon16,
+    appleTouchIcon: config.seo.appleTouchIcon,
+  } : {
+    // Fallback: Build from landing page content (backwards compatibility)
+    title: isSignupPage 
+      ? `Join Waitlist | ${productName}`
       : config.hero?.title 
-        ? `${config.hero.title} | Feather AI - LLM-Assisted Labeling for Data Science Teams`
-        : 'Feather AI - LLM-Assisted Labeling for Data Science Teams',
+        ? `${config.hero.title} | ${productName}`
+        : productName,
     ogTitle: isSignupPage 
-      ? 'Join Waitlist | Feather AI'
-      : config.hero?.title || 'Feather AI - LLM-Assisted Labeling for Data Science Teams',
-    ogDescription: config.hero?.subtitle || 'Trusted, auditable LLM-assisted labeling workflow with versioned schemas, human approvals, and reproducible exports.',
+      ? `Join Waitlist | ${productName}`
+      : config.hero?.title || productName,
+    ogDescription: defaultDescription,
     ogImage: 'https://feathersai.app/feather-owl-navy-pink.png',
     ogUrl: `https://feathersai.app${currentPath}`,
     twitterTitle: isSignupPage 
-      ? 'Join Waitlist | Feather AI'
-      : config.hero?.title || 'Feather AI - LLM-Assisted Labeling for Data Science Teams',
-    twitterDescription: config.hero?.subtitle || 'Trusted, auditable LLM-assisted labeling workflow with versioned schemas, human approvals, and reproducible exports.',
+      ? `Join Waitlist | ${productName}`
+      : config.hero?.title || productName,
+    twitterDescription: defaultDescription,
     twitterImage: 'https://feathersai.app/feather-owl-navy-pink.png',
     canonicalUrl: `https://feathersai.app${currentPath}`,
   }
@@ -79,10 +101,13 @@ const LandingPage = ({ config, scrollToSignup = false, scrollToWorkflow = false 
           enabled={config.analytics.enabled}
         />
       )}
-      <div className="min-h-screen bg-white overflow-y-scroll snap-y snap-mandatory scroll-smooth" style={{ height: '100vh', scrollBehavior: 'smooth' }}>
-        {config.header?.enabled && <Header config={config.header} />}
+      {config.header?.enabled && <Header config={config.header} />}
+      <div 
+        className="h-full w-full overflow-y-auto overflow-x-hidden snap-y snap-mandatory"
+      >
         <main id="main-content" role="main">
           <Hero config={config.hero} />
+          {config.problem?.enabled && <Problem config={config.problem} />}
           {config.workflow?.enabled && <Workflow config={config.workflow} />}
           {config.features?.enabled && <Features config={config.features} />}
           {config.integrations?.enabled && <Integrations config={config.integrations} />}

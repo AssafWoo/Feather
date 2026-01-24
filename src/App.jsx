@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import LandingPage from './components/LandingPage'
 import { featherConfig } from './config/featherConfig'
 import { landingConfig } from './config/landingConfig'
+import { plainConfig } from './config/plainConfig'
 
 // ============================================
 // PRODUCT CONFIG REGISTRY
@@ -13,6 +14,7 @@ import { landingConfig } from './config/landingConfig'
 const configs = {
   feather: featherConfig,
   base: landingConfig,
+  plain: plainConfig,
   // Add new products here:
   // productb: productBConfig,
 }
