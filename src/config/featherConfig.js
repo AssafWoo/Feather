@@ -617,8 +617,11 @@ export const featherConfig = {
     appleTouchIcon: "/feather/logo.png",
     ogTitle: "Feather - LLM-Assisted Labeling with Human Oversight",
     ogDescription: "Trusted, auditable LLM-assisted labeling workflow with versioned schemas, human approvals, and reproducible exports.",
-    ogImage: "/feather/logo.png",
+    ogImage: "https://feathersai.app/feather/logo.png",
+    ogUrl: "https://feathersai.app",
     twitterTitle: "Feather - LLM-Assisted Labeling Platform",
     twitterDescription: "Training LLMs is continuous. Your labels should remember every decision, change, and training cycle.",
+    twitterImage: "https://feathersai.app/feather/logo.png",
+    canonicalUrl: "https://feathersai.app",
   },
 }

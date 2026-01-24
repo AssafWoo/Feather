@@ -698,8 +698,11 @@ export const plainConfig = {
     appleTouchIcon: "/plain/logo.png",
     ogTitle: "Plain - Turn Legacy Data Into an AI-Ready Foundation",
     ogDescription: "We don't replace legacy systems — we elevate them to an AI-ready state.",
-    ogImage: "/plain/logo.png",
+    ogImage: "https://plaindataai.com/plain/logo.png",
+    ogUrl: "https://plaindataai.com",
     twitterTitle: "Plain - Legacy Data to AI-Ready Foundation",
     twitterDescription: "Before agents, fix the data. We help organizations transform legacy systems into AI-ready foundations.",
+    twitterImage: "https://plaindataai.com/plain/logo.png",
+    canonicalUrl: "https://plaindataai.com",
   },
 }
