@@ -119,7 +119,7 @@ export const plainConfig = {
       placeholder: "Work email",
       buttonText: "Let's talk",
       successMessage: "You're in. We'll reach out when early access opens.",
-      apiEndpoint: "https://api.plain.app/subscribe",
+      apiEndpoint: "https://api.plaindataai.com/subscribe",
       align: "left",
     },
 
@@ -539,7 +539,7 @@ export const plainConfig = {
       placeholder: "Work email",
       buttonText: "Join the waitlist",
       successMessage: "You're in. We'll reach out when early access opens.",
-      apiEndpoint: "https://api.plain.app/subscribe",
+      apiEndpoint: "https://api.plaindataai.com/subscribe",
     },
 
     // Alternative: Button
