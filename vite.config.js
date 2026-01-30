@@ -48,8 +48,8 @@ const seoConfigs = {
     preloadLogo: '/plain/logo.png',
     preloadHero: null,
     apiPreconnect: 'https://api.plain.app',
-    gtmId: null, // Plain doesn't have GTM yet
-    gadsId: null,
+    gtmId: 'GTM-KDFVB79C',
+    gadsId: null, // Configure Google Ads conversion tracking inside GTM
   },
 }
 
@@ -171,7 +171,7 @@ function seoPlugin() {
         `<link rel="dns-prefetch" href="${seo.apiPreconnect}" />`
       )
 
-      // Handle GTM - remove if not configured
+      // Handle GTM - remove if not configured, replace if different
       if (!seo.gtmId) {
         // Remove GTM script
         html = html.replace(
@@ -183,6 +183,9 @@ function seoPlugin() {
           /<!-- Google Tag Manager \(noscript\) -->[\s\S]*?<!-- End Google Tag Manager \(noscript\) -->/g,
           ''
         )
+      } else {
+        // Replace GTM ID with product-specific ID
+        html = html.replace(/GTM-[A-Z0-9]+/g, seo.gtmId)
       }
 
       // Handle Google Ads - remove if not configured

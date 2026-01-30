@@ -682,9 +682,9 @@ export const plainConfig = {
   // ANALYTICS CONFIGURATION
   // ============================================
   analytics: {
-    enabled: false, // Set to true and add your GTM ID to enable
-    gtmContainerId: '',
-    ga4MeasurementId: '',
+    enabled: true,
+    gtmContainerId: 'GTM-KDFVB79C',
+    ga4MeasurementId: '', // Configure GA4 inside GTM with your measurement ID
   },
 
   // ============================================
