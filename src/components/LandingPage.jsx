@@ -11,7 +11,7 @@ import Footer from './Footer'
 import SEO from './SEO'
 import GoogleTagManager from './GoogleTagManager'
 
-const LandingPage = ({ config, scrollToSignup = false, scrollToWorkflow = false, scrollToIntegrations = false }) => {
+const LandingPage = ({ config, scrollToSignup = false, scrollToWorkflow = false, scrollToIntegrations = false, scrollToFeatures = false, scrollToFaq = false }) => {
   // Get current path for SEO
   const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/'
   const isSignupPage = currentPath === '/signup'
@@ -105,6 +105,34 @@ const LandingPage = ({ config, scrollToSignup = false, scrollToWorkflow = false,
       return () => clearTimeout(timer)
     }
   }, [scrollToIntegrations])
+
+  // Handle scroll to features section when coming from /features route
+  useEffect(() => {
+    if (scrollToFeatures) {
+      const timer = setTimeout(() => {
+        const featuresSection = document.getElementById('features')
+        if (featuresSection) {
+          featuresSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 300)
+
+      return () => clearTimeout(timer)
+    }
+  }, [scrollToFeatures])
+
+  // Handle scroll to FAQ section when coming from /faq route
+  useEffect(() => {
+    if (scrollToFaq) {
+      const timer = setTimeout(() => {
+        const faqSection = document.getElementById('faq')
+        if (faqSection) {
+          faqSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 300)
+
+      return () => clearTimeout(timer)
+    }
+  }, [scrollToFaq])
 
   return (
     <>

@@ -44,6 +44,16 @@ function WhyPlainRedirect() {
   return <LandingPage config={activeConfig} scrollToIntegrations={true} />
 }
 
+// Component to handle scroll to features section on /features route
+function FeaturesRedirect() {
+  return <LandingPage config={activeConfig} scrollToFeatures={true} />
+}
+
+// Component to handle scroll to FAQ section on /faq route
+function FaqRedirect() {
+  return <LandingPage config={activeConfig} scrollToFaq={true} />
+}
+
 function App() {
   // Active product: controlled by VITE_PRODUCT env var
   // Run with: VITE_PRODUCT=feather npm run dev
@@ -56,6 +66,9 @@ function App() {
         <Route path="/howitworks" element={<HowItWorksRedirect />} />
         <Route path="/join" element={<JoinRedirect />} />
         <Route path="/whyplain" element={<WhyPlainRedirect />} />
+        <Route path="/workflow" element={<HowItWorksRedirect />} />
+        <Route path="/features" element={<FeaturesRedirect />} />
+        <Route path="/faq" element={<FaqRedirect />} />
       </Routes>
     </BrowserRouter>
   )
