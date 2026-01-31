@@ -34,6 +34,16 @@ function HowItWorksRedirect() {
   return <LandingPage config={activeConfig} scrollToWorkflow={true} />
 }
 
+// Component to handle scroll to CTA on /join route
+function JoinRedirect() {
+  return <LandingPage config={activeConfig} scrollToSignup={true} />
+}
+
+// Component to handle scroll to "Why Plain" (integrations) on /whyplain route
+function WhyPlainRedirect() {
+  return <LandingPage config={activeConfig} scrollToIntegrations={true} />
+}
+
 function App() {
   // Active product: controlled by VITE_PRODUCT env var
   // Run with: VITE_PRODUCT=feather npm run dev
@@ -44,6 +54,8 @@ function App() {
         <Route path="/" element={<LandingPage config={activeConfig} />} />
         <Route path="/signup" element={<SignupRedirect />} />
         <Route path="/howitworks" element={<HowItWorksRedirect />} />
+        <Route path="/join" element={<JoinRedirect />} />
+        <Route path="/whyplain" element={<WhyPlainRedirect />} />
       </Routes>
     </BrowserRouter>
   )

@@ -11,7 +11,7 @@ import Footer from './Footer'
 import SEO from './SEO'
 import GoogleTagManager from './GoogleTagManager'
 
-const LandingPage = ({ config, scrollToSignup = false, scrollToWorkflow = false }) => {
+const LandingPage = ({ config, scrollToSignup = false, scrollToWorkflow = false, scrollToIntegrations = false }) => {
   // Get current path for SEO
   const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/'
   const isSignupPage = currentPath === '/signup'
@@ -91,6 +91,20 @@ const LandingPage = ({ config, scrollToSignup = false, scrollToWorkflow = false 
       return () => clearTimeout(timer)
     }
   }, [scrollToWorkflow])
+
+  // Handle scroll to integrations section when coming from /whyplain route
+  useEffect(() => {
+    if (scrollToIntegrations) {
+      const timer = setTimeout(() => {
+        const integrationsSection = document.getElementById('integrations')
+        if (integrationsSection) {
+          integrationsSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 300)
+
+      return () => clearTimeout(timer)
+    }
+  }, [scrollToIntegrations])
 
   return (
     <>
